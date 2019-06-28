@@ -43,7 +43,7 @@
             <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true"><img class="img-fluid img-thumbnail" src="../assets/all orders.png" style="width:30px;"></img>All Orders</a>
             <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false"><img class="img-fluid img-thumbnail" src="../assets/awb.png" style="width:30px;"></img>Create Order AWBS</a>
             <a class="nav-link" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-messages" role="tab" aria-controls="v-pills-messages" aria-selected="false"><img class="img-fluid img-thumbnail" src="../assets/package.png" style="width:30px;"></img>Create Packages</a>
-            <a class="nav-link" id="v-pills-shipped-tab" data-toggle="pill" href="#v-pills-shipped" role="tab" aria-controls="v-pills-shipped" aria-selected="false"><img class="img-fluid img-thumbnail" src="../assets/to be shipped.png" style="width:30px;"></img>To Be Shipped</a>
+            <a class="nav-link" id="v-pills-shipped-tab" data-toggle="pill"  href="#v-pills-shipped" role="tab" aria-controls="v-pills-shipped" aria-selected="false"><img class="img-fluid img-thumbnail" src="../assets/to be shipped.png" style="width:30px;"></img>To Be Shipped</a>
             <a class="nav-link" id="v-pills-intransit-tab" data-toggle="pill" href="#v-pills-intransit" role="tab" aria-controls="v-pills-intransit" aria-selected="false"><img class="img-fluid img-thumbnail" src="../assets/in transit.png" style="width:30px;"></img>In Transit</a>
             <a class="nav-link" id="v-pills-delivered-tab" data-toggle="pill" href="#v-pills-delivered" role="tab" aria-controls="v-pills-delivered" aria-selected="false"><img class="img-fluid img-thumbnail" src="../assets/delivered.png" style="width:30px;"></img>Delivered Orders</a>
             <a class="nav-link" id="v-pills-cancelled-tab" data-toggle="pill" href="#v-pills-cancelled" role="tab" aria-controls="v-pills-cancelled" aria-selected="false"><img class="img-fluid img-thumbnail" src="../assets/cancel (1) - Copy.png" style="width:30px;"></img>>Cancelled Orders</a>
@@ -1333,6 +1333,8 @@
                               </div>  
                                     
                      </div>
+
+
                      <div class="tab-pane fade" id="v-pills-shipped" role="tabpanel" aria-labelledby="v-pills-shipped-tab">
                     <div class="container no_margin tab_holder" id="all_orders">
                         
@@ -1365,7 +1367,7 @@
                                 </div>
                             </div>
                             <div class="row no_margin no_padding">
-                                    <table id="example_ship" class="display table">
+                                    <table id="example_shipped" class="display table">
                                         <thead>
                                                     <tr>
                                                         <th>Package No</th>
@@ -1373,7 +1375,7 @@
                                                         <th>Total Amount</th>
                                                        </tr>
                                                 </thead>
-                                                <tbody>
+                                                <!-- <tbody>
                                                     <tr>
                                         
                                                             <tr>
@@ -1461,7 +1463,7 @@
                                                                </tr>
                                                                 
 
-                                                    </tbody>
+                                                    </tbody> -->
                                                 </table>
                                             </div>
         
@@ -1509,7 +1511,7 @@
                                                         </div>
                                                     </div>
                                                     <div class="row no_margin no_padding">
-                                                            <table id="example_ship" class="display table">
+                                                            <table id="example_intransit" class="display table">
                                                                 <thead>
                                                                             <tr>
                                                                                 <th>Package No</th>
@@ -1698,7 +1700,7 @@
                                                                                 </div>
                                                                             </div>
                                                                             <div class="row no_margin no_padding">
-                                                                                    <table id="example_ship" class="display table">
+                                                                                    <table id="example_cancelled" class="display table">
                                                                                         <thead>
                                                                                                     <tr>
                                                                                                         <th>Package No</th>
@@ -1930,6 +1932,20 @@
             }
     ]
 
+    var shipping = 
+    [
+        {
+            packageNo: 959869,
+            orderId: 7325435,
+            totalAmt: 1500
+        },
+        {
+            packageNo: 72345,
+            orderId: 7325435,
+            totalAmt: 1500
+        }
+    ]
+
         function newArray(arr){
             var array = [];
             for (let i = 0; i < arr.length; i++) {
@@ -2026,15 +2042,39 @@
             });
 
 
-
-
-             $('#example_delivered').DataTable({
+            $('#v-pills-shipped-tab').click(function(){
+             $('#example_shipped').DataTable({
+                data: shipping,
                 destroy: true,
-                select: true,
-                "columnDefs": [{
-                    "visible": false,
-                    "targets": groupColumn
-                }],
+                'rowGroup': {
+                    // 'dataSrc': products.title,
+                    'startRender': function(rows, group) {
+                        console.log(data);
+                        // Assign class name to all child rows
+                        // var groupName = 'group-' + group.replace(/[^A-Za-z0-9]/g, '');
+                        // var rowNodes = rows.nodes();
+                        // rowNodes.to$().addClass(groupName);
+                        
+                        // Get selected checkboxes
+                        // var checkboxesSelected = $('.dt-checkboxes:checked', rowNodes);
+                        
+                        // // Parent checkbox is selected when all child checkboxes are selected
+                        // var isSelected = (checkboxesSelected.length == rowNodes.length);
+                        
+                        return '<label>' + group + ' (' + rows.count() + ')</label>';
+                    }         
+                },
+                
+                'columns':[
+                    {data: 'packageNo'},
+                    {data: 'orderId'},
+                    {data: 'totalAmt'},
+            
+                ],
+                // "columnDefs": [{
+                //     "visible": false,
+                //     "targets": groupColumn
+                // }],
                 "order": [
                     [groupColumn, 'asc']
                 ],
@@ -2050,8 +2090,10 @@
                         page: 'current'
                     }).data().each(function(group, i) {
                         if (last !== group) {
-                            $(rows).eq(i).before(
-                                '<tr class="group"><td colspan="7">' + group + '</td></tr>'
+                            $(rows).eq(i).append(
+                                // '<tr class="group"><td colspan="4">' + group + '</td></tr>'
+                                '<td><button type="button" class="btn btn-primary">Print waybill</button></td>'
+                                
                             );
 
                             last = group;
@@ -2059,16 +2101,109 @@
                     });
                 }
             });
+            });
+
+
+
+            $('#v-pills-intransit-tab').click(function(){
+             $('#example_intransit').DataTable({
+                data: shipping,
+                destroy: true,
+                'rowGroup': {
+                    // 'dataSrc': products.title,
+                    'startRender': function(rows, group) {
+                        console.log(data);
+                        // Assign class name to all child rows
+                        // var groupName = 'group-' + group.replace(/[^A-Za-z0-9]/g, '');
+                        // var rowNodes = rows.nodes();
+                        // rowNodes.to$().addClass(groupName);
+                        
+                        // Get selected checkboxes
+                        // var checkboxesSelected = $('.dt-checkboxes:checked', rowNodes);
+                        
+                        // // Parent checkbox is selected when all child checkboxes are selected
+                        // var isSelected = (checkboxesSelected.length == rowNodes.length);
+                        
+                        return '<label>' + group + ' (' + rows.count() + ')</label>';
+                    }         
+                },
+                
+                'columns':[
+                    {data: 'packageNo'},
+                    {data: 'orderId'},
+                    {data: 'totalAmt'},
+            
+                ],
+                // "columnDefs": [{
+                //     "visible": false,
+                //     "targets": groupColumn
+                // }],
+                "order": [
+                    [groupColumn, 'asc']
+                ],
+                "displayLength": 25,
+                "drawCallback": function(settings) {
+                    var api = this.api();
+                    var rows = api.rows({
+                        page: 'current'
+                    }).nodes();
+                    var last = null;
+
+                    api.column(groupColumn, {
+                        page: 'current'
+                    }).data().each(function(group, i) {
+                        if (last !== group) {
+                            $(rows).eq(i).append(
+                                // '<tr class="group"><td colspan="4">' + group + '</td></tr>'
+                                '<td><button type="button" class="btn btn-primary">Print waybill</button></td>'
+                                
+                            );
+
+                            last = group;
+                        }
+                    });
+                }
+            });
+            });
 
 
 
 
+            //  $('#example_delivered').DataTable({
+            //     destroy: true,
+            //     "columnDefs": [{
+            //         "visible": false,
+            //         "targets": groupColumn
+            //     }],
+            //     "order": [
+            //         [groupColumn, 'asc']
+            //     ],
+            //     "displayLength": 25,
+            //     "drawCallback": function(settings) {
+            //         var api = this.api();
+            //         var rows = api.rows({
+            //             page: 'current'
+            //         }).nodes();
+            //         var last = null;
+
+            //         api.column(groupColumn, {
+            //             page: 'current'
+            //         }).data().each(function(group, i) {
+            //             if (last !== group) {
+            //                 $(rows).eq(i).before(
+            //                     '<tr class="group"><td colspan="7">' + group + '</td></tr>'
+            //                 );
+
+            //                 last = group;
+            //             }
+            //         });
+            //     }
+            // });
 
 
 
 
-            $(document).ready(function (){
-                var table = $('#example_pack').DataTable({
+             var table1 = $('#example_pack').DataTable({
                 'ajax': 
                 {
                     url:'https://api.myjson.com/bins/sh72r'
@@ -2129,11 +2264,11 @@
                 } );
 
                 $('#example_pack tbody').on('click', 'tr.group', function() {
-                var currentOrder = table.order()[0];
+                var currentOrder = table1.order()[0];
                 if (currentOrder[0] === groupColumn && currentOrder[1] === 'asc') {
-                    table.order([groupColumn, 'desc']).draw();
+                    table1.order([groupColumn, 'desc']).draw();
                 } else {
-                    table.order([groupColumn, 'asc']).draw();
+                    table1.order([groupColumn, 'asc']).draw();
                 }
             });
                 
@@ -2155,7 +2290,6 @@
                 // }, 0);
                 // });     
             
-            } ); 
 
 
 
