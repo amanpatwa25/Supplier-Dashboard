@@ -23,10 +23,18 @@ var OrdersController ={
 
             var results  = await OrderService.getOrders(pageno);
 
-            res.send(results);
+            res.status(200).send({
+                success:true,
+                code:200,
+                data:results,
+            });
+
         } catch (error) {
-            console.log('err in controller',error);
-            
+            res.status(500).send({
+                success:false,
+                code:500,
+                msg:error,
+            });
         }
     },
 
@@ -36,13 +44,22 @@ var OrdersController ={
             
             var pageno = req.query.pageNo;
 
-            if(!pageno) pageno = 0;
+            if(pageno === undefined || pageno === null) pageno = 0;
 
             var results  = await OrderService.getOrders(pageno,OrderStatus.DELIVERED);
 
-            res.send(results);
+            res.status(200).send({
+                success:true,
+                code:200,
+                data:results,
+            });
+
         } catch (error) {
-            
+            res.status(500).send({
+                success:false,
+                code:500,
+                msg:error,
+            });
         }
     },
 
@@ -54,29 +71,113 @@ var OrdersController ={
 
             var results  = await OrderService.getOrders(pageno,OrderStatus.CANCELLED);
 
-            res.send(results);
-            
+            res.status(200).send({
+                success:true,
+                code:200,
+                data:results,
+            });
+
         } catch (error) {
-            
+            res.status(500).send({
+                success:false,
+                code:500,
+                msg:error,
+            });
         }
     },
     
-    test: async function(req,res){
-        console.log('inside test');
+    placedOrders:async function(req,res){
+        try {
+            var pageno = req.query.pageNo;
 
-        try{
-            
-            var result = await Orders.find({}).limit(100).lean();
-            console.log('res length',result.length);
-            
-            res.send(result);
-        }catch(err){
-            console.log('inside err',err);
-            
-            res.send(err);
+            if(!pageno) pageno = 0;
+
+            var results  = await OrderService.getOrders(pageno,OrderStatus.ORDER_PLACED);
+
+            res.status(200).send({
+                success:true,
+                code:200,
+                data:results,
+            });
+
+        } catch (error) {
+            res.status(500).send({
+                success:false,
+                code:500,
+                msg:error,
+            });
         }
+    },
 
-    }
+    readyToShipOrders:async function(req,res){
+        try {
+            var pageno = req.query.pageNo;
+
+            if(!pageno) pageno = 0;
+
+            var results  = await OrderService.getOrders(pageno,OrderStatus.READY_TO_SHIP);
+
+            res.status(200).send({
+                success:true,
+                code:200,
+                data:results,
+            });
+
+        } catch (error) {
+            res.status(500).send({
+                success:false,
+                code:500,
+                msg:error,
+            });
+        }
+    },
+
+    shippedOrders:async function(req,res){
+        try {
+            var pageno = req.query.pageNo;
+
+            if(!pageno) pageno = 0;
+
+            var results  = await OrderService.getOrders(pageno,OrderStatus.SHIPPED);
+
+            res.status(200).send({
+                success:true,
+                code:200,
+                data:results,
+            });
+
+        } catch (error) {
+            res.status(500).send({
+                success:false,
+                code:500,
+                msg:error,
+            });
+        }
+    },
+
+
+    inTransitOrders:async function(req,res){
+        try {
+            var pageno = req.query.pageNo;
+
+            if(!pageno) pageno = 0;
+
+            var results  = await OrderService.getOrders(pageno,OrderStatus.PICKUP_IN_TRANSIT);
+
+            res.status(200).send({
+                success:true,
+                code:200,
+                data:results,
+            });
+
+        } catch (error) {
+            res.status(500).send({
+                success:false,
+                code:500,
+                msg:error,
+            });
+        }
+    },
 }
 
 module.exports = OrdersController;
