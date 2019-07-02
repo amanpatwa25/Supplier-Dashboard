@@ -13,6 +13,21 @@ $(document).ready(function() {
     $('#charts').hide();
     get_data("http://dev-gtw1.coutloot.com:4001/users/getMonthAllUsers", selected_month, 0);
     */
+
+   $('#v-pills-messages').click(function(){
+    var table6 = $('#example_package').DataTable();
+    $('#example_package tbody').on( 'click', 'tr', function () {
+        $(this).toggleClass('selected');
+    } );
+
+    $('#button').click( function () {
+        var d = table6.rows('.selected').data()
+        // console.log("d",d);
+        for(var i=0;i<d.length;i++){
+            console.log("Package:"+d[i][0]);
+        }
+    });
+    });
 });
 
 
