@@ -5,7 +5,7 @@ var OrderStatus = require('../../config/OrderStatuses');
 var service = {
 
 
-    getOrders: async function (pageNo, OrderType) {
+    getOrders: async function (pageNo, OrderType,from,to) {
 
         var pageSize = 25;
 
@@ -15,8 +15,21 @@ var service = {
 
             if (OrderType) findString['products.productStatus'] = OrderType;
 
-            var res = await Orders.find(findString).skip(pageNo * pageSize).limit(pageSize).lean();
+            if(from && to ){
+                from = from.split('-').map(el=>Number(el));
+                to = to.split('-').map(el=>Number(el));
 
+                
+                console.log('from',new Date(from[0],from[1],from[2]));
+                console.log('to',new Date(to[0],to[1],to[2]));
+                
+
+                findString['orderDate']={'$gte':new Date(from[0],from[1],from[2]), '$lt':new Date(to[0],to[1],to[2])};
+            }
+
+
+            var res = await Orders.find(findString).skip(pageNo * pageSize).limit(pageSize).lean();
+            
             var results = [];
 
             res.forEach(order => {
@@ -27,8 +40,6 @@ var service = {
                 }
 
                 order.products.forEach(prod => {
-
-                    console.log('prod',JSON.stringify(prod,null,3));
                     
                     if(!prod.productDetails || !prod.money) return;
                     
