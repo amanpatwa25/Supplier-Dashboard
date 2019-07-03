@@ -13,6 +13,7 @@ module.exports = function(app){
 
     app.route('/cancelledOrders').get(OrdersController.CancelledOrders);
 
+    app.route('/status').post(OrdersController.status);
     app.route('/placedOrders').get(OrdersController.placedOrders);
 
     app.route('/readyToShipOrders').get(OrdersController.readyToShipOrders);
