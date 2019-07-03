@@ -16,6 +16,14 @@ module.exports = function(app){
     app.route('/cancelledOrders').get(OrdersController.CancelledOrders);
 
     app.route('/status').post(OrdersController.status);
+    app.route('/placedOrders').get(OrdersController.placedOrders);
+
+    app.route('/readyToShipOrders').get(OrdersController.readyToShipOrders);
+
+    app.route('/ShippedOrders').get(OrdersController.shippedOrders);
+    
+    app.route('/inTransitOrders').get(OrdersController.inTransitOrders);
+    
 
     app.use(function(req,res,next){
         res.status(404).send("page not found");
