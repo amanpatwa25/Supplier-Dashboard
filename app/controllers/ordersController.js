@@ -76,6 +76,23 @@ var OrdersController ={
             res.send(err);
         }
 
+    },
+
+    status: async function(req,res){
+        try{
+
+            var status = req.body.status;
+            var id = req.body.id;
+
+            var result = await Orders.update({"_id":Object(id)},{$set: {"status":status}});
+            res.json({"success":1})
+            
+        }
+        catch(err){
+            console.log(err);
+            res.json({"success":0});
+            
+        }
     }
 }
 
