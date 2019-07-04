@@ -52,6 +52,7 @@ var service = {
                     date: order.orderDate,
                     products: [],
                     totalAmt:0,
+                    allSkus:[],
                 }
 
                 order.products.forEach(prod => {
@@ -70,7 +71,7 @@ var service = {
                     });
 
                     mOrder.totalAmt += prod.money.seller.listedPrice;
-
+                    mOrder.allSkus.push(prod.productDetails.variantSku);
                 });
                 
                 if(!mOrder.products.length) return;
