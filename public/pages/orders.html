@@ -945,7 +945,7 @@
                                             
                                         </tr>
                                     </thead>
-                                    <tbody>
+                                    <!-- <tbody> 
                                         <tr>
                                             <td>Tiger Nixon</td>
                                             <td>System Architect</td>
@@ -1087,7 +1087,7 @@
                                             <td>35</td>
                                             <td><button type="button" class="btn btn-primary btn-sm">Print waybill</button></td>
                                         </tr>
-                                    </tbody>
+                                    </tbody> -->
                                 </table>
                             </div>
                                
@@ -1850,6 +1850,34 @@
     }
     ]
 
+    var packages = 
+    [
+        {
+            waybillno: 959869,
+            orderId: 7325435,
+            products:[{
+            sku:[754,980,133]
+            }],
+            Amt:1500
+        },
+        {
+            waybillno:563672,
+            orderId:98766,
+            products:[{
+            sku:[4647,564,6869]
+            }],
+            Amt:50
+        },
+        {
+            waybillno:56789,
+            orderId:987654,
+            products:[{
+            sku:[456,0987,23]
+            }],
+            Amt:500
+        }
+    ]
+
 
 
     function newCreateAwb(arr){
@@ -2092,6 +2120,69 @@
             //     }
             // });
             // });
+
+            
+            $('#v-pills-messages-tab').click(function(){
+             $('#example_package').DataTable({
+                data: packages,
+                destroy:true,
+                'rowGroup': {
+                    // 'dataSrc': products.title,
+                    'startRender': function(rows, group) {
+                        console.log(data);
+                        // Assign class name to all child rows
+                        // var groupName = 'group-' + group.replace(/[^A-Za-z0-9]/g, '');
+                        // var rowNodes = rows.nodes();
+                        // rowNodes.to$().addClass(groupName);
+                        
+                        // Get selected checkboxes
+                        // var checkboxesSelected = $('.dt-checkboxes:checked', rowNodes);
+                        
+                        // // Parent checkbox is selected when all child checkboxes are selected
+                        // var isSelected = (checkboxesSelected.length == rowNodes.length);
+                        
+                        return '<label>' + group + ' (' + rows.count() + ')</label>';
+                    }         
+                },
+                
+                'columns':[
+                    {data: 'waybillno'},
+                    {data: 'orderId'},
+                    {data:'products[0].sku'},
+                    {data: 'Amt'},
+            
+                ],
+                // "columnDefs": [{
+                //     "visible": false,
+                //     "targets": groupColumn
+                // }],
+                "order": [
+                    [groupColumn, 'asc']
+                ],
+                "displayLength": 25,
+                "drawCallback": function(settings) {
+                    var api = this.api();
+                    var rows = api.rows({
+                        page: 'current'
+                    }).nodes();
+                    var last = null;
+
+                    api.column(groupColumn, {
+                        page: 'current'
+                    }).data().each(function(group, i) {
+                        if (last !== group) {
+                            $(rows).eq(i).append(
+                                // '<tr class="group"><td colspan="4">' + group + '</td></tr>'
+                                '<td><button type="button" class="btn btn-primary">Print waybill</button></td>'
+                                
+                            );
+
+                            last = group;
+                        }
+                    });
+                }
+            });
+            });
             
 
             $('#v-pills-intransit-tab').click(function(){
