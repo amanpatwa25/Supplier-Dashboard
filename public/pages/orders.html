@@ -731,9 +731,572 @@
 
 
 
+function newCreateAwb(arr){
+            var array = [];
+            for (let i = 0; i < arr.length; i++) {
+                for (let j = 0; j < arr[i].products.length; j++) {
+                    
+                    array.push({
+                        orderId:arr[i].orderId,
+                        date: arr[i].date,
+                        products:[
+                            {
+                            imageUrl:arr[i].products[j].imageUrl,
+                            sku:arr[i].products[j].sku,
+                            title:arr[i].products[j].title,
+                            price:arr[i].products[j].price,
+                            qty:arr[i].products[j].qty,
+                            }
+                        ],
+                    })
+                }
+            }
+            return array;
+        }
+
+
+        function newDeliveredArray(arr){
+            var array = [];
+            for (let i = 0; i < arr.length; i++) {
+                for (let j = 0; j < arr[i].products.length; j++) {
+                    console.log("test  ",array[i]);
+                    
+                    array.push({
+                        orderId:arr[i].orderId,
+                        wayBillNo:arr[i].wayBillNo,
+                        packageNo:arr[i].packageNo,
+                        products:[
+                            {
+                            sku:arr[i].products[j].sku,
+                            title:arr[i].products[j].title,
+                            price:arr[i].products[j].price,
+                            qty:arr[i].products[j].qty,
+                            productStatus:arr[i].products[j].productStatus,
+                            }
+                        ],
+                        
+                    })
+                }
+            }
+            return array;
+        }
+
+
+        function newArray(arr){
+            var array = [];
+            for (let i = 0; i < arr.length; i++) {
+                for (let j = 0; j < arr[i].products.length; j++) {
+                    array.push({
+                        orderId: arr[i].orderId,	
+                        date: arr[i].date,
+                        products:[
+                            {
+                                sku: arr[i].products[j].sku,
+                                title: arr[i].products[j].title,
+                                price: arr[i].products[j].price,
+                                qty: arr[i].products[j].qty,
+                                productStatus:arr[i].products[j].productStatus, 
+                            }
+                        ],
+                        
+                    })
+                }
+            }
+            return array;
+        }
+
+       
+        function getOrders(results){
+
+        var table = $('#example').DataTable({
+            data: results,
+            destroy: true,
+            'rowGroup': {
+                // 'dataSrc': products.title,
+                'startRender': function(rows, group) {
+                    console.log(data);
+                    // Assign class name to all child rows
+                    // var groupName = 'group-' + group.replace(/[^A-Za-z0-9]/g, '');
+                    // var rowNodes = rows.nodes();
+                    // rowNodes.to$().addClass(groupName);
+                    
+                    // Get selected checkboxes
+                    // var checkboxesSelected = $('.dt-checkboxes:checked', rowNodes);
+                    
+                    // // Parent checkbox is selected when all child checkboxes are selected
+                    // var isSelected = (checkboxesSelected.length == rowNodes.length);
+                    
+                    return '<label>' + group + ' (' + rows.count() + ')</label>';
+                }         
+            },
+            
+            'columns':[
+                {data: 'orderId'},
+                {data: 'products[0].sku'},
+                {data: 'products[0].title'},
+                {data: 'products[0].qty'},
+                {data: 'products[0].price'},
+                {data: 'products[0].productStatus'},
+            ],
+            "columnDefs": [{
+                "visible": false,
+                "targets": groupColumn
+            }],
+            "order": [
+                [groupColumn, 'asc']
+            ],
+            "displayLength": 25,
+            "drawCallback": function(settings) {
+                var api = this.api();
+                var rows = api.rows({
+                    page: 'current'
+                }).nodes();
+                var last = null;
+
+                api.column(groupColumn, {
+                    page: 'current'
+                }).data().each(function(group, i) {
+                    if (last !== group) {
+                        $(rows).eq(i).before(
+                            '<tr class="group"><td colspan="5">' + group + '</td></tr>'
+                        );
+
+                        last = group;
+                    }
+                });
+            }
+        });
+
+        // // Order by the grouping
+        $('#example tbody').on('click', 'tr.group', function() {
+            var currentOrder = table.order()[0];
+            if (currentOrder[0] === groupColumn && currentOrder[1] === 'asc') {
+                table.order([groupColumn, 'desc']).draw();
+            } else {
+                table.order([groupColumn, 'asc']).draw();
+            }
+        });
+
+
+
+}
+
+
+        function deliveredOrders(results){
+            var table1= $('#example_delivered').DataTable({
+                data: results,
+                destroy: true,
+                'rowGroup': {
+                    // 'dataSrc': products.title,
+                    'startRender': function(rows, group) {
+                        console.log(data);
+                        
+                        return '<label>' + group + ' (' + rows.count() + ')</label>';
+                    }         
+                },
+                
+                'columns':[
+                    {data: 'orderId'},
+                    {data: 'products[0].sku'},
+                    {data: 'products[0].title'},
+                    {data: 'wayBillNo'},
+                    {data: 'packageNo'},
+                    {data: 'product[0].qty'},
+                    {data: 'product[0].price'},
+                    {data: 'product[0].productStatus'}
+                ],
+                "columnDefs": [{
+                    "visible": false,
+                    "targets": groupColumn
+                }],
+                "order": [
+                    [groupColumn, 'asc']
+                ],
+                "displayLength": 25,
+                "drawCallback": function(settings) {
+                    var api = this.api();
+                    var rows = api.rows({
+                        page: 'current'
+                    }).nodes();
+                    var last = null;
+
+                    api.column(groupColumn, {
+                        page: 'current'
+                    }).data().each(function(group, i) {
+                        if (last !== group) {
+                            $(rows).eq(i).before(
+                                '<tr class="group"><td colspan="7">' + group + '</td></tr>'
+                            );
+
+                            last = group;
+                        }
+                    });
+                }
+            });
+        
+
+                $('#example_delivered tbody').on('click', 'tr.group', function() {
+                var currentOrder = table1.order()[0];
+                if (currentOrder[0] === groupColumn && currentOrder[1] === 'asc') {
+                    table1.order([groupColumn, 'desc']).draw();
+                } else {
+                    table1.order([groupColumn, 'asc']).draw();
+                }
+            });
+
+            
+        }
+
+        var table6 = $('#example_package').DataTable();
+            $('#example_package tbody').on( 'click', 'tr', function () {
+                $(this).toggleClass('selected');
+            } );
+                
+
+            $('#button').click( function () {
+                var d = table6.rows('.selected').data()
+                console.log("d",d);
+                for(var i=0;i<d.length;i++){
+
+                    console.log("Package:"+d[i][0]);
+                }
+            });
+
+
+var groupColumn = 0;
+            $('#v-pills-home-tab').click(function(){
+                var results;
+
+                $.ajax({
+                    'url' : '/allOrders',
+                    'type' : 'GET',
+                    'success': function(data){
+                        results=newArray(data.data);
+                        getOrders(results);
+                    }
+
+                });
+
+            
+            
+        });
+
+
+            $('#v-pills-shipped-tab').click(function(){
+                // $('#example_shipped').empty();
+                var table5 = $('#example_shipped').DataTable({
+                    ajax:'/readyToShipOrders',
+                data: 'data',
+                destroy:true,
+                'rowGroup': {
+                    // 'dataSrc': products.title,
+                    'startRender': function(rows, group) {
+                        console.log("Data",data);
+                        // Assign class name to all child rows
+                        // var groupName = 'group-' + group.replace(/[^A-Za-z0-9]/g, '');
+                        // var rowNodes = rows.nodes();
+                        // rowNodes.to$().addClass(groupName);
+                        
+                        // Get selected checkboxes
+                        // var checkboxesSelected = $('.dt-checkboxes:checked', rowNodes);
+                        
+                        // // Parent checkbox is selected when all child checkboxes are selected
+                        // var isSelected = (checkboxesSelected.length == rowNodes.length);
+                        
+                        return '<label>' + group + ' (' + rows.count() + ')</label>';
+                    }         
+                },
+                
+                'columns':[
+                    {data: 'packageNo'},
+                    {data: 'orderId'},
+                    {data: 'totalAmt'},
+            
+                ],
+                // "columnDefs": [{
+                //     "visible": false,
+                //     "targets": groupColumn
+                // }],
+                "order": [
+                    [groupColumn, 'asc']
+                ],
+                "displayLength": 25,
+                "drawCallback": function(settings) {
+                    var api = this.api();
+                    var rows = api.rows({
+                        page: 'current'
+                    }).nodes();
+                    var last = null;
+
+                    api.column(groupColumn, {
+                        page: 'current'
+                    }).data().each(function(group, i) {
+                        if (last !== group) {
+                            // console.log("rows",$(rows).closest('tr').data());
+                            // console.log("data:",JSON.stringify(rows.context[0].aoData[0]._aData.packageNo));
+                             $(rows).eq(i).append(
+                                '<td><button type="button" class="btn btn-primary btn_shipped">Print waybill</button></td>'
+                                
+                            );
+
+                            last = group;
+                        }
+                    });
+                }
+            });
+
+            $('#example_shipped').on( 'click', 'tbody .btn_shipped', function () {
+
+                var d = table5.row( $(this).parents('tr') ).data();
+                console.log("d",d.packageNo);
+                
+            // console.log("Shipped click:", JSON.stringify(table5.row( $(this).parents('tr') ).data(),undefined,2));
+            } );
+
+            });
+
+            
+            $('#v-pills-messages-tab').click(function(){
+             $('#example_package').DataTable({
+                ajax: "/readyToShipOrders",
+                data: 'data',
+                destroy:true,
+                'rowGroup': {
+                    // 'dataSrc': products.title,
+                    'startRender': function(rows, group) {
+                        console.log(data);
+                        // Assign class name to all child rows
+                        // var groupName = 'group-' + group.replace(/[^A-Za-z0-9]/g, '');
+                        // var rowNodes = rows.nodes();
+                        // rowNodes.to$().addClass(groupName);
+                        
+                        // Get selected checkboxes
+                        // var checkboxesSelected = $('.dt-checkboxes:checked', rowNodes);
+                        
+                        // // Parent checkbox is selected when all child checkboxes are selected
+                        // var isSelected = (checkboxesSelected.length == rowNodes.length);
+                        
+                        return '<label>' + group + ' (' + rows.count() + ')</label>';
+                    }         
+                },
+                
+                'columns':[
+                    {data: 'waybillno'},
+                    {data: 'orderId'},
+                    {data:'products[0].sku'},
+                    {data: 'Amt'},
+            
+                ],
+                // "columnDefs": [{
+                //     "visible": false,
+                //     "targets": groupColumn
+                // }],
+                "order": [
+                    [groupColumn, 'asc']
+                ],
+                "displayLength": 25,
+                "drawCallback": function(settings) {
+                    var api = this.api();
+                    var rows = api.rows({
+                        page: 'current'
+                    }).nodes();
+                    var last = null;
+
+                    api.column(groupColumn, {
+                        page: 'current'
+                    }).data().each(function(group, i) {
+                        if (last !== group) {
+                            $(rows).eq(i).append(
+                                // '<tr class="group"><td colspan="4">' + group + '</td></tr>'
+                                '<td><button type="button" class="btn btn-primary">Print waybill</button></td>'
+                                
+                            );
+
+                            last = group;
+                        }
+                    });
+                }
+            });
+            });
+            
+
+            $('#v-pills-intransit-tab').click(function(){
+             $('#example_intransit').DataTable({
+                 ajax:'/ShippedOrders',
+                data: 'data',
+                destroy:true,
+                'rowGroup': {
+                    // 'dataSrc': products.title,
+                    'startRender': function(rows, group) {
+                        console.log(data);
+                        // Assign class name to all child rows
+                        // var groupName = 'group-' + group.replace(/[^A-Za-z0-9]/g, '');
+                        // var rowNodes = rows.nodes();
+                        // rowNodes.to$().addClass(groupName);
+                        
+                        // Get selected checkboxes
+                        // var checkboxesSelected = $('.dt-checkboxes:checked', rowNodes);
+                        
+                        // // Parent checkbox is selected when all child checkboxes are selected
+                        // var isSelected = (checkboxesSelected.length == rowNodes.length);
+                        
+                        return '<label>' + group + ' (' + rows.count() + ')</label>';
+                    }         
+                },
+                
+                'columns':[
+                    {data: 'packageNo'},
+                    {data: 'orderId'},
+                    {data: 'totalAmt'},
+            
+                ],
+                // "columnDefs": [{
+                //     "visible": false,
+                //     "targets": groupColumn
+                // }],
+                "order": [
+                    [groupColumn, 'asc']
+                ],
+                "displayLength": 25,
+                "drawCallback": function(settings) {
+                    var api = this.api();
+                    var rows = api.rows({
+                        page: 'current'
+                    }).nodes();
+                    var last = null;
+
+                    api.column(groupColumn, {
+                        page: 'current'
+                    }).data().each(function(group, i) {
+                        if (last !== group) {
+                            $(rows).eq(i).append(
+                                // '<tr class="group"><td colspan="4">' + group + '</td></tr>'
+                                '<td><button type="button" class="btn btn_intransit btn-primary">Print waybill</button></td>'
+                                
+                            );
+
+                            last = group;
+                        }
+                    });
+                }
+            });
+
+            $('#example_intransit').on( 'click', 'tbody .btn_intransit', function () {
+
+            var d = table5.row( $(this).parents('tr') ).data();
+            console.log("d",d.packageNo);
+
+            // console.log("Shipped click:", JSON.stringify(table5.row( $(this).parents('tr') ).data(),undefined,2));
+            } );
+
+            });
+
+
+            $('#v-pills-delivered-tab').click(function(){
+
+                $.ajax({
+
+                    'url' : '/allOrders',
+                    'type' : 'GET',
+                    'success': function(data){
+                        results=newDeliveredArray(data.data);
+                        deliveredOrders(results);
+                    }
+
+                });
+
+
+             
+            });
+
+            
+                $('#v-pills-profile-tab').click(function(){
+                    $.ajax({
+                        'url' : '/placedOrders',
+                        'type' : 'GET',
+                        'success': function(data){
+
+                            var createAwbs = data.data;
+
+                    $('.list-group-item').empty();
+                    for(let i=0;i<createAwbs.length;i++){
+                        var items = '';
+                        for(let j=0;j<createAwbs[i].products.length;j++){
+                            items+='<li class="list-item orderitem_product">'+
+'                                                <div class="row no_margin">'+
+'<img class="img-fluid col-1 no_margin" style="max-height: 55px;" src='+createAwbs[i].products[j].imageUrl+'></img>'+
+'                                                    <div class="col-2 no_margin">'+createAwbs[i].products[j].sku+'</div>'+
+'                                                    <div class="col-5 no_margin">'+createAwbs[i].products[j].title+'</div>'+
+'                                                    <div class="col-2 no_margin">'+createAwbs[i].products[j].qty+'</div>'+
+'                                                    <div class="col-2 no_margin">'+createAwbs[i].products[j].price+'</div>'+
+'</div>'+
+'                                            </li>';
+                            }
+                            
+                            $('.list-group-item').append('<div class="container no_margin order_item">'+
+'                                    <div class="row no_margin ">'+
+'                                        <div class="col-6 no_margin no_padding" style="text-align: left;">'+
+'                                            <h4 class="no_margin">Order Id : '+createAwbs[i].orderId+'</h4>'+
+'                                            <p class="no_margin no_padding" style="font-size: 15px;color:#666666">Order Date : '+createAwbs[i].date+'</p>'+
+'                                        </div>'+
+''+
+'                                        <div class="col-2 no_margin"></div>'+
+'                                        <div class="col-4 no_margin">'+
+'                                            <button type="button" class="btn" style="background: #ce2465;color: white;float: right;">Create AWB</button>'+
+'                                        </div>'+
+'                                    </div>'+
+''+
+'                                    <h5 style="padding-top: 15px;padding-left: 10px;">Products</h5>'+
+'                                    <div class="row no_margin order_item_products" style="padding-left: 10px;">'+
+'                                        <ul class="list-group list-group-flush">'+
+''+
+'                                            <li class="list-item orderitem_product">'+
+'                                                <div class="row no_margin">'+
+'                                                    <div class="col-1 no_margin"></div>'+
+'                                                    <div class="col-2 no_margin">SKU</div>'+
+'                                                    <div class="col-5 no_margin">Product Description</div>'+
+'                                                    <div class="col-2 no_margin">Ordered Qty</div>'+
+'                                                    <div class="col-2 no_margin">Amount</div>'+
+'                                                </div>'+
+'                                            </li>'+items+
+''+
+'                                        </ul>'+
+''+
+'                                    </div>'+
+''+
+'                                </div>'+
+''+
+'                            </li>');
+                        }
+                    
+                        }
+                    })
+
+                    // console.log(createAwbs.length);
+                
+                   
+
+                });
+
+                      
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         $(document).ready(function() {
-
 
             var AllOrders = [
             {
@@ -887,506 +1450,26 @@
 
 
 
-    function newCreateAwb(arr){
-            var array = [];
-            for (let i = 0; i < arr.length; i++) {
-                for (let j = 0; j < arr[i].products.length; j++) {
-                    
-                    array.push({
-                        orderId:arr[i].orderId,
-                        date: arr[i].date,
-                        products:[
-                            {
-                            imageUrl:arr[i].products[j].imageUrl,
-                            sku:arr[i].products[j].sku,
-                            title:arr[i].products[j].title,
-                            price:arr[i].products[j].price,
-                            qty:arr[i].products[j].qty,
-                            }
-                        ],
-                    })
-                }
-            }
-            return array;
-        }
-
-
-        function newDeliveredArray(arr){
-            var array = [];
-            for (let i = 0; i < arr.length; i++) {
-                for (let j = 0; j < arr[i].products.length; j++) {
-                    console.log("test  ",array[i]);
-                    
-                    array.push({
-                        orderId:arr[i].orderId,
-                        wayBillNo:arr[i].wayBillNo,
-                        packageNo:arr[i].packageNo,
-                        products:[
-                            {
-                            sku:arr[i].products[j].sku,
-                            title:arr[i].products[j].title,
-                            price:arr[i].products[j].price,
-                            qty:arr[i].products[j].qty,
-                            }
-                        ],
-                        status:arr[i].status,
-                    })
-                }
-            }
-            return array;
-        }
-
-
-        function newArray(arr){
-            var array = [];
-            for (let i = 0; i < arr.length; i++) {
-                for (let j = 0; j < arr[i].products.length; j++) {
-                    array.push({
-                        orderId: arr[i].orderId,	
-                        date: arr[i].date,
-                        products:[
-                            {
-                                sku: arr[i].products[j].sku,
-                                title: arr[i].products[j].title,
-                                price: arr[i].products[j].price,
-                                qty: arr[i].products[j].qty 
-                            }
-                        ],
-                        status:arr[i].status
-                    })
-                }
-            }
-            return array;
-        }
-
-        let newAllOrders = newArray(AllOrders);
+     let newAllOrders = newArray(AllOrders);
         console.log('new all orders.....', newAllOrders);
 
         let newDeliveredOrders = newDeliveredArray(delivered);
+
+
         
-            var groupColumn = 0;
-            var table = $('#example').DataTable({
-                ajax: "http://localhost:8000/allOrders",
-                data: 'data',
-                destroy: true,
-                'rowGroup': {
-                    // 'dataSrc': products.title,
-                    'startRender': function(rows, group) {
-                        console.log(data);
-                        // Assign class name to all child rows
-                        // var groupName = 'group-' + group.replace(/[^A-Za-z0-9]/g, '');
-                        // var rowNodes = rows.nodes();
-                        // rowNodes.to$().addClass(groupName);
-                        
-                        // Get selected checkboxes
-                        // var checkboxesSelected = $('.dt-checkboxes:checked', rowNodes);
-                        
-                        // // Parent checkbox is selected when all child checkboxes are selected
-                        // var isSelected = (checkboxesSelected.length == rowNodes.length);
-                        
-                        return '<label>' + group + ' (' + rows.count() + ')</label>';
-                    }         
-                },
-                
-                'columns':[
-                    {data: 'orderId'},
-                    {data: 'products[0].sku'},
-                    {data: 'products[0].title'},
-                    {data: 'products[0].price'},
-                    {data: 'products[0].qty'},
-                    {data: 'products[0].productStatus'},
-                ],
-                "columnDefs": [{
-                    "visible": false,
-                    "targets": groupColumn
-                }],
-                "order": [
-                    [groupColumn, 'asc']
-                ],
-                "displayLength": 25,
-                "drawCallback": function(settings) {
-                    var api = this.api();
-                    var rows = api.rows({
-                        page: 'current'
-                    }).nodes();
-                    var last = null;
+         var results;
 
-                    api.column(groupColumn, {
-                        page: 'current'
-                    }).data().each(function(group, i) {
-                        if (last !== group) {
-                            $(rows).eq(i).before(
-                                '<tr class="group"><td colspan="5">' + group + '</td></tr>'
-                            );
-
-                            last = group;
-                        }
-                    });
-                }
-            });
-
-            // // Order by the grouping
-            $('#example tbody').on('click', 'tr.group', function() {
-                var currentOrder = table.order()[0];
-                if (currentOrder[0] === groupColumn && currentOrder[1] === 'asc') {
-                    table.order([groupColumn, 'desc']).draw();
-                } else {
-                    table.order([groupColumn, 'asc']).draw();
-                }
-            });
-
-
-            $('#v-pills-shipped-tab').click(function(){
-                // $('#example_shipped').empty();
-                var table5 = $('#example_shipped').DataTable({
-                    ajax:'/readyToShipOrders',
-                data: 'data',
-                destroy:true,
-                'rowGroup': {
-                    // 'dataSrc': products.title,
-                    'startRender': function(rows, group) {
-                        console.log("Data",data);
-                        // Assign class name to all child rows
-                        // var groupName = 'group-' + group.replace(/[^A-Za-z0-9]/g, '');
-                        // var rowNodes = rows.nodes();
-                        // rowNodes.to$().addClass(groupName);
-                        
-                        // Get selected checkboxes
-                        // var checkboxesSelected = $('.dt-checkboxes:checked', rowNodes);
-                        
-                        // // Parent checkbox is selected when all child checkboxes are selected
-                        // var isSelected = (checkboxesSelected.length == rowNodes.length);
-                        
-                        return '<label>' + group + ' (' + rows.count() + ')</label>';
-                    }         
-                },
-                
-                'columns':[
-                    {data: 'packageNo'},
-                    {data: 'orderId'},
-                    {data: 'totalAmt'},
-            
-                ],
-                // "columnDefs": [{
-                //     "visible": false,
-                //     "targets": groupColumn
-                // }],
-                "order": [
-                    [groupColumn, 'asc']
-                ],
-                "displayLength": 25,
-                "drawCallback": function(settings) {
-                    var api = this.api();
-                    var rows = api.rows({
-                        page: 'current'
-                    }).nodes();
-                    var last = null;
-
-                    api.column(groupColumn, {
-                        page: 'current'
-                    }).data().each(function(group, i) {
-                        if (last !== group) {
-                            // console.log("rows",$(rows).closest('tr').data());
-                            // console.log("data:",JSON.stringify(rows.context[0].aoData[0]._aData.packageNo));
-                             $(rows).eq(i).append(
-                                '<td><button type="button" class="btn btn-primary btn_shipped">Print waybill</button></td>'
-                                
-                            );
-
-                            last = group;
-                        }
-                    });
-                }
-            });
-
-            $('#example_shipped').on( 'click', 'tbody .btn_shipped', function () {
-
-                var d = table5.row( $(this).parents('tr') ).data();
-                console.log("d",d.packageNo);
-                
-            // console.log("Shipped click:", JSON.stringify(table5.row( $(this).parents('tr') ).data(),undefined,2));
-            } );
-
-            });
-
-            // function printWayBill(rows){
-            //     console.log(JSON.stringify(rows));
-                
-            // }
-            
-            // $('#v-pills-messages').click(function(){
-            // var table6 = $('#example_package').DataTable();
-            // $('#example_package tbody').on( 'click', 'tr', function () {
-            //     $(this).toggleClass('selected');
-            // } );
-        
-            // $('#button').click( function () {
-            //     var d = table6.rows('.selected').data()
-            //     console.log("d",d);
-            //     for(var i=0;i<d.length;i++){
-            //         console.log("Package:"+d[i][0]);
-            //     }
-            // });
-            // });
-
-            
-            $('#v-pills-messages-tab').click(function(){
-             $('#example_package').DataTable({
-                data: packages,
-                destroy:true,
-                'rowGroup': {
-                    // 'dataSrc': products.title,
-                    'startRender': function(rows, group) {
-                        console.log(data);
-                        // Assign class name to all child rows
-                        // var groupName = 'group-' + group.replace(/[^A-Za-z0-9]/g, '');
-                        // var rowNodes = rows.nodes();
-                        // rowNodes.to$().addClass(groupName);
-                        
-                        // Get selected checkboxes
-                        // var checkboxesSelected = $('.dt-checkboxes:checked', rowNodes);
-                        
-                        // // Parent checkbox is selected when all child checkboxes are selected
-                        // var isSelected = (checkboxesSelected.length == rowNodes.length);
-                        
-                        return '<label>' + group + ' (' + rows.count() + ')</label>';
-                    }         
-                },
-                
-                'columns':[
-                    {data: 'waybillno'},
-                    {data: 'orderId'},
-                    {data:'products[0].sku'},
-                    {data: 'Amt'},
-            
-                ],
-                // "columnDefs": [{
-                //     "visible": false,
-                //     "targets": groupColumn
-                // }],
-                "order": [
-                    [groupColumn, 'asc']
-                ],
-                "displayLength": 25,
-                "drawCallback": function(settings) {
-                    var api = this.api();
-                    var rows = api.rows({
-                        page: 'current'
-                    }).nodes();
-                    var last = null;
-
-                    api.column(groupColumn, {
-                        page: 'current'
-                    }).data().each(function(group, i) {
-                        if (last !== group) {
-                            $(rows).eq(i).append(
-                                // '<tr class="group"><td colspan="4">' + group + '</td></tr>'
-                                '<td><button type="button" class="btn btn-primary">Print waybill</button></td>'
-                                
-                            );
-
-                            last = group;
-                        }
-                    });
-                }
-            });
-            });
-            
-
-            $('#v-pills-intransit-tab').click(function(){
-             $('#example_intransit').DataTable({
-                 ajax:'/ShippedOrders',
-                data: 'data',
-                destroy:true,
-                'rowGroup': {
-                    // 'dataSrc': products.title,
-                    'startRender': function(rows, group) {
-                        console.log(data);
-                        // Assign class name to all child rows
-                        // var groupName = 'group-' + group.replace(/[^A-Za-z0-9]/g, '');
-                        // var rowNodes = rows.nodes();
-                        // rowNodes.to$().addClass(groupName);
-                        
-                        // Get selected checkboxes
-                        // var checkboxesSelected = $('.dt-checkboxes:checked', rowNodes);
-                        
-                        // // Parent checkbox is selected when all child checkboxes are selected
-                        // var isSelected = (checkboxesSelected.length == rowNodes.length);
-                        
-                        return '<label>' + group + ' (' + rows.count() + ')</label>';
-                    }         
-                },
-                
-                'columns':[
-                    {data: 'packageNo'},
-                    {data: 'orderId'},
-                    {data: 'totalAmt'},
-            
-                ],
-                // "columnDefs": [{
-                //     "visible": false,
-                //     "targets": groupColumn
-                // }],
-                "order": [
-                    [groupColumn, 'asc']
-                ],
-                "displayLength": 25,
-                "drawCallback": function(settings) {
-                    var api = this.api();
-                    var rows = api.rows({
-                        page: 'current'
-                    }).nodes();
-                    var last = null;
-
-                    api.column(groupColumn, {
-                        page: 'current'
-                    }).data().each(function(group, i) {
-                        if (last !== group) {
-                            $(rows).eq(i).append(
-                                // '<tr class="group"><td colspan="4">' + group + '</td></tr>'
-                                '<td><button type="button" class="btn btn-primary">Print waybill</button></td>'
-                                
-                            );
-
-                            last = group;
-                        }
-                    });
-                }
-            });
-            });
-
-
-             var table1= $('#example_delivered').DataTable({
-                 ajax:'/deliveredOrders',
-                data: 'data',
-                destroy: true,
-                'rowGroup': {
-                    // 'dataSrc': products.title,
-                    'startRender': function(rows, group) {
-                        console.log(data);
-                        // Assign class name to all child rows
-                        // var groupName = 'group-' + group.replace(/[^A-Za-z0-9]/g, '');
-                        // var rowNodes = rows.nodes();
-                        // rowNodes.to$().addClass(groupName);
-                        
-                        // Get selected checkboxes
-                        // var checkboxesSelected = $('.dt-checkboxes:checked', rowNodes);
-                        
-                        // // Parent checkbox is selected when all child checkboxes are selected
-                        // var isSelected = (checkboxesSelected.length == rowNodes.length);
-                        
-                        return '<label>' + group + ' (' + rows.count() + ')</label>';
-                    }         
-                },
-                
-                'columns':[
-                    {data: 'orderId'},
-                    {data: 'products[0].sku'},
-                    {data: 'products[0].title'},
-                    {data: 'wayBillNo'},
-                    {data: 'packageNo'},
-                    {data: 'product[0].qty'},
-                    {data: 'product[0].price'},
-                    {data: 'status'}
-                ],
-                "columnDefs": [{
-                    "visible": false,
-                    "targets": groupColumn
-                }],
-                "order": [
-                    [groupColumn, 'asc']
-                ],
-                "displayLength": 25,
-                "drawCallback": function(settings) {
-                    var api = this.api();
-                    var rows = api.rows({
-                        page: 'current'
-                    }).nodes();
-                    var last = null;
-
-                    api.column(groupColumn, {
-                        page: 'current'
-                    }).data().each(function(group, i) {
-                        if (last !== group) {
-                            $(rows).eq(i).before(
-                                '<tr class="group"><td colspan="7">' + group + '</td></tr>'
-                            );
-
-                            last = group;
-                        }
-                    });
-                }
-            });
-        
-
-                $('#example_delivered tbody').on('click', 'tr.group', function() {
-                var currentOrder = table1.order()[0];
-                if (currentOrder[0] === groupColumn && currentOrder[1] === 'asc') {
-                    table1.order([groupColumn, 'desc']).draw();
-                } else {
-                    table1.order([groupColumn, 'asc']).draw();
-                }
-            });
-                
-
-                $('#v-pills-profile-tab').click(function(){
-                    console.log(createAwbs.length);
-                
-                    $('.list-group-item').empty();
-                    for(let i=0;i<createAwbs.length;i++){
-                        var items = '';
-                        for(let j=0;j<createAwbs[i].products.length;j++){
-                            items+='<li class="list-item orderitem_product">'+
-'                                                <div class="row no_margin">'+
-'<img class="img-fluid col-1 no_margin" style="max-height: 55px;" src='+createAwbs[i].products[j].imageUrl+'></img>'+
-'                                                    <div class="col-2 no_margin">'+createAwbs[i].products[j].sku+'</div>'+
-'                                                    <div class="col-5 no_margin">'+createAwbs[i].products[j].title+'</div>'+
-'                                                    <div class="col-2 no_margin">'+createAwbs[i].products[j].qty+'</div>'+
-'                                                    <div class="col-2 no_margin">'+createAwbs[i].products[j].price+'</div>'+
-'</div>'+
-'                                            </li>';
-                            }
-                            
-                            $('.list-group-item').append('<div class="container no_margin order_item">'+
-'                                    <div class="row no_margin ">'+
-'                                        <div class="col-6 no_margin no_padding" style="text-align: left;">'+
-'                                            <h4 class="no_margin">Order Id : '+createAwbs[i].orderId+'</h4>'+
-'                                            <p class="no_margin no_padding" style="font-size: 15px;color:#666666">Order Date : '+createAwbs[i].date+'</p>'+
-'                                        </div>'+
-''+
-'                                        <div class="col-2 no_margin"></div>'+
-'                                        <div class="col-4 no_margin">'+
-'                                            <button type="button" class="btn" style="background: #ce2465;color: white;float: right;">Create AWB</button>'+
-'                                        </div>'+
-'                                    </div>'+
-''+
-'                                    <h5 style="padding-top: 15px;padding-left: 10px;">Products</h5>'+
-'                                    <div class="row no_margin order_item_products" style="padding-left: 10px;">'+
-'                                        <ul class="list-group list-group-flush">'+
-''+
-'                                            <li class="list-item orderitem_product">'+
-'                                                <div class="row no_margin">'+
-'                                                    <div class="col-1 no_margin"></div>'+
-'                                                    <div class="col-2 no_margin">SKU</div>'+
-'                                                    <div class="col-5 no_margin">Product Description</div>'+
-'                                                    <div class="col-2 no_margin">Ordered Qty</div>'+
-'                                                    <div class="col-2 no_margin">Amount</div>'+
-'                                                </div>'+
-'                                            </li>'+items+
-''+
-'                                        </ul>'+
-''+
-'                                    </div>'+
-''+
-'                                </div>'+
-''+
-'                            </li>');
-                        }
-                    
+                $.ajax({
+                    'url' : '/allOrders',
+                    'type' : 'GET',
+                    'success': function(data){
+                        results=newArray(data.data);
+                        getOrders(results);
+                    }
 
                 });
 
-                        $('input[name="daterange"]').daterangepicker({
+             $('input[name="daterange"]').daterangepicker({
 
                         }, function(start, end, label) {
                             console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
