@@ -7,8 +7,6 @@ module.exports = function(app){
 
     app.route("/").get(OrdersController.index)
 
-    // app.route("/test").get(OrdersController.test);
-
     app.route('/allOrders').get(OrdersController.allOrders);
 
     app.route('/deliveredOrders').get(OrdersController.DeliveredOrders);
