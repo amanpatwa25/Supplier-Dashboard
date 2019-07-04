@@ -808,74 +808,74 @@ function newCreateAwb(arr){
        
         function getOrders(results){
 
-var table = $('#example').DataTable({
-    data: results,
-    destroy: true,
-    'rowGroup': {
-        // 'dataSrc': products.title,
-        'startRender': function(rows, group) {
-            console.log(data);
-            // Assign class name to all child rows
-            // var groupName = 'group-' + group.replace(/[^A-Za-z0-9]/g, '');
-            // var rowNodes = rows.nodes();
-            // rowNodes.to$().addClass(groupName);
+        var table = $('#example').DataTable({
+            data: results,
+            destroy: true,
+            'rowGroup': {
+                // 'dataSrc': products.title,
+                'startRender': function(rows, group) {
+                    console.log(data);
+                    // Assign class name to all child rows
+                    // var groupName = 'group-' + group.replace(/[^A-Za-z0-9]/g, '');
+                    // var rowNodes = rows.nodes();
+                    // rowNodes.to$().addClass(groupName);
+                    
+                    // Get selected checkboxes
+                    // var checkboxesSelected = $('.dt-checkboxes:checked', rowNodes);
+                    
+                    // // Parent checkbox is selected when all child checkboxes are selected
+                    // var isSelected = (checkboxesSelected.length == rowNodes.length);
+                    
+                    return '<label>' + group + ' (' + rows.count() + ')</label>';
+                }         
+            },
             
-            // Get selected checkboxes
-            // var checkboxesSelected = $('.dt-checkboxes:checked', rowNodes);
-            
-            // // Parent checkbox is selected when all child checkboxes are selected
-            // var isSelected = (checkboxesSelected.length == rowNodes.length);
-            
-            return '<label>' + group + ' (' + rows.count() + ')</label>';
-        }         
-    },
-    
-    'columns':[
-        {data: 'orderId'},
-        {data: 'products[0].sku'},
-        {data: 'products[0].title'},
-        {data: 'products[0].qty'},
-        {data: 'products[0].price'},
-        {data: 'products[0].productStatus'},
-    ],
-    "columnDefs": [{
-        "visible": false,
-        "targets": groupColumn
-    }],
-    "order": [
-        [groupColumn, 'asc']
-    ],
-    "displayLength": 25,
-    "drawCallback": function(settings) {
-        var api = this.api();
-        var rows = api.rows({
-            page: 'current'
-        }).nodes();
-        var last = null;
+            'columns':[
+                {data: 'orderId'},
+                {data: 'products[0].sku'},
+                {data: 'products[0].title'},
+                {data: 'products[0].qty'},
+                {data: 'products[0].price'},
+                {data: 'products[0].productStatus'},
+            ],
+            "columnDefs": [{
+                "visible": false,
+                "targets": groupColumn
+            }],
+            "order": [
+                [groupColumn, 'asc']
+            ],
+            "displayLength": 25,
+            "drawCallback": function(settings) {
+                var api = this.api();
+                var rows = api.rows({
+                    page: 'current'
+                }).nodes();
+                var last = null;
 
-        api.column(groupColumn, {
-            page: 'current'
-        }).data().each(function(group, i) {
-            if (last !== group) {
-                $(rows).eq(i).before(
-                    '<tr class="group"><td colspan="5">' + group + '</td></tr>'
-                );
+                api.column(groupColumn, {
+                    page: 'current'
+                }).data().each(function(group, i) {
+                    if (last !== group) {
+                        $(rows).eq(i).before(
+                            '<tr class="group"><td colspan="5">' + group + '</td></tr>'
+                        );
 
-                last = group;
+                        last = group;
+                    }
+                });
             }
         });
-    }
-});
 
-// // Order by the grouping
-$('#example tbody').on('click', 'tr.group', function() {
-    var currentOrder = table.order()[0];
-    if (currentOrder[0] === groupColumn && currentOrder[1] === 'asc') {
-        table.order([groupColumn, 'desc']).draw();
-    } else {
-        table.order([groupColumn, 'asc']).draw();
-    }
-});
+        // // Order by the grouping
+        $('#example tbody').on('click', 'tr.group', function() {
+            var currentOrder = table.order()[0];
+            if (currentOrder[0] === groupColumn && currentOrder[1] === 'asc') {
+                table.order([groupColumn, 'desc']).draw();
+            } else {
+                table.order([groupColumn, 'asc']).draw();
+            }
+        });
 
 
 
@@ -943,9 +943,24 @@ $('#example tbody').on('click', 'tr.group', function() {
                     table1.order([groupColumn, 'asc']).draw();
                 }
             });
-                
+
+            
         }
 
+        var table6 = $('#example_package').DataTable();
+            $('#example_package tbody').on( 'click', 'tr', function () {
+                $(this).toggleClass('selected');
+            } );
+                
+
+            $('#button').click( function () {
+                var d = table6.rows('.selected').data()
+                console.log("d",d);
+                for(var i=0;i<d.length;i++){
+
+                    console.log("Package:"+d[i][0]);
+                }
+            });
 
 
 var groupColumn = 0;
@@ -1156,7 +1171,7 @@ var groupColumn = 0;
                         if (last !== group) {
                             $(rows).eq(i).append(
                                 // '<tr class="group"><td colspan="4">' + group + '</td></tr>'
-                                '<td><button type="button" class="btn btn-primary">Print waybill</button></td>'
+                                '<td><button type="button" class="btn btn_intransit btn-primary">Print waybill</button></td>'
                                 
                             );
 
@@ -1165,6 +1180,15 @@ var groupColumn = 0;
                     });
                 }
             });
+
+            $('#example_intransit').on( 'click', 'tbody .btn_intransit', function () {
+
+            var d = table5.row( $(this).parents('tr') ).data();
+            console.log("d",d.packageNo);
+
+            // console.log("Shipped click:", JSON.stringify(table5.row( $(this).parents('tr') ).data(),undefined,2));
+            } );
+
             });
 
 
