@@ -1931,7 +1931,8 @@
         
             var groupColumn = 0;
             var table = $('#example').DataTable({
-                data: newAllOrders,
+                ajax:"http://localhost:8000/allOrders",
+                data:'data',
                 destroy: true,
                 'rowGroup': {
                     // 'dataSrc': products.title,
