@@ -42,13 +42,13 @@
 
     <div class="main_holder no_margin row">
         <div class="nav flex-column nav-pills no_margin col-2 shadow" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-            <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true"><img class="img-fluid" src="../assets/all orders.png" style="width:20px; height: 30px;"></img>All Orders</a>
-            <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false"><img class="img-fluid img-thumbnail" src="../assets/awb.png" style="width:30px;"></img>Create Order AWBS</a>
-            <a class="nav-link" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-messages" role="tab" aria-controls="v-pills-messages" aria-selected="false"><img class="img-fluid img-thumbnail" src="../assets/package.png" style="width:30px;"></img>Create Packages</a>
-            <a class="nav-link" id="v-pills-shipped-tab" data-toggle="pill"  href="#v-pills-shipped" role="tab" aria-controls="v-pills-shipped" aria-selected="false"><img class="img-fluid img-thumbnail" src="../assets/to be shipped.png" style="width:30px;"></img>To Be Shipped</a>
-            <a class="nav-link" id="v-pills-intransit-tab" data-toggle="pill" href="#v-pills-intransit" role="tab" aria-controls="v-pills-intransit" aria-selected="false"><img class="img-fluid img-thumbnail" src="../assets/in transit.png" style="width:30px;"></img>In Transit</a>
-            <a class="nav-link" id="v-pills-delivered-tab" data-toggle="pill" href="#v-pills-delivered" role="tab" aria-controls="v-pills-delivered" aria-selected="false"><img class="img-fluid img-thumbnail" src="../assets/delivered.png" style="width:30px;"></img>Delivered Orders</a>
-            <a class="nav-link" id="v-pills-cancelled-tab" data-toggle="pill" href="#v-pills-cancelled" role="tab" aria-controls="v-pills-cancelled" aria-selected="false"><img class="img-fluid img-thumbnail" src="../assets/cancel (1) - Copy.png" style="width:30px;"></img>Cancelled Orders</a>
+            <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true"><img class="img-fluid img-thumbnail" src="../assets/all orders.png" style="width:30px; border: 0 none;"></img>All Orders</a>
+            <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false"><img class="img-fluid img-thumbnail" src="../assets/awb.png" style="width:30px; border: 0 none;"></img>Create Order AWBS</a>
+            <a class="nav-link" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-messages" role="tab" aria-controls="v-pills-messages" aria-selected="false"><img class="img-fluid img-thumbnail" src="../assets/package.png" style="width:30px; border: 0 none;"></img>Create Packages</a>
+            <a class="nav-link" id="v-pills-shipped-tab" data-toggle="pill"  href="#v-pills-shipped" role="tab" aria-controls="v-pills-shipped" aria-selected="false"><img class="img-fluid img-thumbnail" src="../assets/to be shipped.png" style="width:30px; border: 0 none;"></img>To Be Shipped</a>
+            <a class="nav-link" id="v-pills-intransit-tab" data-toggle="pill" href="#v-pills-intransit" role="tab" aria-controls="v-pills-intransit" aria-selected="false"><img class="img-fluid img-thumbnail" src="../assets/in transit.png" style="width:30px; border: 0 none;"></img>In Transit</a>
+            <a class="nav-link" id="v-pills-delivered-tab" data-toggle="pill" href="#v-pills-delivered" role="tab" aria-controls="v-pills-delivered" aria-selected="false"><img class="img-fluid img-thumbnail" src="../assets/delivered.png" style="width:30px; border: 0 none;"></img>Delivered Orders</a>
+            <a class="nav-link" id="v-pills-cancelled-tab" data-toggle="pill" href="#v-pills-cancelled" role="tab" aria-controls="v-pills-cancelled" aria-selected="false"><img class="img-fluid img-thumbnail" src="../assets/cancel (1) - Copy.png" style="width:30px; border: 0 none;"></img>Cancelled Orders</a>
         </div>
         <!-- <img class="img-fluid img-thumbnail" src="../assets/cancel (1) - Copy.png"></img> -->
         <div class="tab-content no_margin col-10 no_padding" id="v-pills-tabContent">
@@ -1430,7 +1430,7 @@
                                                             </div>
 
 
-            <div class="tab-pane fade show active" id="v-pills-delivered" role="tabpanel" aria-labelledby="v-pills-delivered-tab">
+            <div class="tab-pane fade" id="v-pills-delivered" role="tabpanel" aria-labelledby="v-pills-delivered-tab">
                 <div class="container no_margin tab_holder" id="all_orders">
                     <h3 class="tab_header">Orders Delivered</h3>
                     <div class="row no_margin" style="padding-top: 5px;">
@@ -1448,12 +1448,12 @@
                             </div>
                         </div>
 
-                        <div class="input-group col-4" class="date_selector">
+                        <!-- <div class="input-group col-4" class="date_selector">
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="basic-addon1">Between Dates</span>
                             </div>
                             <input type="text" name="daterange" class="form-control" placeholder="Select Date" aria-label="Username" aria-describedby="basic-addon1" style="background: white!important;cursor: pointer;" readonly>
-                        </div>
+                        </div> -->
 
                         <div class="input-group col-3">
                             <button type="button" class="btn" style="background: #273c75;color: white;">Apply Filter</button>
@@ -1497,194 +1497,194 @@
 
          
 
-                                                                <div class="tab-pane fade" id="v-pills-cancelled" role="tabpanel" aria-labelledby="v-pills-cancelled-tab">
-                                                                    <div class="container no_margin tab_holder" id="all_orders">
-                                                                        
-                                                                                <h3 class="tab_header">Cancelled</h3>                                          
-                                                
-                                                                                 
-                                                                                <div class="row no_margin" style="padding-top: 5px;">
-                                                        
-                                                                                <div class="input-group col-3">
-                                                                                    <div class="input-group">
-                                                                                        <select style="background: #E9ECEF;border-top-left-radius:5px;border-bottom-left-radius:5px;padding-left: 4px;">
-                                                                                                    <option disabled selected>Search By</option>
-                                                                                                       <option>By Order Id</option> 
-                                                                                                       <option>By SPU</option> 
-                                                                                                       <option>By SKU</option>
-                                                                                                    </select>
-                                                                                        <input type="text" class="form-control" id="search_box" placeholder="Search" aria-label="Text input with dropdown button">
-                                                                                    </div>
-                                                                                </div>
-                                                        
-                                                                                <div class="input-group col-4" class="date_selector">
-                                                                                    <div class="input-group-prepend">
-                                                                                        <span class="input-group-text" id="basic-addon1">Between Dates</span>
-                                                                                    </div>
-                                                                                    <input type="text" name="daterange" class="form-control" placeholder="Select Date" aria-label="Username" aria-describedby="basic-addon1" style="background: white!important;cursor: pointer;" readonly>
-                                                                                </div>
-                                                        
-                                                                                <div class="input-group col-3">
-                                                                                    <button type="button" class="btn" style="background: #273c75;color: white;">Apply Filter</button>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="row no_margin no_padding">
-                                                                                    <table id="example_cancelled" class="display table">
-                                                                                        <thead>
-                                                                                                    <tr>
-                                                                                                        <th>Package No</th>
-                                                                                                        <th>No of Orders</th>
-                                                                                                        <th>Total Amount</th>
-                                                                                                       </tr>
-                                                                                                </thead>
-                                                                                                <tbody>
-                                                                                                    <tr>
-                                                                                        
-                                                                                                            <tr>
-                                                                                                                    <td>Tiger Nixon</td>
-                                                                                                                    <td>System Architect</td>
-                                                                                                                    <td>51</td>                                                             
-                                                                                                                    <td><button type="button" class="btn btn-primary">Print waybill</button></td>
-                                                                                                            </tr>
-                                                        
-                                                                                                            <tr>    <td>Garrett Winters</td>
-                                                                                                                    <td>Accountant</td>
-                                                                                                                    <td>555</td>
-                                                                                                                    <td><button type="button" class="btn btn-primary">Print waybill</button></td>
-                                                                                                            </tr>
-                                                                                                            <tr>
-                                                                                                                    <td>Ashton Cox</td>
-                                                                                                                    <td>Junior Technical Author</td>
-                                                                                                                    <td>4488</td>
-                                                                                                                    <td><button type="button" class="btn btn-primary">Print waybill</button></td> 
-                                                                                                            </tr>            
-                                                                                                            <tr>
-                                                                                                                    <td>Jennifer Chang</td>
-                                                                                                                    <td>Regional Director</td>
-                                                                                                                    <td>48909</td>
-                                                                                                                    <td><button type="button" class="btn btn-primary">Print waybill</button></td>                                                   
-                                                                                                            </tr>
-                                                
-                                                                                                            <tr>
-                                                                                                                <td>Sakura Yamamoto</td>
-                                                                                                                <td>Support Engineer</td>
-                                                                                                                <td>900</td>
-                                                                                                                <td><button type="button" class="btn btn-primary">Print waybill</button></td>
-                                                                                                                </tr>
-                                                
-                                                                                                                <tr>
-                                                                                                                    <td>Zenaida Frank</td>
-                                                                                                                    <td>Software Engineer</td>
-                                                                                                                     <td>63</td>
-                                                                                                                    <td><button type="button" class="btn btn-primary">Print waybill</button></td>         
-                                                                                                                     </tr>
-                                                                                                                <tr>
-                                                                                                                    <td>Zorita Serrano</td>
-                                                                                                                    <td>Software Engineer</td>
-                                                                                                                    <td>56</td>
-                                                                                                                    <td><button type="button" class="btn btn-primary">Print waybill</button></td>         
-                                                                                                                                                                                  </tr>
-                                                                                                                <tr>
-                                                                                                                    <td>Jennifer Acosta</td>
-                                                                                                                    <td>Junior Javascript Developer</td>
-                                                                                                                    <td>60</td>     
-                                                                                                                    <td><button type="button" class="btn btn-primary">Print waybill</button></td>                                            
-                                                                                                                </tr>
-                                                                                                                <tr>
-                                                                                                                    <td>Cara Stevens</td>
-                                                                                                                    <td>Sales Assistant</td>
-                                                                                                                     <td>46</td>
-                                                                                                                     <td><button type="button" class="btn btn-primary">Print waybill</button></td>         
-                                                                                                               </tr>
-                                                                                                                <tr>
-                                                                                                                    <td>Hermione Butler</td>
-                                                                                                                    <td>Regional Director</td>
-                                                                                                                     <td>47</td>
-                                                                                                                     <td><button type="button" class="btn btn-primary">Print waybill</button></td>         
-                                                
-                                                                                                                </tr>
-                                                                                                                <tr>
-                                                                                                                    <td>Lael Greer</td>
-                                                                                                                    <td>Systems Administrator</td>
-                                                                                                                     <td>21</td>
-                                                                                                                     <td><button type="button" class="btn btn-primary">Print waybill</button></td>         
-                                                                                                                </tr>
-                                                                                                                <tr>
-                                                                                                                    <td>Jonas Alexander</td>
-                                                                                                                    <td>Developer</td>
-                                                                                                                    <td>30</td>
-                                                                                                                    <td><button type="button" class="btn btn-primary">Print waybill</button></td>         
-                                                
-                                                                                                                </tr>
-                                                                                                                <tr>
-                                                                                                                    <td>Shad Decker</td>
-                                                                                                                    <td>Regional Director</td>
-                                                
-                                                                                                                    <td>51</td>
-                                                                                                                    <td><button type="button" class="btn btn-primary">Print waybill</button></td>         
-                                                                                                               </tr>
-                                                                                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                                                                            
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                                                                    </tbody>
-                                                                                                </table>
-                                                                                            </div>
-                                                        
-                                                                     
-                                                                                   
-                                                            </div>
+            <div class="tab-pane fade" id="v-pills-cancelled" role="tabpanel" aria-labelledby="v-pills-cancelled-tab">
+                <div class="container no_margin tab_holder" id="all_orders">
+                    
+                            <h3 class="tab_header">Cancelled</h3>                                          
+
+                                
+                            <div class="row no_margin" style="padding-top: 5px;">
+    
+                            <div class="input-group col-3">
+                                <div class="input-group">
+                                    <select style="background: #E9ECEF;border-top-left-radius:5px;border-bottom-left-radius:5px;padding-left: 4px;">
+                                                <option disabled selected>Search By</option>
+                                                    <option>By Order Id</option> 
+                                                    <option>By SPU</option> 
+                                                    <option>By SKU</option>
+                                                </select>
+                                    <input type="text" class="form-control" id="search_box" placeholder="Search" aria-label="Text input with dropdown button">
+                                </div>
+                            </div>
+    
+                            <div class="input-group col-4" class="date_selector">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="basic-addon1">Between Dates</span>
+                                </div>
+                                <input type="text" name="daterange" class="form-control" placeholder="Select Date" aria-label="Username" aria-describedby="basic-addon1" style="background: white!important;cursor: pointer;" readonly>
+                            </div>
+    
+                            <div class="input-group col-3">
+                                <button type="button" class="btn" style="background: #273c75;color: white;">Apply Filter</button>
+                            </div>
+                        </div>
+                        <div class="row no_margin no_padding">
+                                <table id="example_cancelled" class="display table">
+                                    <thead>
+                                                <tr>
+                                                    <th>Package No</th>
+                                                    <th>No of Orders</th>
+                                                    <th>Total Amount</th>
+                                                    </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                    
+                                                        <tr>
+                                                                <td>Tiger Nixon</td>
+                                                                <td>System Architect</td>
+                                                                <td>51</td>                                                             
+                                                                <td><button type="button" class="btn btn-primary">Print waybill</button></td>
+                                                        </tr>
+    
+                                                        <tr>    <td>Garrett Winters</td>
+                                                                <td>Accountant</td>
+                                                                <td>555</td>
+                                                                <td><button type="button" class="btn btn-primary">Print waybill</button></td>
+                                                        </tr>
+                                                        <tr>
+                                                                <td>Ashton Cox</td>
+                                                                <td>Junior Technical Author</td>
+                                                                <td>4488</td>
+                                                                <td><button type="button" class="btn btn-primary">Print waybill</button></td> 
+                                                        </tr>            
+                                                        <tr>
+                                                                <td>Jennifer Chang</td>
+                                                                <td>Regional Director</td>
+                                                                <td>48909</td>
+                                                                <td><button type="button" class="btn btn-primary">Print waybill</button></td>                                                   
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td>Sakura Yamamoto</td>
+                                                            <td>Support Engineer</td>
+                                                            <td>900</td>
+                                                            <td><button type="button" class="btn btn-primary">Print waybill</button></td>
+                                                            </tr>
+
+                                                            <tr>
+                                                                <td>Zenaida Frank</td>
+                                                                <td>Software Engineer</td>
+                                                                    <td>63</td>
+                                                                <td><button type="button" class="btn btn-primary">Print waybill</button></td>         
+                                                                    </tr>
+                                                            <tr>
+                                                                <td>Zorita Serrano</td>
+                                                                <td>Software Engineer</td>
+                                                                <td>56</td>
+                                                                <td><button type="button" class="btn btn-primary">Print waybill</button></td>         
+                                                                                                                                </tr>
+                                                            <tr>
+                                                                <td>Jennifer Acosta</td>
+                                                                <td>Junior Javascript Developer</td>
+                                                                <td>60</td>     
+                                                                <td><button type="button" class="btn btn-primary">Print waybill</button></td>                                            
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Cara Stevens</td>
+                                                                <td>Sales Assistant</td>
+                                                                    <td>46</td>
+                                                                    <td><button type="button" class="btn btn-primary">Print waybill</button></td>         
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Hermione Butler</td>
+                                                                <td>Regional Director</td>
+                                                                    <td>47</td>
+                                                                    <td><button type="button" class="btn btn-primary">Print waybill</button></td>         
+
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Lael Greer</td>
+                                                                <td>Systems Administrator</td>
+                                                                    <td>21</td>
+                                                                    <td><button type="button" class="btn btn-primary">Print waybill</button></td>         
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Jonas Alexander</td>
+                                                                <td>Developer</td>
+                                                                <td>30</td>
+                                                                <td><button type="button" class="btn btn-primary">Print waybill</button></td>         
+
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Shad Decker</td>
+                                                                <td>Regional Director</td>
+
+                                                                <td>51</td>
+                                                                <td><button type="button" class="btn btn-primary">Print waybill</button></td>         
+                                                            </tr>
                                                             
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                        
+
+
+
+
+
+
+
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+    
+                    
+                                
+        </div>
+        
+
+                
                                                 
-                                                                    
-                                                                                                 
-                                                                                                    
-                                                                                                    
-                                                                                                
-                                                                                        </div>
+                                                
+                                                
+                                            
+                                    </div>
 
         </div> 
         </div>
