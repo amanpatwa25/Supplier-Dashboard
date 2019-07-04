@@ -1931,7 +1931,8 @@
         
             var groupColumn = 0;
             var table = $('#example').DataTable({
-                data: newAllOrders,
+                ajax: "http://localhost:8000/allOrders",
+                data: 'data',
                 destroy: true,
                 'rowGroup': {
                     // 'dataSrc': products.title,
@@ -1958,7 +1959,7 @@
                     {data: 'products[0].title'},
                     {data: 'products[0].price'},
                     {data: 'products[0].qty'},
-                    {data: 'status'}
+                    {data: 'products[0].productStatus'},
                 ],
                 "columnDefs": [{
                     "visible": false,
