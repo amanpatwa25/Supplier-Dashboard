@@ -51,6 +51,7 @@ var service = {
                     orderId: order.orderId,
                     date: order.orderDate,
                     products: [],
+                    totalAmt:0,
                 }
 
                 order.products.forEach(prod => {
@@ -65,9 +66,14 @@ var service = {
                         price:      prod.money.seller.listedPrice,
                         productStatus: prod.productStatus,
                         qty:        1,                      //change this later
+                        imageUrl:   prod.productDetails.thumb,
                     });
 
+                    mOrder.totalAmt += prod.money.seller.listedPrice;
+
                 });
+                
+                if(!mOrder.products.length) return;
 
                 results.push(mOrder);
             });

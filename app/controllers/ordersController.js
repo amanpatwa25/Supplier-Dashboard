@@ -8,9 +8,15 @@ var OrderStatus = require('../../config/OrderStatuses');
 var OrdersController ={
 
     index : async function(req,res){
-        console.log('inside index');
-        
         res.sendFile('orders.html', { root: path.join(__dirname, '../../public/pages') });
+    },
+
+    listing : async function(req,res){        
+        res.sendFile('listings.html', { root: path.join(__dirname, '../../public/pages') });
+    },
+
+    transactions : async function(req,res){
+        res.sendFile('transactions.html', { root: path.join(__dirname, '../../public/pages') });
     },
 
     allOrders:async function(req,res){
