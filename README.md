@@ -1,5 +1,7 @@
 # Supplier-Dashboard
 
+## localhost:8000 (homePage)
+
 ## /search
 type:post
 req.body:
@@ -42,19 +44,21 @@ orderType options:
 
 ## all endpoints for getting orders
 
-'/allOrders'            : all orders tab
+```
+'/allOrders'            : all orders tab 
 '/deliveredOrders'      : delivered tab
 '/cancelledOrders'      : cancelled tab
 '/placedOrders'         : create orders awbs tab
 '/readyToShipOrders'    : create pacakages tab
 '/shippedOrders'        : shipped Orders
 '/inTransitOrders'      : intransit order
+```
 
 ### url queries for above endpoints
 
-pageNo : ( starts from zero)
-from : filter orders after this date
-to :  filter order upto this date
+pageNo : ( starts from zero)    <br>
+from : filter orders after this date <br>
+to :  filter order upto this date   <br>
 
 eg:-
 ```
