@@ -18,10 +18,12 @@ var OrdersController ={
 
         try {
             var pageno = req.query.pageNo;
+            var from = req.query.from;
+            var to = req.query.to;
 
             if(!pageno) pageno = 0;
 
-            var results  = await OrderService.getOrders(pageno);
+            var results  = await OrderService.getOrders(pageno,null,from,to);
 
             res.status(200).send({
                 success:true,
@@ -46,7 +48,7 @@ var OrdersController ={
 
             if(pageno === undefined || pageno === null) pageno = 0;
 
-            var results  = await OrderService.getOrders(pageno,OrderStatus.DELIVERED);
+            var results  = await OrderService.getOrders(pageno,OrderStatus.DELIVERED,req.query.from,req.query.to);
 
             res.status(200).send({
                 success:true,
@@ -69,7 +71,7 @@ var OrdersController ={
 
             if(!pageno) pageno = 0;
 
-            var results  = await OrderService.getOrders(pageno,OrderStatus.CANCELLED);
+            var results  = await OrderService.getOrders(pageno,OrderStatus.CANCELLED,req.query.from,req.query.to);
 
             res.status(200).send({
                 success:true,
@@ -92,7 +94,7 @@ var OrdersController ={
 
             if(!pageno) pageno = 0;
 
-            var results  = await OrderService.getOrders(pageno,OrderStatus.ORDER_PLACED);
+            var results  = await OrderService.getOrders(pageno,OrderStatus.ORDER_PLACED,req.query.from,req.query.to);
 
             res.status(200).send({
                 success:true,
@@ -115,7 +117,7 @@ var OrdersController ={
 
             if(!pageno) pageno = 0;
 
-            var results  = await OrderService.getOrders(pageno,OrderStatus.READY_TO_SHIP);
+            var results  = await OrderService.getOrders(pageno,OrderStatus.READY_TO_SHIP,req.query.from,req.query.to);
 
             res.status(200).send({
                 success:true,
@@ -138,7 +140,7 @@ var OrdersController ={
 
             if(!pageno) pageno = 0;
 
-            var results  = await OrderService.getOrders(pageno,OrderStatus.SHIPPED);
+            var results  = await OrderService.getOrders(pageno,OrderStatus.SHIPPED,req.query.from,req.query.to);
 
             res.status(200).send({
                 success:true,
@@ -156,13 +158,30 @@ var OrdersController ={
     },
 
 
+    status: async function(req,res){
+        try{
+
+            var status = req.body.status;
+            var id = req.body.id;
+
+            var result = await Orders.update({"_id":Object(id)},{$set: {"status":status}});
+            res.json({"success":1})
+            
+        }
+        catch(err){
+            console.log(err);
+            res.json({"success":0});
+            
+        }
+    },
+
     inTransitOrders:async function(req,res){
         try {
             var pageno = req.query.pageNo;
 
             if(!pageno) pageno = 0;
 
-            var results  = await OrderService.getOrders(pageno,OrderStatus.PICKUP_IN_TRANSIT);
+            var results  = await OrderService.getOrders(pageno,OrderStatus.PICKUP_IN_TRANSIT,req.query.from,req.query.to);
 
             res.status(200).send({
                 success:true,

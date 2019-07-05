@@ -1931,8 +1931,7 @@
         
             var groupColumn = 0;
             var table = $('#example').DataTable({
-                ajax:'http://localhost:8000/allOrders',
-                data:'data',
+                data: newAllOrders,
                 destroy: true,
                 'rowGroup': {
                     // 'dataSrc': products.title,
@@ -2004,8 +2003,7 @@
             $('#v-pills-shipped-tab').click(function(){
                 // $('#example_shipped').empty();
                 var table5 = $('#example_shipped').DataTable({
-                ajax: 'http://localhost:8000/ShippedOrders',
-                data: 'data',
+                data: shipping,
                 destroy:true,
                 'rowGroup': {
                     // 'dataSrc': products.title,
@@ -2097,8 +2095,7 @@
 
             $('#v-pills-intransit-tab').click(function(){
              $('#example_intransit').DataTable({
-                ajax: 'http://localhost:8000/readyToShipOrders',
-                data: 'data',
+                data: shipping,
                 destroy:true,
                 'rowGroup': {
                     // 'dataSrc': products.title,
@@ -2159,8 +2156,7 @@
 
 
              var table1= $('#example_delivered').DataTable({
-                 ajax: 'http://localhost:8000/deliveredOrders',
-                data: 'data',
+                data: newDeliveredOrders,
                 destroy: true,
                 'rowGroup': {
                     // 'dataSrc': products.title,
