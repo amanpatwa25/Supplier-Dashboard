@@ -731,6 +731,17 @@
 
 
 
+// $('#example').DataTable({
+//    drawCallback: function(){
+//       $('.paginate_button.next:not(.disabled)', this.api().table().container())          
+//          .on('click', function(){
+//             alert('next');
+//          });       
+//    }
+// });   
+
+
+
 function newCreateAwb(arr){
             var array = [];
             for (let i = 0; i < arr.length; i++) {
@@ -947,20 +958,41 @@ function newCreateAwb(arr){
             
         }
 
+        
+
         var table6 = $('#example_package').DataTable();
             $('#example_package tbody').on( 'click', 'tr', function () {
                 $(this).toggleClass('selected');
             } );
+
+
+
+            $('#button').on( 'click', function () {
+            console.log("Inside btn click");
+            
+            // var d = $.map(table6.rows('.selected').data(),function(item){
+            //     return item[0];
+            // });
+            var d = $('#example_package').DataTable().rows('.selected').data();
+            for(var i=0;i<d.length;i++){
+
+                console.log("Package:"+d[i].totalAmt);
+            }
+            console.log("d",d);
+            alert($('#example_package').DataTable().rows(('.selected')).data().length + ' row(s) selected');
+
+            // console.log("Shipped click:", JSON.stringify(table5.row( $(this).parents('tr') ).data(),undefined,2));
+            } );
                 
 
-            $('#button').click( function () {
-                var d = table6.rows('.selected').data()
-                console.log("d",d);
-                for(var i=0;i<d.length;i++){
+            // $('#button').click( function () {
+            //     var d = table6.rows('.selected').data()
+            //     console.log("d",d);
+            //     for(var i=0;i<d.length;i++){
 
-                    console.log("Package:"+d[i][0]);
-                }
-            });
+            //         console.log("Package:"+d[i][0]);
+            //     }
+            // });
 
 
 var groupColumn = 0;
@@ -1083,8 +1115,8 @@ var groupColumn = 0;
                 'columns':[
                     {data: 'waybillno'},
                     {data: 'orderId'},
-                    {data:'products[0].sku'},
-                    {data: 'Amt'},
+                    {data:'allSku'},
+                    {data: 'totalAmt'},
             
                 ],
                 // "columnDefs": [{
