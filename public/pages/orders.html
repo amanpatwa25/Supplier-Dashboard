@@ -119,9 +119,27 @@
                         </div>
 
                         <div class="input-group col-3">
-                            <button type="button" class="btn" style="background: #273c75;color: white;">Apply Filter</button>
+                            <button type="button" onclick="displayOrders()" class="btn" style="background: #273c75;color: white;">Apply Filter</button>
                         </div>
                     </div>
+                    <div class="row no_margin no_padding" id="main_orders" style="display: none;">
+                            <table id="example_search" class="display table">
+                                    <thead>
+                                        <tr>
+                                            <th>Order Id</th>
+                                            <th>SKU</th>
+                                            <th>Title</th>
+                                            <th>Qty</th>
+                                            <th>Price</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+
+                                </table>
+
+                    </div>
+                    
+                    
                     <div class="row no_margin no_padding">
                         <table id="example" class="display table">
                             <thead>
@@ -177,8 +195,23 @@
                             </div>
     
                             <div class="input-group col-3">
-                                <button type="button" class="btn" style="background: #273c75;color: white;">Apply Filter</button>
+                                <button type="button" onclick="displayPackages()" class="btn" style="background: #273c75;color: white;">Apply Filter</button>
                             </div>
+                        </div>
+
+                        <div class="row no_margin no_padding" id="main_packages" style="display: none;">
+                                <table id="example_filter_package" class="display table">
+                                        <thead>
+                                            <tr>
+                                                <th>Waybill no</th>
+                                                <th>Order number</th>
+                                                <th>Qty</th>
+                                                <th>Amount</th>
+                                                
+                                            </tr>
+                                        </thead>
+                                    </table>
+                            
                         </div>
                         <div class="row no_margin no_padding">
                                 <table id="example_package" class="display table">
@@ -227,8 +260,20 @@
                             </div>
     
                             <div class="input-group col-3">
-                                <button type="button" class="btn" style="background: #273c75;color: white;">Apply Filter</button>
+                                <button type="button" onclick="displayShipped()" class="btn" style="background: #273c75;color: white;">Apply Filter</button>
                             </div>
+                        </div>
+                        <div class="row no_margin no_padding" id="main_shipped" style="display: none;">
+                                <table id="example_filter_shipped" class="display table">
+                                        <thead>
+                                                    <tr>
+                                                        <th>Package No</th>
+                                                        <th>No of Orders</th>
+                                                        <th>Total Amount</th>
+                                                       </tr>
+                                                </thead>
+                                                </table>
+
                         </div>
                         <div class="row no_margin no_padding">
                                 <table id="example_shipped" class="display table">
@@ -282,9 +327,23 @@
                                                     </div>
                             
                                                     <div class="input-group col-3">
-                                                        <button type="button" class="btn" style="background: #273c75;color: white;">Apply Filter</button>
+                                                        <button type="button" onclick="displayIntransit()" class="btn" style="background: #273c75;color: white;">Apply Filter</button>
                                                     </div>
                                                 </div>
+
+                                                <div class="row no_margin no_padding" id="main_intransit" style="display: none;">
+                                                        <table id="example_filter_intransit" class="display table">
+                                                                <thead>
+                                                                            <tr>
+                                                                                <th>Package No</th>
+                                                                                <th>No of Orders</th>
+                                                                                <th>Total Amount</th>
+                                                                               </tr>
+                                                                        </thead>
+                                                        </table>                
+
+                                                </div>
+
                                                 <div class="row no_margin no_padding">
                                                         <table id="example_intransit" class="display table">
                                                             <thead>
@@ -463,9 +522,28 @@
                         </div>
 
                         <div class="input-group col-3">
-                            <button type="button" class="btn" style="background: #273c75;color: white;">Apply Filter</button>
+                            <button type="button" onclick="displayDelivered()" class="btn" style="background: #273c75;color: white;">Apply Filter</button>
                         </div>
                     </div>
+                    <div class="row no_margin no_padding" id="main_delivered" style="display: none;">
+                            <table id="example_deliver" class="display table">
+                                    <thead>
+                                        <tr>
+                                                <th>Order Id</th>
+                                                <th>SKU</th>
+                                                <th>Title</th>
+                                                <th>WayBill No</th>
+                                                <th>Package No</th>
+                                                <th>Qty</th>
+                                                <th>Price</th>
+                                                <th>Status</th>
+                                        </tr>
+                                    </thead>
+
+                                </table>
+
+                    </div>
+
                     <div class="row no_margin no_padding container">
 
                             
@@ -492,17 +570,6 @@
 
                 </div>
             </div>
-
-
-            
-           
-            
-
-
-            <!-- <div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">...</div>
-            <div class="tab-pane fade" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">...</div> -->
-
-         
 
             <div class="tab-pane fade" id="v-pills-cancelled" role="tabpanel" aria-labelledby="v-pills-cancelled-tab">
                 <div class="container no_margin tab_holder" id="all_orders">
@@ -532,9 +599,24 @@
                             </div>
     
                             <div class="input-group col-3">
-                                <button type="button" class="btn" style="background: #273c75;color: white;">Apply Filter</button>
+                                <button type="button" onclick="displayCancel()" class="btn" style="background: #273c75;color: white;">Apply Filter</button>
                             </div>
                         </div>
+
+                        <div class="row no_margin no_padding" id="main_cancel" style="display: none;">
+                                <table id="example_cancel" class="display table">
+                                        <thead>
+                                            <tr>
+                                                <th>Package No</th>
+                                                <th>No of Orders</th>
+                                                <th>Total Amount</th>
+                                            </tr>
+                                        </thead>
+                                </table>       
+
+
+                        </div>
+
                         <div class="row no_margin no_padding">
                                 <table id="example_cancelled" class="display table">
                                     <thead>
@@ -630,51 +712,6 @@
                                                                 <td>51</td>
                                                                 <td><button type="button" class="btn btn-primary">Print waybill</button></td>         
                                                             </tr>
-                                                            
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                                                        
-
-
-
-
-
-
 
 
                                                 </tbody>
@@ -729,6 +766,34 @@
 
     <script>
 
+
+function displayOrders() {
+            // $('#example').hide();
+            $('#main_orders').css('display','block');
+            
+}
+
+function displayCancel(){
+    $('#main_cancel').css('display','block');
+}        
+
+function displayDelivered(){
+    $('#main_delivered').css('display','block');
+}  
+
+function displayIntransit(){
+    $('#main_intransit').css('display','block');
+}
+
+function displayShipped(){
+    $('#main_shipped').css('display','block');
+}
+
+function displayPackages()
+{
+    $('#main_packages').css('display','block');
+}
+  
 
 
 function newCreateAwb(arr){
