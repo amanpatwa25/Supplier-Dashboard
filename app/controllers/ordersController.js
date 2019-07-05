@@ -8,9 +8,15 @@ var OrderStatus = require('../../config/OrderStatuses');
 var OrdersController ={
 
     index : async function(req,res){
-        console.log('inside index');
-        
         res.sendFile('orders.html', { root: path.join(__dirname, '../../public/pages') });
+    },
+
+    listing : async function(req,res){        
+        res.sendFile('listings.html', { root: path.join(__dirname, '../../public/pages') });
+    },
+
+    transactions : async function(req,res){
+        res.sendFile('transactions.html', { root: path.join(__dirname, '../../public/pages') });
     },
 
     allOrders:async function(req,res){
@@ -167,8 +173,7 @@ var OrdersController ={
             var result = await Orders.update({"_id":Object(id)},{$set: {"status":status}});
             res.json({"success":1})
             
-        }
-        catch(err){
+        }catch(err){
             console.log(err);
             res.json({"success":0});
             
@@ -194,6 +199,46 @@ var OrdersController ={
                 success:false,
                 code:500,
                 msg:error,
+            });
+        }
+    },
+
+
+    search: async function(req,res){
+        try {
+      
+            var body = req.body;
+            var errMsg = undefined;
+
+            // if(body.orderType === undefined) errMsg='OrderType Not Found';
+            if(body.searchBy === undefined) errMsg='searchBy Not Found'; 
+            if(body.searchString === undefined) errMsg='searchString Not Found'; 
+
+
+            if(errMsg){
+              return res.status(400).send({
+                    code:400,
+                    success:false,
+                    msg:errMsg
+                });
+            }
+
+
+            var result = await OrderService.search(body.orderType,body.searchBy,body.searchString);
+
+            return res.status(200).send({
+                code:200,
+                success:true,
+                data:result
+            });
+            
+        } catch (error) {
+            console.log('err',error);
+            
+            res.status(500).send({
+                code:500,
+                success:false,
+                msg:error
             });
         }
     },
