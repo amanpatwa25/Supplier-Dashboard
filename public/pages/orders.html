@@ -106,9 +106,9 @@
                             <div class="input-group">
                                 <select id="select_1" style="background: #E9ECEF;border-top-left-radius:5px;border-bottom-left-radius:5px;padding-left: 4px;">
                                             <option disabled selected>Search By</option>
-                                               <option>By Order Id</option> 
-                                               <option>By SPU</option> 
-                                               <option>By SKU</option>
+                                               <option>orderId</option> 
+                                               <option>SPU</option> 
+                                               <option>SKU</option>
                                             </select>
                                 <input type="text" class="form-control" id="search_box_1" placeholder="Search" aria-label="Text input with dropdown button">
                             </div>
@@ -181,13 +181,13 @@
     
                             <div class="input-group col-3">
                                 <div class="input-group">
-                                    <select style="background: #E9ECEF;border-top-left-radius:5px;border-bottom-left-radius:5px;padding-left: 4px;">
+                                    <select id="select_package" style="background: #E9ECEF;border-top-left-radius:5px;border-bottom-left-radius:5px;padding-left: 4px;">
                                                 <option disabled selected>Search By</option>
-                                                   <option>By Order Id</option> 
-                                                   <option>By SPU</option> 
-                                                   <option>By SKU</option>
+                                                   <option>orderId</option> 
+                                                   <option>SPU</option> 
+                                                   <option>SKU</option>
                                                 </select>
-                                    <input type="text" class="form-control" id="search_box" placeholder="Search" aria-label="Text input with dropdown button">
+                                    <input type="text" id="input_package" class="form-control" id="search_box" placeholder="Search" aria-label="Text input with dropdown button">
                                 </div>
                             </div>
     
@@ -249,13 +249,13 @@
     
                             <div class="input-group col-3">
                                 <div class="input-group">
-                                    <select style="background: #E9ECEF;border-top-left-radius:5px;border-bottom-left-radius:5px;padding-left: 4px;">
+                                    <select id="select_shipped" style="background: #E9ECEF;border-top-left-radius:5px;border-bottom-left-radius:5px;padding-left: 4px;">
                                                 <option disabled selected>Search By</option>
-                                                   <option>By Order Id</option> 
-                                                   <option>By SPU</option> 
-                                                   <option>By SKU</option>
+                                                   <option>orderId</option> 
+                                                   <option>SPU</option> 
+                                                   <option>SKU</option>
                                                 </select>
-                                    <input type="text" class="form-control" id="search_box" placeholder="Search" aria-label="Text input with dropdown button">
+                                    <input type="text" class="form-control" id="input_shipped" placeholder="Search" aria-label="Text input with dropdown button">
                                 </div>
                             </div>
     
@@ -319,13 +319,13 @@
                             
                                                     <div class="input-group col-3">
                                                         <div class="input-group">
-                                                            <select style="background: #E9ECEF;border-top-left-radius:5px;border-bottom-left-radius:5px;padding-left: 4px;">
+                                                            <select id="select_intransit" style="background: #E9ECEF;border-top-left-radius:5px;border-bottom-left-radius:5px;padding-left: 4px;">
                                                                         <option disabled selected>Search By</option>
-                                                                           <option>By Order Id</option> 
-                                                                           <option>By SPU</option> 
-                                                                           <option>By SKU</option>
+                                                                           <option>orderId</option> 
+                                                                           <option>SPU</option> 
+                                                                           <option>SKU</option>
                                                                         </select>
-                                                            <input type="text" class="form-control" id="search_box" placeholder="Search" aria-label="Text input with dropdown button">
+                                                            <input type="text" class="form-control" id="input_intransit" placeholder="Search" aria-label="Text input with dropdown button">
                                                         </div>
                                                     </div>
                             
@@ -389,14 +389,14 @@
 
                         <div class="input-group col-3">
                             <div class="input-group">
-                                <select style="background: #E9ECEF;border-top-left-radius:5px;border-bottom-left-radius:5px;padding-left: 4px;">
+                                <select id="select_delivered" style="background: #E9ECEF;border-top-left-radius:5px;border-bottom-left-radius:5px;padding-left: 4px;">
                                             <option disabled selected>Search By</option>
-                                               <option>By Order Id</option> 
-                                               <option>By SPU</option> 
-                                               <option>By SKU</option>
-                                               <option>By Package Id</option>
+                                               <option>orderId</option> 
+                                               <option>SPU</option> 
+                                               <option>SKU</option>
+                                               <!-- <option>By Package Id</option> -->
                                             </select>
-                                <input type="text" class="form-control" id="search_box" placeholder="Search" aria-label="Text input with dropdown button">
+                                <input type="text" class="form-control" id="input_delivered" placeholder="Search" aria-label="Text input with dropdown button">
                             </div>
                         </div>
 
@@ -655,14 +655,14 @@ function displayOrders() {
     var searchVal = $('#search_box_1').val();
     console.log(option);
     console.log(searchVal);
-    // $('#example').hide();
+            // $('#example').hide();
            // $('#main_orders').css('display','block');
             $.ajax({
                 url: '/search',
                 type:'POST',
                 data: {
-                    "searchBy":"orderId",
-                    "searchString":"24108"
+                    "searchBy":option,
+                    "searchString":searchVal
 
                 },
                 success:function(data){
@@ -674,24 +674,109 @@ function displayOrders() {
 }
 
 function displayCancel(){
+    
     $('#main_cancel').css('display','block');
 }        
 
 function displayDelivered(){
-    $('#main_delivered').css('display','block');
+    var option = $('#select_delivered').find(":selected").text();
+    var searchVal = $('#input_delivered').val();
+    console.log(option);
+    console.log(searchVal);
+    // $('#example').hide();
+           // $('#main_orders').css('display','block');
+            $.ajax({
+                url: '/search',
+                type:'POST',
+                data: {
+                    "orderType":'DELIVERED',
+                    "searchBy":option,
+                    "searchString":searchVal
+
+                },
+                success:function(data){
+                  var results = newDeliveredArray(data.data);
+                    deliveredOrders(results);
+                }
+            })
+    
+    //     $('#main_delivered').css('display','block');
 }  
 
 function displayIntransit(){
-    $('#main_intransit').css('display','block');
+
+    var option = $('#select_intransit').find(":selected").text();
+    var searchVal = $('#input_intransit').val();
+    console.log(option);
+    console.log(searchVal);
+    // $('#example').hide();
+           // $('#main_orders').css('display','block');
+            $.ajax({
+                url: '/search',
+                type:'POST',
+                data: {
+                    "orderType":'PICKUP_IN_TRANSIT',
+                    "searchBy":option,
+                    "searchString":searchVal
+
+                },
+                success:function(data){
+                    console.log(data.data);
+                  createIntransit(data.data);
+                }
+            })
+    
+
+
+    // $('#main_intransit').css('display','block');
 }
 
 function displayShipped(){
-    $('#main_shipped').css('display','block');
+
+    var option = $('#select_shipped').find(":selected").text();
+    var searchVal = $('#input_shipped').val();
+    console.log(option);
+    console.log(searchVal);
+    // $('#example').hide();
+           // $('#main_orders').css('display','block');
+            $.ajax({
+                url: '/search',
+                type:'POST',
+                data: {
+                    "orderType":'SHIPPED',
+                    "searchBy":option,
+                    "searchString":searchVal
+
+                },
+                success:function(data){
+                    createShipped(data.data);
+                }
+            })
+    // $('#main_shipped').css('display','block');
 }
 
 function displayPackages()
 {
-    $('#main_packages').css('display','block');
+    var option = $('#select_package').find(":selected").text();
+    var searchVal = $('#input_package').val();
+    console.log(option);
+    console.log(searchVal);
+    // $('#example').hide();
+           // $('#main_orders').css('display','block');
+            $.ajax({
+                url: '/search',
+                type:'POST',
+                data: {
+                    "searchBy":option,
+                    "searchString":searchVal
+
+                },
+                success:function(data){
+                    createPackage(data.data);
+                }
+            })
+    
+    // $('#main_packages').css('display','block');
 }
   
 
@@ -980,6 +1065,70 @@ var groupColumn = 0;
             
         });
 
+        function createShipped(data){
+             // $('#example_shipped').empty();
+             var table5 = $('#example_shipped').DataTable({
+                paging: false,
+                data: data,
+                destroy:true,
+                'rowGroup': {
+                    // 'dataSrc': products.title,
+                    'startRender': function(rows, group) {
+                        console.log("Data",data);
+                        // Assign class name to all child rows
+                        // var groupName = 'group-' + group.replace(/[^A-Za-z0-9]/g, '');
+                        // var rowNodes = rows.nodes();
+                        // rowNodes.to$().addClass(groupName);
+                        
+                        // Get selected checkboxes
+                        // var checkboxesSelected = $('.dt-checkboxes:checked', rowNodes);
+                        
+                        // // Parent checkbox is selected when all child checkboxes are selected
+                        // var isSelected = (checkboxesSelected.length == rowNodes.length);
+                        
+                        return '<label>' + group + ' (' + rows.count() + ')</label>';
+                    }         
+                },
+                
+                'columns':[
+                    {data: 'packageNo'},
+                    {data: 'orderId'},
+                    {data: 'totalAmt'},
+            
+                ],
+                // "columnDefs": [{
+                //     "visible": false,
+                //     "targets": groupColumn
+                // }],
+                "order": [
+                    [groupColumn, 'asc']
+                ],
+                "displayLength": 25,
+                "drawCallback": function(settings) {
+                    var api = this.api();
+                    var rows = api.rows({
+                        page: 'current'
+                    }).nodes();
+                    var last = null;
+
+                    api.column(groupColumn, {
+                        page: 'current'
+                    }).data().each(function(group, i) {
+                        if (last !== group) {
+                            // console.log("rows",$(rows).closest('tr').data());
+                            // console.log("data:",JSON.stringify(rows.context[0].aoData[0]._aData.packageNo));
+                             $(rows).eq(i).append(
+                                '<td><button type="button" class="btn btn-primary btn_shipped">Print waybill</button></td>'
+                                
+                            );
+
+                            last = group;
+                        }
+                    });
+                }
+            });
+        }
+
 
             $('#v-pills-shipped-tab').click(function(){
                 // $('#example_shipped').empty();
@@ -1055,12 +1204,10 @@ var groupColumn = 0;
 
             });
 
-            
-            $('#v-pills-messages-tab').click(function(){
-             $('#example_package').DataTable({
+            function createPackage(data){
+                $('#example_package').DataTable({
                 paging: false,
-                ajax: "/readyToShipOrders",
-                data: 'data',
+                data: data,
                 destroy:true,
                 'rowGroup': {
                     // 'dataSrc': products.title,
@@ -1084,7 +1231,7 @@ var groupColumn = 0;
                 'columns':[
                     {data: 'waybillno'},
                     {data: 'orderId'},
-                    {data:'allSku'},
+                    {data:'allSkus'},
                     {data: 'totalAmt'},
             
                 ],
@@ -1118,8 +1265,137 @@ var groupColumn = 0;
                     });
                 }
             });
-            });
+          
+            }
             
+            $('#v-pills-messages-tab').click(function(){
+                $('#example_package').DataTable({
+                paging: false,
+                ajax: "/readyToShipOrders",
+                data: 'data',
+                destroy:true,
+                'rowGroup': {
+                    // 'dataSrc': products.title,
+                    'startRender': function(rows, group) {
+                        console.log(data);
+                        // Assign class name to all child rows
+                        // var groupName = 'group-' + group.replace(/[^A-Za-z0-9]/g, '');
+                        // var rowNodes = rows.nodes();
+                        // rowNodes.to$().addClass(groupName);
+                        
+                        // Get selected checkboxes
+                        // var checkboxesSelected = $('.dt-checkboxes:checked', rowNodes);
+                        
+                        // // Parent checkbox is selected when all child checkboxes are selected
+                        // var isSelected = (checkboxesSelected.length == rowNodes.length);
+                        
+                        return '<label>' + group + ' (' + rows.count() + ')</label>';
+                    }         
+                },
+                
+                'columns':[
+                    {data: 'waybillno'},
+                    {data: 'orderId'},
+                    {data:'allSkus'},
+                    {data: 'totalAmt'},
+            
+                ],
+                // "columnDefs": [{
+                //     "visible": false,
+                //     "targets": groupColumn
+                // }],
+                "order": [
+                    [groupColumn, 'asc']
+                ],
+                "displayLength": 25,
+                "drawCallback": function(settings) {
+                    var api = this.api();
+                    var rows = api.rows({
+                        page: 'current'
+                    }).nodes();
+                    var last = null;
+
+                    api.column(groupColumn, {
+                        page: 'current'
+                    }).data().each(function(group, i) {
+                        if (last !== group) {
+                            $(rows).eq(i).append(
+                                // '<tr class="group"><td colspan="4">' + group + '</td></tr>'
+                                '<td><button type="button" class="btn btn-primary">Print waybill</button></td>'
+                                
+                            );
+
+                            last = group;
+                        }
+                    });
+                }
+            });
+          
+              });
+            
+              function createIntransit(data){
+
+                $('#example_intransit').DataTable({
+                data: data,
+                destroy:true,
+                'rowGroup': {
+                    // 'dataSrc': products.title,
+                    'startRender': function(rows, group) {
+                        console.log(data);
+                        // Assign class name to all child rows
+                        // var groupName = 'group-' + group.replace(/[^A-Za-z0-9]/g, '');
+                        // var rowNodes = rows.nodes();
+                        // rowNodes.to$().addClass(groupName);
+                        
+                        // Get selected checkboxes
+                        // var checkboxesSelected = $('.dt-checkboxes:checked', rowNodes);
+                        
+                        // // Parent checkbox is selected when all child checkboxes are selected
+                        // var isSelected = (checkboxesSelected.length == rowNodes.length);
+                        
+                        return '<label>' + group + ' (' + rows.count() + ')</label>';
+                    }         
+                },
+                
+                'columns':[
+                    {data: 'packageNo'},
+                    {data: 'orderId'},
+                    {data: 'totalAmt'},
+            
+                ],
+                // "columnDefs": [{
+                //     "visible": false,
+                //     "targets": groupColumn
+                // }],
+                "order": [
+                    [groupColumn, 'asc']
+                ],
+                "displayLength": 25,
+                "drawCallback": function(settings) {
+                    var api = this.api();
+                    var rows = api.rows({
+                        page: 'current'
+                    }).nodes();
+                    var last = null;
+
+                    api.column(groupColumn, {
+                        page: 'current'
+                    }).data().each(function(group, i) {
+                        if (last !== group) {
+                            $(rows).eq(i).append(
+                                // '<tr class="group"><td colspan="4">' + group + '</td></tr>'
+                                '<td><button type="button" class="btn btn_intransit btn-primary">Print waybill</button></td>'
+                                
+                            );
+
+                            last = group;
+                        }
+                    });
+                }
+            });
+                  
+              }
+
 
             $('#v-pills-intransit-tab').click(function(){
              $('#example_intransit').DataTable({
