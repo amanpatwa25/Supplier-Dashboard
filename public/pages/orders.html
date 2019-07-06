@@ -135,6 +135,8 @@
                                 </tr>
                             </thead>
                         </table>
+                        <div class="dataTables_info col-11" id="example_info" role="status" aria-live="polite"></div>
+                        <button type="button" class="btn col-1" style="background: #273c75;display: inline; float: right; color: white;">Next</button>
                     
                     </div>
                     
@@ -151,7 +153,7 @@
                 <div class="container no_margin tab_holder" id="all_orders">
                         <div>
                             <h3 class="tab_header col-10" style="display: inline;">Create packages:</h3> 
-                                    <button type="button" id="button" class="btn btn-primary btn-md col-2" style="float:right;">Create Package</button>
+                                    <button type="button" id="button" class="btn btn-primary btn-md col-2" style="float: bottom-right;">Create Package</button>
                         </div>
 
                              
@@ -192,6 +194,10 @@
                                         </tr>
                                     </thead>
                                 </table>
+                                <div class="dataTables_info col-11" id="example_info" role="status" aria-live="polite"></div>
+                                <button type="button" class="btn col-1" style="background: #273c75;display: inline; float: right; color: white;">Next</button>
+                            
+
                             </div>
                                
                           </div>  
@@ -240,6 +246,10 @@
                                                    </tr>
                                             </thead>
                                             </table>
+                                            <div class="dataTables_info col-11" id="example_info" role="status" aria-live="polite"></div>
+                                            <button type="button" class="btn col-1" style="background: #273c75; float: right; color: white;">Next</button>
+
+
                                         </div>
     
                  
@@ -429,6 +439,9 @@
                     
                                                                         </tbody>
                                                                     </table>
+                                                                    <div class="dataTables_info col-11" id="example_info" role="status" aria-live="polite"></div>
+                                                                    <button type="button" class="btn col-1" style="background: #273c75;display: inline; float: right; color: white;">Next</button>
+                                                                    
                                                                 </div>
                             
                                          
@@ -483,7 +496,8 @@
                                 </tr>
                             </thead>
                          </table>
-                        
+                         <div class="dataTables_info col-11" id="example_info" role="status" aria-live="polite"></div>
+                         <button type="button" class="btn col-1" style="background: #273c75;display: inline; float: right; color: white;">Next</button>   
                     
                     
                     
@@ -679,6 +693,9 @@
 
                                                 </tbody>
                                             </table>
+                                            <div class="dataTables_info col-11" id="example_info" role="status" aria-live="polite"></div>
+                                            <button type="button" class="btn col-1" style="background: #273c75;display: inline; float: right; color: white;">Next</button>
+
                                         </div>
     
                     
@@ -820,6 +837,7 @@ function newCreateAwb(arr){
         function getOrders(results){
 
         var table = $('#example').DataTable({
+            paging: false,
             data: results,
             destroy: true,
             'rowGroup': {
@@ -897,6 +915,7 @@ function newCreateAwb(arr){
             var table1= $('#example_delivered').DataTable({
                 data: results,
                 destroy: true,
+                paging: false,
                 'rowGroup': {
                     // 'dataSrc': products.title,
                     'startRender': function(rows, group) {
@@ -1019,6 +1038,7 @@ var groupColumn = 0;
                 var table5 = $('#example_shipped').DataTable({
                     ajax:'/shippedOrders',
                 data: 'data',
+                paging: false,
                 destroy:true,
                 'rowGroup': {
                     // 'dataSrc': products.title,
@@ -1092,6 +1112,7 @@ var groupColumn = 0;
              $('#example_package').DataTable({
                 ajax: "/readyToShipOrders",
                 data: 'data',
+                paging: false,
                 destroy:true,
                 'rowGroup': {
                     // 'dataSrc': products.title,
@@ -1156,6 +1177,7 @@ var groupColumn = 0;
              $('#example_intransit').DataTable({
                  ajax:'/inTransitOrders',
                 data: 'data',
+                paging: false,
                 destroy:true,
                 'rowGroup': {
                     // 'dataSrc': products.title,
