@@ -104,13 +104,13 @@
 
                         <div class="input-group col-3">
                             <div class="input-group">
-                                <select style="background: #E9ECEF;border-top-left-radius:5px;border-bottom-left-radius:5px;padding-left: 4px;">
+                                <select id="select_1" style="background: #E9ECEF;border-top-left-radius:5px;border-bottom-left-radius:5px;padding-left: 4px;">
                                             <option disabled selected>Search By</option>
                                                <option>By Order Id</option> 
                                                <option>By SPU</option> 
                                                <option>By SKU</option>
                                             </select>
-                                <input type="text" class="form-control" id="search_box" placeholder="Search" aria-label="Text input with dropdown button">
+                                <input type="text" class="form-control" id="search_box_1" placeholder="Search" aria-label="Text input with dropdown button">
                             </div>
                         </div>
 
@@ -650,8 +650,26 @@
 
 
 function displayOrders() {
-            // $('#example').hide();
-            $('#main_orders').css('display','block');
+
+    var option = $('#select_1').find(":selected").text();
+    var searchVal = $('#search_box_1').val();
+    console.log(option);
+    console.log(searchVal);
+    // $('#example').hide();
+           // $('#main_orders').css('display','block');
+            $.ajax({
+                url: '/search',
+                type:'POST',
+                data: {
+                    "searchBy":"orderId",
+                    "searchString":"24108"
+
+                },
+                success:function(data){
+                  var results = newArray(data.data);
+                    getOrders(results);
+                }
+            })
             
 }
 
