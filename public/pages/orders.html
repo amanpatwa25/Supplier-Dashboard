@@ -87,7 +87,15 @@
 
                             </li>
                             </ul>
-                    </div>
+
+                            <div class="dataTables_info col-11" id="example_info" role="status" aria-live="polite"></div>
+                            <button type="button" onclick=displayNext() class="btn col-1" style="background: #273c75; float: right;  color: white;">Next</button>
+
+
+
+
+
+                        </div>
 
                 </div>
             </div>
@@ -101,13 +109,13 @@
 
                         <div class="input-group col-3">
                             <div class="input-group">
-                                <select style="background: #E9ECEF;border-top-left-radius:5px;border-bottom-left-radius:5px;padding-left: 4px;">
+                                <select id="select_1" style="background: #E9ECEF;border-top-left-radius:5px;border-bottom-left-radius:5px;padding-left: 4px;">
                                             <option disabled selected>Search By</option>
                                                <option>By Order Id</option> 
                                                <option>By SPU</option> 
                                                <option>By SKU</option>
                                             </select>
-                                <input type="text" class="form-control" id="search_box" placeholder="Search" aria-label="Text input with dropdown button">
+                                <input type="text" class="form-control" id="search_box_1" placeholder="Search" aria-label="Text input with dropdown button">
                             </div>
                         </div>
 
@@ -119,9 +127,27 @@
                         </div>
 
                         <div class="input-group col-3">
-                            <button type="button" class="btn" style="background: #273c75;color: white;">Apply Filter</button>
+                            <button type="button" onclick="displayOrders()" class="btn" style="background: #273c75;color: white;">Apply Filter</button>
                         </div>
                     </div>
+                    <div class="row no_margin no_padding" id="main_orders" style="display: none;">
+                            <table id="example_search" class="display table">
+                                    <thead>
+                                        <tr>
+                                            <th>Order Id</th>
+                                            <th>SKU</th>
+                                            <th>Title</th>
+                                            <th>Qty</th>
+                                            <th>Price</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+
+                                </table>
+
+                    </div>
+                    
+                    
                     <div class="row no_margin no_padding">
                         <table id="example" class="display table">
                             <thead>
@@ -135,10 +161,10 @@
                                 </tr>
                             </thead>
                         </table>
+
                         <div class="dataTables_info col-11" id="example_info" role="status" aria-live="polite"></div>
                         <button type="button" class="btn col-1" style="background: #273c75;display: inline; float: right; color: white;">Next</button>
-                    
-                    </div>
+                            </div>
                     
                     
 
@@ -179,8 +205,23 @@
                             </div>
     
                             <div class="input-group col-3">
-                                <button type="button" class="btn" style="background: #273c75;color: white;">Apply Filter</button>
+                                <button type="button" onclick="displayPackages()" class="btn" style="background: #273c75;color: white;">Apply Filter</button>
                             </div>
+                        </div>
+
+                        <div class="row no_margin no_padding" id="main_packages" style="display: none;">
+                                <table id="example_filter_package" class="display table">
+                                        <thead>
+                                            <tr>
+                                                <th>Waybill no</th>
+                                                <th>Order number</th>
+                                                <th>Qty</th>
+                                                <th>Amount</th>
+                                                
+                                            </tr>
+                                        </thead>
+                                    </table>
+                            
                         </div>
                         <div class="row no_margin no_padding">
                                 <table id="example_package" class="display table">
@@ -197,6 +238,8 @@
                                 <div class="dataTables_info col-11" id="example_info" role="status" aria-live="polite"></div>
                                 <button type="button" class="btn col-1" style="background: #273c75;display: inline; float: right; color: white;">Next</button>
                             
+
+
 
                             </div>
                                
@@ -233,8 +276,20 @@
                             </div>
     
                             <div class="input-group col-3">
-                                <button type="button" class="btn" style="background: #273c75;color: white;">Apply Filter</button>
+                                <button type="button" onclick="displayShipped()" class="btn" style="background: #273c75;color: white;">Apply Filter</button>
                             </div>
+                        </div>
+                        <div class="row no_margin no_padding" id="main_shipped" style="display: none;">
+                                <table id="example_filter_shipped" class="display table">
+                                        <thead>
+                                                    <tr>
+                                                        <th>Package No</th>
+                                                        <th>No of Orders</th>
+                                                        <th>Total Amount</th>
+                                                       </tr>
+                                                </thead>
+                                                </table>
+
                         </div>
                         <div class="row no_margin no_padding">
                                 <table id="example_shipped" class="display table">
@@ -246,11 +301,13 @@
                                                    </tr>
                                             </thead>
                                             </table>
+
                                             <div class="dataTables_info col-11" id="example_info" role="status" aria-live="polite"></div>
                                             <button type="button" class="btn col-1" style="background: #273c75; float: right; color: white;">Next</button>
 
 
                                         </div>
+                       </div>
     
                  
                                
@@ -292,161 +349,43 @@
                                                     </div>
                             
                                                     <div class="input-group col-3">
-                                                        <button type="button" class="btn" style="background: #273c75;color: white;">Apply Filter</button>
+                                                        <button type="button" onclick="displayIntransit()" class="btn" style="background: #273c75;color: white;">Apply Filter</button>
                                                     </div>
                                                 </div>
+
+                                                <div class="row no_margin no_padding" id="main_intransit" style="display: none;">
+                                                        <table id="example_filter_intransit" class="display table">
+                                                                <thead>
+                                                                            <tr>
+                                                                                <th>Package No</th>
+                                                                                <th>No of Orders</th>
+                                                                                <th>Total Amount</th>
+                                                                               </tr>
+                                                                        </thead>
+                                                        </table>                
+
+                                                </div>
+
                                                 <div class="row no_margin no_padding">
                                                         <table id="example_intransit" class="display table">
                                                             <thead>
                                                                         <tr>
+                                                
                                                                             <th>Package No</th>
                                                                             <th>No of Orders</th>
                                                                             <th>Total Amount</th>
                                                                            </tr>
                                                                     </thead>
-                                                                    <tbody>
-                                                                        <tr>
-                                                            
-                                                                                <tr>
-                                                                                        <td>Tiger Nixon</td>
-                                                                                        <td>System Architect</td>
-                                                                                        <td>51</td>                                                             
-                                                                                        <td><button type="button" class="btn btn-primary">Print waybill</button></td>
-                                                                                </tr>
-                            
-                                                                                <tr>    <td>Garrett Winters</td>
-                                                                                        <td>Accountant</td>
-                                                                                        <td>555</td>
-                                                                                        <td><button type="button" class="btn btn-primary">Print waybill</button></td>
-                                                                                </tr>
-                                                                                <tr>
-                                                                                        <td>Ashton Cox</td>
-                                                                                        <td>Junior Technical Author</td>
-                                                                                        <td>4488</td>
-                                                                                        <td><button type="button" class="btn btn-primary">Print waybill</button></td> 
-                                                                                </tr>            
-                                                                                <tr>
-                                                                                        <td>Jennifer Chang</td>
-                                                                                        <td>Regional Director</td>
-                                                                                        <td>48909</td>
-                                                                                        <td><button type="button" class="btn btn-primary">Print waybill</button></td>                                                   
-                                                                                </tr>
-                    
-                                                                                <tr>
-                                                                                    <td>Sakura Yamamoto</td>
-                                                                                    <td>Support Engineer</td>
-                                                                                    <td>900</td>
-                                                                                    <td><button type="button" class="btn btn-primary">Print waybill</button></td>
-                                                                                    </tr>
-                    
-                                                                                    <tr>
-                                                                                        <td>Zenaida Frank</td>
-                                                                                        <td>Software Engineer</td>
-                                                                                         <td>63</td>
-                                                                                        <td><button type="button" class="btn btn-primary">Print waybill</button></td>         
-                                                                                         </tr>
-                                                                                    <tr>
-                                                                                        <td>Zorita Serrano</td>
-                                                                                        <td>Software Engineer</td>
-                                                                                        <td>56</td>
-                                                                                        <td><button type="button" class="btn btn-primary">Print waybill</button></td>         
-                                                                                                                                                      </tr>
-                                                                                    <tr>
-                                                                                        <td>Jennifer Acosta</td>
-                                                                                        <td>Junior Javascript Developer</td>
-                                                                                        <td>60</td>     
-                                                                                        <td><button type="button" class="btn btn-primary">Print waybill</button></td>                                                                   <td>43</td>
-                                                                                    </tr>
-                                                                                    <tr>
-                                                                                        <td>Cara Stevens</td>
-                                                                                        <td>Sales Assistant</td>
-                                                                                         <td>46</td>
-                                                                                         <td><button type="button" class="btn btn-primary">Print waybill</button></td>         
-                                                                                   </tr>
-                                                                                    <tr>
-                                                                                        <td>Hermione Butler</td>
-                                                                                        <td>Regional Director</td>
-                                                                                         <td>47</td>
-                                                                                         <td><button type="button" class="btn btn-primary">Print waybill</button></td>         
-                    
-                                                                                    </tr>
-                                                                                    <tr>
-                                                                                        <td>Lael Greer</td>
-                                                                                        <td>Systems Administrator</td>
-                                                                                         <td>21</td>
-                                                                                         <td><button type="button" class="btn btn-primary">Print waybill</button></td>         
-                                                                                    </tr>
-                                                                                    <tr>
-                                                                                        <td>Jonas Alexander</td>
-                                                                                        <td>Developer</td>
-                                                                                        <td>30</td>
-                                                                                        <td><button type="button" class="btn btn-primary">Print waybill</button></td>         
-                    
-                                                                                    </tr>
-                                                                                    <tr>
-                                                                                        <td>Shad Decker</td>
-                                                                                        <td>Regional Director</td>
-                    
-                                                                                        <td>51</td>
-                                                                                        <td><button type="button" class="btn btn-primary">Print waybill</button></td>         
-                                                                                   </tr>
-                                                                                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                                                                                
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                                                                        </tbody>
+                                                                    
                                                                     </table>
+
                                                                     <div class="dataTables_info col-11" id="example_info" role="status" aria-live="polite"></div>
                                                                     <button type="button" class="btn col-1" style="background: #273c75;display: inline; float: right; color: white;">Next</button>
-                                                                    
-                                                                </div>
+                                                                      </div>
                             
                                          
                                                        
-                                </div>
+                            
                                 
                     
                                         
@@ -476,9 +415,28 @@
                         </div>
 
                         <div class="input-group col-3">
-                            <button type="button" class="btn" style="background: #273c75;color: white;">Apply Filter</button>
+                            <button type="button" onclick="displayDelivered()" class="btn" style="background: #273c75;color: white;">Apply Filter</button>
                         </div>
                     </div>
+                    <div class="row no_margin no_padding" id="main_delivered" style="display: none;">
+                            <table id="example_deliver" class="display table">
+                                    <thead>
+                                        <tr>
+                                                <th>Order Id</th>
+                                                <th>SKU</th>
+                                                <th>Title</th>
+                                                <th>WayBill No</th>
+                                                <th>Package No</th>
+                                                <th>Qty</th>
+                                                <th>Price</th>
+                                                <th>Status</th>
+                                        </tr>
+                                    </thead>
+
+                                </table>
+
+                    </div>
+
                     <div class="row no_margin no_padding container">
 
                             
@@ -499,6 +457,7 @@
                          <div class="dataTables_info col-11" id="example_info" role="status" aria-live="polite"></div>
                          <button type="button" class="btn col-1" style="background: #273c75;display: inline; float: right; color: white;">Next</button>   
                     
+ 
                     
                     
                     </div>
@@ -506,17 +465,6 @@
 
                 </div>
             </div>
-
-
-            
-           
-            
-
-
-            <!-- <div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">...</div>
-            <div class="tab-pane fade" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">...</div> -->
-
-         
 
             <div class="tab-pane fade" id="v-pills-cancelled" role="tabpanel" aria-labelledby="v-pills-cancelled-tab">
                 <div class="container no_margin tab_holder" id="all_orders">
@@ -546,9 +494,24 @@
                             </div>
     
                             <div class="input-group col-3">
-                                <button type="button" class="btn" style="background: #273c75;color: white;">Apply Filter</button>
+                                <button type="button" onclick="displayCancel()" class="btn" style="background: #273c75;color: white;">Apply Filter</button>
                             </div>
                         </div>
+
+                        <div class="row no_margin no_padding" id="main_cancel" style="display: none;">
+                                <table id="example_cancel" class="display table">
+                                        <thead>
+                                            <tr>
+                                                <th>Package No</th>
+                                                <th>No of Orders</th>
+                                                <th>Total Amount</th>
+                                            </tr>
+                                        </thead>
+                                </table>       
+
+
+                        </div>
+
                         <div class="row no_margin no_padding">
                                 <table id="example_cancelled" class="display table">
                                     <thead>
@@ -644,51 +607,6 @@
                                                                 <td>51</td>
                                                                 <td><button type="button" class="btn btn-primary">Print waybill</button></td>         
                                                             </tr>
-                                                            
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                                                        
-
-
-
-
-
-
 
 
                                                 </tbody>
@@ -746,6 +664,52 @@
 
     <script>
 
+
+function displayOrders() {
+
+    var option = $('#select_1').find(":selected").text();
+    var searchVal = $('#search_box_1').val();
+    console.log(option);
+    console.log(searchVal);
+    // $('#example').hide();
+           // $('#main_orders').css('display','block');
+            $.ajax({
+                url: '/search',
+                type:'POST',
+                data: {
+                    "searchBy":"orderId",
+                    "searchString":"24108"
+
+                },
+                success:function(data){
+                  var results = newArray(data.data);
+                    getOrders(results);
+                }
+            })
+            
+}
+
+function displayCancel(){
+    $('#main_cancel').css('display','block');
+}        
+
+function displayDelivered(){
+    $('#main_delivered').css('display','block');
+}  
+
+function displayIntransit(){
+    $('#main_intransit').css('display','block');
+}
+
+function displayShipped(){
+    $('#main_shipped').css('display','block');
+}
+
+function displayPackages()
+{
+    $('#main_packages').css('display','block');
+}
+  
 
 
 // $('#example').DataTable({
@@ -840,6 +804,10 @@ function newCreateAwb(arr){
             paging: false,
             data: results,
             destroy: true,
+            
+
+
+
             'rowGroup': {
                 // 'dataSrc': products.title,
                 'startRender': function(rows, group) {
@@ -913,6 +881,7 @@ function newCreateAwb(arr){
 
         function deliveredOrders(results){
             var table1= $('#example_delivered').DataTable({
+                paging: false,
                 data: results,
                 destroy: true,
                 paging: false,
@@ -1036,6 +1005,7 @@ var groupColumn = 0;
             $('#v-pills-shipped-tab').click(function(){
                 // $('#example_shipped').empty();
                 var table5 = $('#example_shipped').DataTable({
+                    paging: false,
                     ajax:'/shippedOrders',
                 data: 'data',
                 paging: false,
@@ -1110,6 +1080,7 @@ var groupColumn = 0;
             
             $('#v-pills-messages-tab').click(function(){
              $('#example_package').DataTable({
+                paging: false,
                 ajax: "/readyToShipOrders",
                 data: 'data',
                 paging: false,
