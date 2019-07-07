@@ -83,14 +83,14 @@ var OrdersController ={
             
                 var str = "sellInit.categories."+ indexes[0]+".endNodeData."+indexes[1]+".templateId";
                 // var test[str]=templateId;
-                var results = await template.updateOne({_id:'5d21e92f2372ad2a162475eb'},{"$set":{[str]:templateId}});
+                var results = await template.updateOne({_id:'5d2258bf7cd18069f24f4241'},{"$set":{[str]:templateId}});
                 console.log("result1",results);
                 
             }
             else{
                 
             var str = "sellInit.categories."+ indexes[0]+".data."+indexes[1]+".endNodeData."+indexes[2]+".templateId";
-            var results = await template.updateOne({_id:'5d21e92f2372ad2a162475eb'},{"$set": {[str] :templateId}});
+            var results = await template.updateOne({_id:'5d2258bf7cd18069f24f4241'},{"$set": {[str] :templateId}});
             console.log("result2",results);
             }
             // console.log(results);
@@ -106,10 +106,22 @@ var OrdersController ={
 
     getSellInit: async function(req,res){
         try{
-            var result = await template.find({_id:'5d21e92f2372ad2a162475eb'});
+            var result = await template.find({_id:'5d2258bf7cd18069f24f4241'});
             console.log("Result",JSON.stringify(result,undefined,3));
             res.json({sellInit: result});
             
+        }
+        catch(err){
+            console.log(err);
+            
+        }
+    },
+
+    bulksellinit : async function(req,res){
+        try{
+            var obj = JSON.parse(req.body.bulkobj);
+            var result = await template.updateOne({_id:'5d2258bf7cd18069f24f4241'},obj);
+            console.log("Result",result);
         }
         catch(err){
             console.log(err);

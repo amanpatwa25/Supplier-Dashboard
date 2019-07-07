@@ -20,7 +20,7 @@ module.exports = function(app){
     app.route('/updateTemplateId').post(OrdersController.updateTemplateId);
     app.route('/getsellInit').post(OrdersController.getSellInit);
     app.route('/changeOrderStatus').post(OrdersController.status);
-
+    app.route('/bulksellinit').post(OrdersController.bulksellinit);
 
     app.route('/search').post(OrdersController.search);
 
