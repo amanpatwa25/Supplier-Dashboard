@@ -17,8 +17,8 @@ module.exports = function(app){
     app.route('/readyToShipOrders').get(OrdersController.readyToShipOrders); //create pacakages tab
     app.route('/shippedOrders').get(OrdersController.shippedOrders);    // shipped Orders
     app.route('/inTransitOrders').get(OrdersController.inTransitOrders); //intransit order
-    
-
+    app.route('/updateTemplateId').post(OrdersController.updateTemplateId);
+    app.route('/getsellInit').post(OrdersController.getSellInit);
     app.route('/changeOrderStatus').post(OrdersController.status);
 
 

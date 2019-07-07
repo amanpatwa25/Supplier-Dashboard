@@ -3,7 +3,8 @@ var Orders = require('../models/Orders');
 var OrderStatus = require('../../config/OrderStatuses');
 var OrderService = require('../services/OrderService');
 var OrderStatus = require('../../config/OrderStatuses');
-
+var template = require('../models/template');
+var ObjectId = require('mongodb').ObjectID;
 
 var OrdersController ={
 
@@ -68,6 +69,51 @@ var OrdersController ={
                 code:500,
                 msg:error,
             });
+        }
+    },
+
+
+    updateTemplateId: async function(req,res){
+        try{
+            // var body = JSON.parse(req.body);
+            console.log(req.body);
+            var indexes = req.body.index;
+            var templateId = req.body.templateId;
+            if(indexes.length === 2 ){
+            
+                var str = "sellInit.categories."+ indexes[0]+".endNodeData."+indexes[1]+".templateId";
+                // var test[str]=templateId;
+                var results = await template.updateOne({_id:'5d221eee46dc560a8f2c193c'},{"$set":{[str]:templateId}});
+                console.log("result1",results);
+                
+            }
+            else{
+                
+            var str = "sellInit.categories."+ indexes[0]+".data."+indexes[1]+".endNodeData."+indexes[2]+".templateId";
+            var results = await template.updateOne({_id:'5d221eee46dc560a8f2c193c'},{"$set": {[str] :templateId}});
+            console.log("result2",results);
+            }
+            // console.log(results);
+
+            res.json({"success":1});
+            
+        }
+        catch(err){
+            console.log(err);
+            res.json({"success":0});
+        }
+    },
+
+    getSellInit: async function(req,res){
+        try{
+            var result = await template.find({_id:'5d221eee46dc560a8f2c193c'});
+            console.log("Result",JSON.stringify(result,undefined,3));
+            res.json({sellInit: result});
+            
+        }
+        catch(err){
+            console.log(err);
+            
         }
     },
 
