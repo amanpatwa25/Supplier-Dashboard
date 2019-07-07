@@ -8,4 +8,4 @@ var Orders=mongoose.Schema({
     strict:false,
 });
 
-module.exports = mongoose.model('NS_new_sellinit',Orders,'NS_new_sellinit');
+module.exports = mongoose.model('NS_test_tempEngine',Orders,'NS_test_tempEngine');

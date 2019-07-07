@@ -83,14 +83,14 @@ var OrdersController ={
             
                 var str = "sellInit.categories."+ indexes[0]+".endNodeData."+indexes[1]+".templateId";
                 // var test[str]=templateId;
-                var results = await template.updateOne({_id:'5d221eee46dc560a8f2c193c'},{"$set":{[str]:templateId}});
+                var results = await template.updateOne({_id:'5d21e92f2372ad2a162475eb'},{"$set":{[str]:templateId}});
                 console.log("result1",results);
                 
             }
             else{
                 
             var str = "sellInit.categories."+ indexes[0]+".data."+indexes[1]+".endNodeData."+indexes[2]+".templateId";
-            var results = await template.updateOne({_id:'5d221eee46dc560a8f2c193c'},{"$set": {[str] :templateId}});
+            var results = await template.updateOne({_id:'5d21e92f2372ad2a162475eb'},{"$set": {[str] :templateId}});
             console.log("result2",results);
             }
             // console.log(results);
