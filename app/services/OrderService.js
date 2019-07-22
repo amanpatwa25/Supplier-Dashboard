@@ -62,7 +62,9 @@ var service = {
                         soldAt: prod.money.transaction.soldAt,
                         productStatus: prod.productStatus,
                         quantity:        prod.quantity?(prod.quantity):1,                      //change this later
-                        // imageUrl:   prod.productDetails.thumb,
+                        thumb:   prod.productDetails.thumb,
+                        buyer:order.buyer,
+                        seller:prod.seller,
                     });
 
                     // mOrder.totalAmt += prod.money.seller.listedPrice;
