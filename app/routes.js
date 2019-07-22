@@ -10,20 +10,22 @@ module.exports = function(app){
     app.route("/transaction").get(OrdersController.transactions);
     
 
-    app.route('/allOrders').get(OrdersController.allOrders);   // all orders tab
-    app.route('/deliveredOrders').get(OrdersController.DeliveredOrders);  // delivered tab
-    app.route('/cancelledOrders').get(OrdersController.CancelledOrders);    //cancelled tab
-    app.route('/placedOrders').get(OrdersController.placedOrders);   //create orders awbs tab
-    app.route('/readyToShipOrders').get(OrdersController.readyToShipOrders); //create pacakages tab
-    app.route('/shippedOrders').get(OrdersController.shippedOrders);    // shipped Orders
-    app.route('/inTransitOrders').get(OrdersController.inTransitOrders); //intransit order
+    // app.route('/allOrders').get(OrdersController.allOrders);   // all orders tab
+    // app.route('/deliveredOrders').get(OrdersController.DeliveredOrders);  // delivered tab
+    // app.route('/cancelledOrders').get(OrdersController.CancelledOrders);    //cancelled tab
+    // app.route('/placedOrders').get(OrdersController.placedOrders);   //create orders awbs tab
+    // app.route('/readyToShipOrders').get(OrdersController.readyToShipOrders); //create pacakages tab
+    // app.route('/shippedOrders').get(OrdersController.shippedOrders);    // shipped Orders
+    // app.route('/inTransitOrders').get(OrdersController.inTransitOrders); //intransit order
     
 
-    app.route('/changeOrderStatus').post(OrdersController.status);
+    // app.route('/changeOrderStatus').post(OrdersController.status);
 
 
-    app.route('/search').post(OrdersController.search);
+    // app.route('/search').post(OrdersController.search);
 
+
+    app.route('/getOrders').post(OrdersController.getOrders);
 
     app.use(function(req,res,next){
         res.status(404).send("page not found");

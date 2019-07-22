@@ -37,36 +37,41 @@ var service = {
 
             res.forEach(order => {
 
-                let mOrder = {
-                    orderId: order.orderId,
-                    date: order.orderDate,
-                    products: [],
-                    totalAmt:0,
-                    allSkus:[],
-                }
+                // let mOrder = {
+                //     orderId: order.orderId,
+                //     orderDate: order.orderDate,
+                //     products: [],
+                //     totalAmt:0,
+                //     allSkus:[],
+                // };
 
                 order.products.forEach(prod => {
                     
-                    if(!prod.productDetails || !prod.money) return;
+                    // if(!prod.productDetails || !prod.money) return;
                     
-                    mOrder.products.push({
+                    // mOrder.products.push({
+                    results.push({
+
+                        orderId: order.orderId,
+                        orderDate: order.orderDate,
                         productId:  prod.productId,
-                        sku:        prod.productDetails.variantSku,
+                        // sku:        prod.productDetails.variantSku,
                         title:      prod.productDetails.title,
-                        description: prod.productDetails.description,
-                        price:      prod.money.seller.listedPrice,
+                        // description: prod.productDetails.description,
+                        listedPrice:      prod.money.seller.listedPrice,
+                        soldAt: prod.money.transaction.soldAt,
                         productStatus: prod.productStatus,
-                        qty:        1,                      //change this later
-                        imageUrl:   prod.productDetails.thumb,
+                        quantity:        prod.quantity?(prod.quantity):1,                      //change this later
+                        // imageUrl:   prod.productDetails.thumb,
                     });
 
-                    mOrder.totalAmt += prod.money.seller.listedPrice;
-                    mOrder.allSkus.push(prod.productDetails.variantSku);
+                    // mOrder.totalAmt += prod.money.seller.listedPrice;
+                    // mOrder.allSkus.push(prod.productDetails.variantSku);
                 });
                 
-                if(!mOrder.products.length) return;
+                // if(!mOrder.products.length) return;
 
-                results.push(mOrder);
+                // results.push(mOrder);
             });
             return results;
         } catch (error) {
