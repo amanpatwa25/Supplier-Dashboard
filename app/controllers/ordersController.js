@@ -269,6 +269,34 @@ var OrdersController ={
             });
         }
     },
+
+
+    getAllUniqueStatus:async function(req,res){
+
+
+        try{
+
+            var results = await OrderService.getAllUniqueStatus();
+
+            res.status(200).send({
+                success:true,
+                code:200,
+                length:results.length,
+                data:results,
+            });
+
+        } catch (error) {
+            console.log("error",error);
+            res.status(500).send({
+                success:false,
+                code:500,
+                msg:error,
+            });
+        }
+    },
 }
 
+        
+
+    
 module.exports = OrdersController;
