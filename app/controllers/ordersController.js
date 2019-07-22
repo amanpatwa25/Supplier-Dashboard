@@ -242,6 +242,33 @@ var OrdersController ={
             });
         }
     },
+
+
+    getOrders:async function(req,res){
+
+
+        try {
+            var pageno = req.body.pageNo;
+
+            if(!pageno) pageno = 0;
+
+            var results  = await OrderService.getOrders(pageno);
+
+            res.status(200).send({
+                success:true,
+                code:200,
+                length:results.length,
+                data:results,
+            });
+
+        } catch (error) {
+            res.status(500).send({
+                success:false,
+                code:500,
+                msg:error,
+            });
+        }
+    },
 }
 
 module.exports = OrdersController;
