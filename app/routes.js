@@ -26,8 +26,9 @@ module.exports = function(app){
 
 
     app.route('/getOrders').post(OrdersController.getOrders);
-
+    app.route('/getAllUniqueStatus').get(OrdersController.getAllUniqueStatus);
     app.use(function(req,res,next){
         res.status(404).send("page not found");
     });
+    
 }

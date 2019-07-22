@@ -138,6 +138,40 @@ var service = {
             console.log('err',err);
         }
     },
+getAllUniqueStatus : async function (){
+    try {
+      var results= await Orders.find({}).distinct("products.productStatus").lean();
+      return results;
+    } catch (error){
+console.log("error",error) ;
+        
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
 
 
