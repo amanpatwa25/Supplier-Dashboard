@@ -60,6 +60,7 @@ var service = {
                         transactionId:  prod.transactionId,
                         // sku:        prod.productDetails.variantSku,
                         title:      prod.productDetails.title,
+                        transactionType: prod.transactionType,
                         // description: prod.productDetails.description,
                         listedPrice:      prod.money.seller.listedPrice,
                         soldAt: prod.money.transaction.soldAt,
