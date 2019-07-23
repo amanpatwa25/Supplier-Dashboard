@@ -49,7 +49,7 @@ var OrdersController ={
     lastOneMonth: async function(req,res){
 
         try{
-            
+
 
         }
         catch(error){
@@ -264,10 +264,12 @@ var OrdersController ={
 
         try {
             var pageno = req.body.pageNo;
+            var from = req.body.from;
+            var to = req.body.to;
 
             if(!pageno) pageno = 0;
 
-            var results  = await OrderService.getOrders(pageno);
+            var results  = await OrderService.getOrders(pageno,from,to);
 
             res.status(200).send({
                 success:true,
