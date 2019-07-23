@@ -21,9 +21,10 @@ module.exports = function(app){
     app.route('/getsellInit').post(OrdersController.getSellInit);
     app.route('/changeOrderStatus').post(OrdersController.status);
     app.route('/bulksellinit').post(OrdersController.bulksellinit);
-
+    app.route('/lastOneMonth').post(OrdersController.lastOneMonth);
     app.route('/search').post(OrdersController.search);
 
+    app.route('/updateCategories').post(OrdersController.updateCategories);
 
     app.use(function(req,res,next){
         res.status(404).send("page not found");

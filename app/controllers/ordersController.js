@@ -5,6 +5,7 @@ var OrderService = require('../services/OrderService');
 var OrderStatus = require('../../config/OrderStatuses');
 var template = require('../models/template');
 var ObjectId = require('mongodb').ObjectID;
+var categories = require('../models/Categories');
 
 var OrdersController ={
 
@@ -106,7 +107,8 @@ var OrdersController ={
 
     getSellInit: async function(req,res){
         try{
-            var result = await template.find({_id:'5d2258bf7cd18069f24f4241'});
+            var id = req.body.id;
+            var result = await template.find({_id:id});
             console.log("Result",JSON.stringify(result,undefined,3));
             res.json({sellInit: result});
             
@@ -300,6 +302,20 @@ var OrdersController ={
             });
         }
     },
+
+    updateCategories: async function(req,res){
+        try{
+            console.log("Inside")
+            var result = await categories.updateMany({},{$unset:{"pickupCharges":35}});
+            console.log("Result",result);
+            res.json({"status":1});
+            
+        }
+        catch(err){
+            res.json({status:0});
+            console.log(err)
+        }
+    }
 }
 
 module.exports = OrdersController;
