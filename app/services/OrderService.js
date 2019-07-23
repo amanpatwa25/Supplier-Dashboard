@@ -170,33 +170,79 @@ var service = {
     console.log("error",error) ;
         
     }
+},
+find: async function(){
+try{
+        if (OrderType) find['status.productStatus'] = OrderType;
+        if (prod.productStatus!= OrderType ) return;
+               if(searchBy==='productStatus') find['products.productStatus']=searchString;
+        if(searchBy==='products') find['logtype']=Number(searchString);
+        // if(searchBy==='SPU') findString['product.productDetails.variantSku']=searchString;                
+        
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+catch(err){
+    console.log(err);
 }
+     
+
+    // console.log('find in search  ',find);
+} 
+}          
+//     var res = await Orders.find(findString).lean();
+
+//     var results = [];
+
+//         res.forEach(order => {
+
+//             let mOrder = {
+//                 orderId: order.orderId,
+//                 date: order.orderDate,
+//                 products: [],
+//                 totalAmt:0,
+//                 allSkus:[],
+//             }
+
+//             order.products.forEach(prod => {
+                
+//                 if(!prod.productDetails || !prod.money) return;
+                
+//                 mOrder.products.push({
+//                     productId:  prod.productId,
+//                     sku:        prod.productDetails.variantSku,
+//                     title:      prod.productDetails.title,
+//                     description: prod.productDetails.description,
+//                     price:      prod.money.seller.listedPrice,
+//                     productStatus: prod.productStatus,
+//                     qty:        1,                      //change this later
+//                     imageUrl:   prod.productDetails.thumb,
+//                 });
+
+//                 mOrder.totalAmt += prod.money.seller.listedPrice;
+//                 mOrder.allSkus.push(prod.productDetails.variantSku);
+//             });
+            
+//             if(!mOrder.products.length) return;
+
+//             results.push(mOrder);
+//         });
+//         return results;
+// }catch(err){
+//     console.log('err',err);
+// }
+// },
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 module.exports = service;

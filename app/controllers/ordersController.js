@@ -316,7 +316,9 @@ var OrdersController ={
         try{
 
             var results = await OrderService.getAllUniqueStatus();
+            var orderType =req.body.orderType;
 
+ 
             res.status(200).send({
                 success:true,
                 code:200,
@@ -334,6 +336,7 @@ var OrdersController ={
         }
     },
 }
+
 
         
 
