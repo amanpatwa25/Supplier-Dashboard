@@ -46,6 +46,21 @@ var OrdersController ={
         }
     },
 
+    lastOneMonth: async function(req,res){
+
+        try{
+            
+
+        }
+        catch(error){
+            res.status(500).send({
+                success:false,
+                code: 500,
+                msg: error
+            });
+        }
+    },
+
     DeliveredOrders:async function(req,res){
 
         try {
