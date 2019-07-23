@@ -5,7 +5,7 @@ var OrderStatus = require('../../config/OrderStatuses');
 var service = {
 
 
-    getOrders: async function (pageNo, OrderType,from,to) {
+    getOrders: async function (pageNo,from,to, OrderType) {
 
         var pageSize = 25;
 
@@ -16,21 +16,23 @@ var service = {
             if (OrderType) findString['products.productStatus'] = OrderType;
 
             if(from && to ){
-                from = from.split('-').map(el=>Number(el));
-                to = to.split('-').map(el=>Number(el));
+                // from = from.split('-').map(el=>Number(el));
+                // to = to.split('-').map(el=>Number(el));
 
+                console.log("from",from);
+                console.log("to",to);
                 
-                console.log('from',new Date(from[0],from[1],from[2]));
-                console.log('to',new Date(to[0],to[1],to[2]));
+                // console.log('from',(new Date(from[0],from[1],from[2])).getTime()/1000.0);
+                // console.log('to',(new Date(to[0],to[1],to[2]))/1000.0);
                 
-
-                findString['orderDate']={'$gte':new Date(from[0],from[1],from[2]), '$lt':new Date(to[0],to[1],to[2])};
+                findString['orderDate']= {'$gte':from, '$lt':to }
+                // findString['orderDate']={'$gte':((new Date(from[0],from[1],from[2]))/-1000), '$lt':((new Date(to[0],to[1],to[2]))/-1000)};
             }         
-
+            console.log("pageNo",pageNo);
             console.log('findstring',JSON.stringify(findString,null,3));
             
 
-            var res = await Orders.find(findString).skip(pageNo * pageSize).limit(pageSize).lean();
+            var res = await Orders.find(findString).lean();
             console.log('res',res.length);
             
             var results = [];
@@ -58,6 +60,7 @@ var service = {
                         transactionId:  prod.transactionId,
                         // sku:        prod.productDetails.variantSku,
                         title:      prod.productDetails.title,
+                        transactionType: prod.transactionType,
                         // description: prod.productDetails.description,
                         listedPrice:      prod.money.seller.listedPrice,
                         soldAt: prod.money.transaction.soldAt,
@@ -82,6 +85,8 @@ var service = {
 
         }
     },
+
+    // sendAsPerToAndFrom: async function(from,to)
 
     search : async function (OrderType,searchBy,searchString){
 

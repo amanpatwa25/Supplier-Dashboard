@@ -27,9 +27,11 @@ var OrdersController ={
             var from = req.query.from;
             var to = req.query.to;
 
+            console.log("Req",req);
+
             if(!pageno) pageno = 0;
 
-            var results  = await OrderService.getOrders(pageno,null,from,to);
+            var results  = await OrderService.getOrders(pageno,from,to);
 
             res.status(200).send({
                 success:true,
@@ -42,6 +44,21 @@ var OrdersController ={
                 success:false,
                 code:500,
                 msg:error,
+            });
+        }
+    },
+
+    lastOneMonth: async function(req,res){
+
+        try{
+
+
+        }
+        catch(error){
+            res.status(500).send({
+                success:false,
+                code: 500,
+                msg: error
             });
         }
     },
@@ -248,11 +265,15 @@ var OrdersController ={
 
 
         try {
-            var pageno = req.body.pageNo;
+            var pageno = parseInt(req.body.pageNo);
+            var from = parseInt(req.body.from);
+            var to = parseInt(req.body.to);
+
+            console.log("Req",req);
 
             if(!pageno) pageno = 0;
 
-            var results  = await OrderService.getOrders(pageno);
+            var results  = await OrderService.getOrders(pageno,from,to);
 
             res.status(200).send({
                 success:true,
