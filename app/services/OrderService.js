@@ -19,10 +19,11 @@ var service = {
                 // from = from.split('-').map(el=>Number(el));
                 // to = to.split('-').map(el=>Number(el));
 
-                console.log("fromq",from);
+                console.log("from",from);
+                console.log("to",to);
                 
-                console.log('from',(new Date(from[0],from[1],from[2])).getTime()/1000.0);
-                console.log('to',(new Date(to[0],to[1],to[2]))/1000.0);
+                // console.log('from',(new Date(from[0],from[1],from[2])).getTime()/1000.0);
+                // console.log('to',(new Date(to[0],to[1],to[2]))/1000.0);
                 
                 findString['orderDate']= {'$gte':from, '$lt':to }
                 // findString['orderDate']={'$gte':((new Date(from[0],from[1],from[2]))/-1000), '$lt':((new Date(to[0],to[1],to[2]))/-1000)};
