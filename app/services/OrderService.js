@@ -1,9 +1,23 @@
 
 var Orders = require('../models/Orders');
 var OrderStatus = require('../../config/OrderStatuses');
+var NewOrders = require('../models/newOrders');
 
 var service = {
 
+
+    // getLength: async function(result){
+    //     var length = 0
+    //     result.forEach(function(prod){
+    //         if(prod.products){
+    //         count = prod.products.length;
+
+    //         length += count;
+    //         console.log("Length",length)
+    //         }
+    //     })
+    //     return length
+    // },
 
     getOrders: async function (pageNo,from,to, OrderType) {
 
@@ -32,7 +46,7 @@ var service = {
             console.log('findstring',JSON.stringify(findString,null,3));
             
 
-            var res = await Orders.find(findString).lean();
+            var res = await NewOrders.find(findString).lean();
             console.log('res',res.length);
             
             var results = [];

@@ -24,6 +24,7 @@ module.exports = function(app){
 
     // app.route('/search').post(OrdersController.search);
 
+    // app.route('/getLength').post(OrdersController.getLength);
 
     app.route('/getOrders').post(OrdersController.getOrders);
     app.route('/getAllUniqueStatus').get(OrdersController.getAllUniqueStatus);

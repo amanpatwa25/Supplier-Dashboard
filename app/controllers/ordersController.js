@@ -19,6 +19,24 @@ var OrdersController ={
         res.sendFile('transactions.html', { root: path.join(__dirname, '../../public/pages') });
     },
 
+    // getLength:async function(req,res){
+    //     try{
+    //     var result = await Orders.find({}).lean();
+    //     // console.log("Result",result);
+    //     // var length = 0;
+    //     var aman =await OrderService.getLength(result);
+        
+    //     res.send({
+    //         data:aman,
+    //         success: 1
+    //     })
+    // }
+    // catch(err){
+    //     console.log(err);
+        
+    // }
+    // },
+
     allOrders:async function(req,res){
 
 
