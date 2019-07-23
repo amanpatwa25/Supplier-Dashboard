@@ -8,7 +8,7 @@ module.exports = function(app){
     app.route("/").get(OrdersController.index);
     app.route("/listing").get(OrdersController.listing);
     app.route("/transaction").get(OrdersController.transactions);
-    
+    app.route("/lastOneMonth").post(OrdersController.lastOneMonth);
 
     // app.route('/allOrders').get(OrdersController.allOrders);   // all orders tab
     // app.route('/deliveredOrders').get(OrdersController.DeliveredOrders);  // delivered tab
