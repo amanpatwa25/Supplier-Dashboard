@@ -46,7 +46,7 @@ var service = {
             console.log('findstring',JSON.stringify(findString,null,3));
             
 
-            var res = await NewOrders.find(findString).sort({_id:-1}).lean();
+            var res = await NewOrders.find(findString).sort({orderDate:1}).lean();
             console.log('res',res.length);
             
             var results = [];
