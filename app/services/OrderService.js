@@ -55,6 +55,7 @@ var service = {
                         orderId: order.orderId,
                         orderDate: order.orderDate,
                         productId:  prod.productId,
+                        transactionId:  prod.transactionId,
                         // sku:        prod.productDetails.variantSku,
                         title:      prod.productDetails.title,
                         // description: prod.productDetails.description,
@@ -140,12 +141,14 @@ var service = {
             console.log('err',err);
         }
     },
-getAllUniqueStatus : async function (){
-    try {
-      var results= await Orders.find({}).distinct("products.productStatus").lean();
-      return results;
-    } catch (error){
-console.log("error",error) ;
+
+
+    getAllUniqueStatus : async function (){
+        try {
+        var results= await Orders.find({}).distinct("products.productStatus").lean();
+        return results;
+        } catch (error){
+    console.log("error",error) ;
         
     }
 }
