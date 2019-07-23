@@ -29,7 +29,7 @@ var OrdersController ={
 
             if(!pageno) pageno = 0;
 
-            var results  = await OrderService.getOrders(pageno,null,from,to);
+            var results  = await OrderService.getOrders(pageno,from,to);
 
             res.status(200).send({
                 success:true,
