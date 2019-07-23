@@ -265,9 +265,9 @@ var OrdersController ={
 
 
         try {
-            var pageno = req.body.pageNo;
-            var from = req.body.from;
-            var to = req.body.to;
+            var pageno = parseInt(req.body.pageNo);
+            var from = parseInt(req.body.from);
+            var to = parseInt(req.body.to);
 
             console.log("Req",req);
 

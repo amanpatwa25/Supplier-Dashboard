@@ -32,7 +32,7 @@ var service = {
             console.log('findstring',JSON.stringify(findString,null,3));
             
 
-            var res = await Orders.find(findString).skip(pageNo * pageSize).limit(pageSize).lean();
+            var res = await Orders.find(findString).lean();
             console.log('res',res.length);
             
             var results = [];
