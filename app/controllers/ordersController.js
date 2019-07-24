@@ -42,14 +42,15 @@ var OrdersController ={
 
         try {
             var pageno = req.query.pageNo;
-            var from = req.query.from;
-            var to = req.query.to;
+            var from = parseInt(req.query.from);
+            var to = parseInt(req.query.to);
+            var orderType = req.query.orderType;
 
-            console.log("Req",req);
+            // console.log("Req",req.body);
 
             if(!pageno) pageno = 0;
 
-            var results  = await OrderService.getOrders(pageno,from,to);
+            var results  = await OrderService.getOrders(pageno,from,to,orderType);
 
             res.status(200).send({
                 success:true,
@@ -286,12 +287,12 @@ var OrdersController ={
             var pageno = parseInt(req.body.pageNo);
             var from = parseInt(req.body.from);
             var to = parseInt(req.body.to);
-
-            console.log("Req",req);
+            var orderType = req.body.orderType;
+            console.log("Req",req.body);
 
             if(!pageno) pageno = 0;
 
-            var results  = await OrderService.getOrders(pageno,from,to);
+            var results  = await OrderService.getOrders(pageno,from,to,orderType);
 
             res.status(200).send({
                 success:true,

@@ -63,7 +63,7 @@ var service = {
 
                 order.products.forEach(prod => {
                     
-                    // if(!prod.productDetails || !prod.money) return;
+                    if(prod.productStatus !== OrderType) return;
                     
                     // mOrder.products.push({
                     results.push({
