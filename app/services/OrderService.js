@@ -63,7 +63,7 @@ var service = {
 
                 order.products.forEach(prod => {
 
-                    if (prod.productStatus !== OrderType) return;
+                    if (OrderType && prod.productStatus !== OrderType) return;
 
                     // mOrder.products.push({
                     results.push({

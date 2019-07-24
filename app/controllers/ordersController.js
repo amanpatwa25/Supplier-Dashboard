@@ -287,8 +287,8 @@ var OrdersController ={
             var pageno = parseInt(req.body.pageNo);
             var from = parseInt(req.body.from);
             var to = parseInt(req.body.to);
-            var orderType = req.body.orderType;
-            console.log("Req",req.body);
+            if(req.body.orderType) var orderType = req.body.orderType;
+            // console.log("Req",req.body);
 
             if(!pageno) pageno = 0;
 

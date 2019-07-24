@@ -4,7 +4,7 @@ var controller = {
 
     getUserDetails :async function(req,res){
 
-        console.log('req',req.body);
+        // console.log('req',req.body);
         
         try {
             if(!req.body.userId) res.status(400).send({success:false,msg:'userId not provided'});
