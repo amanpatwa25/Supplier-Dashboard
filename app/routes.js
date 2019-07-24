@@ -1,4 +1,5 @@
 var OrdersController = require('./controllers/ordersController');
+var UserController = require('./controllers/UserController');
 
 module.exports = function(app){
 
@@ -28,6 +29,9 @@ module.exports = function(app){
 
     app.route('/getOrders').post(OrdersController.getOrders);
     app.route('/getAllUniqueStatus').get(OrdersController.getAllUniqueStatus);
+    
+    app.route('/getUserDetails').post(UserController.getUserDetails);
+
     app.use(function(req,res,next){
         res.status(404).send("page not found");
     });
