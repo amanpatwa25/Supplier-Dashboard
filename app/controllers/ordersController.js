@@ -398,6 +398,7 @@ var OrdersController = {
         try 
         {
             var arr = req.body;
+            console.log(JSON.stringify(arr,undefined,3));
 
             for (i = 0; i < arr.length; i++) {
                 var result = await chats.updateOne({ _id: arr[i]._id }, { '$set': { "product.sku": arr[i].sku } }).lean();
