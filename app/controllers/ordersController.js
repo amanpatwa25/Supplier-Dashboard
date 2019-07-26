@@ -376,7 +376,7 @@ var OrdersController ={
         try{
             var pageNo = req.body.pageNo
 
-            var result = await chats.find({},{_id:1,product:1}).skip(pageNo).limit(10000).lean();
+            var result = await chats.find({},{_id:1,product:1}).skip(pageNo*1000).limit(10000).lean();
             console.log("Result",result);
             res.send({
                 success:1,
