@@ -383,7 +383,7 @@ var OrdersController = {
             var pageNo = req.body.pageNo
 
             var result = await chats.find({}, { _id: 1, product: 1 }).skip(pageNo * 10000).limit(10000).lean();
-            console.log("Result", result);
+            // console.log("Result", result);
             res.send({
                 success: 1,
                 data: result
@@ -398,12 +398,16 @@ var OrdersController = {
         try 
         {
             var arr = req.body;
-            console.log("arr", arr);
 
             for (i = 0; i < arr.length; i++) {
                 var result = await chats.updateOne({ _id: arr[i]._id }, { '$set': { "product.sku": arr[i].sku } }).lean();
-                console.log(result + ". " + i);
+               
+                console.log("arr", arr[i].sku);
+                // console.log(result + ". " + i);
             }
+            res.send({
+                success:1
+            })
         }
         catch (err) {
             console.log(err);

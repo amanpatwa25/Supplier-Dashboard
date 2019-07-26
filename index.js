@@ -9,7 +9,7 @@ app.use(morgan('dev'));
 app.use(cors());
 
 app.use(bodyParser.urlencoded({extended:true}));
-app.use(bodyParser.json());
+app.use(bodyParser.json({limit:'50mb'}));
 
 app.use(express.static(__dirname+"/public"));
 // app.use(express.static(__dirname+"/public/pages"));
