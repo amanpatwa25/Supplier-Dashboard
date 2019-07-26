@@ -360,11 +360,12 @@ var OrdersController ={
             var percent = Number(req.body.percent);
             var transactionId = Number(req.body.transactionId);
 
-            var result = await newOrders.find({"products.transactionId":transactionId},{$set:{"products.0.transactionType": transactionType,"products.money.seller.commision":commission,"products.money.seller.commisionPercent":percent,"products.money.seller.productEarnings":earning}}).lean();
+            var result = await newOrders.updateOne({"products.transactionId":transactionId},{$set:{"products.transactionType": transactionType,"products.money.seller.commision":commission,"products.money.seller.commisionPercent":percent,"products.money.seller.productEarnings":earning}}).lean();
 
             console.log("Result",result);
             res.send({
                 success:1,
+                result:result
             })
         }
         catch(err){
@@ -376,7 +377,7 @@ var OrdersController ={
         try{
             var pageNo = req.body.pageNo
 
-            var result = await chats.find({},{_id:1,product:1}).skip(pageNo*1000).limit(10000).lean();
+            var result = await chats.find({},{_id:1,product:1}).skip(pageNo*10000).limit(10000).lean();
             console.log("Result",result);
             res.send({
                 success:1,
