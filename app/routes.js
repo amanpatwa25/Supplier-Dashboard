@@ -30,6 +30,7 @@ module.exports = function(app){
     app.route('/getOrders').post(OrdersController.getOrders);
     app.route('/getAllUniqueStatus').get(OrdersController.getAllUniqueStatus);
     app.route('/getChats').post(OrdersController.getChats);
+    app.route('/updateChats').post(OrdersController.updateChats);
     app.use(function(req,res,next){
         res.status(404).send("page not found");
     });

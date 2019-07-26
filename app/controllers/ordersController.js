@@ -387,6 +387,21 @@ var OrdersController ={
         catch(err){
             console.log(err);
         }
+    },
+    updateChats: async function(req,res){
+        try{
+
+            var sku = req.body.sku;
+            var id = req.body.id;
+            var result = await chats.find({_id:id},{$set:{"product.sku":sku}}).lean();
+            console.log(result);
+            res.send({
+                success:result,
+            })
+        }
+        catch(err){
+            console.log(err);
+        }
     }
 }
 
