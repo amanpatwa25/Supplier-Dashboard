@@ -1,9 +1,10 @@
 var path  =  require('path');
 var Orders = require('../models/Orders');
+var newOrders = require('../models/newOrders');
 var OrderStatus = require('../../config/OrderStatuses');
 var OrderService = require('../services/OrderService');
 var OrderStatus = require('../../config/OrderStatuses');
-
+var chats = require('../models/chat');
 
 var OrdersController ={
 
@@ -335,6 +336,54 @@ var OrdersController ={
             });
         }
     },
+
+    changeStatus: async function(req,res){
+        try{
+            var id = Number(req.body.transactionId);
+            console.log("Id",id);
+            var result = await newOrders.find({"products.transactionId":id},{_id:0,products:1}).lean();
+            console.log("Result",result);
+            res.json({
+                result1:result
+            })
+        }
+        catch(err){
+            console.log(err);
+            
+        }
+    },
+    changed: async function(req,res){
+        try{
+            var commission = Number(req.body.commission);
+            var earning = Number(req.body.earnings);
+            var transactionType = req.body.transactionType;
+            var percent = Number(req.body.percent);
+            var transactionId = Number(req.body.transactionId);
+
+            var result = await newOrders.find({"products.transactionId":transactionId},{$set:{"products.0.transactionType": transactionType,"products.money.seller.commision":commission,"products.money.seller.commisionPercent":percent,"products.money.seller.productEarnings":earning}}).lean();
+
+            console.log("Result",result);
+            res.send({
+                success:1,
+            })
+        }
+        catch(err){
+            console.log(err);
+        }
+    },
+
+    getChats: async function(req,res){
+        try{
+            var pageNo = req.body.pageNo
+
+            var result = await chats.find({},{_id:1,product:1}).skip(pageNo).limit(10000).lean();
+            console.log("Result",result);
+
+        }
+        catch(err){
+            console.log(err);
+        }
+    }
 }
 
 

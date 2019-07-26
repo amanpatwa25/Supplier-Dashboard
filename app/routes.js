@@ -25,9 +25,11 @@ module.exports = function(app){
     // app.route('/search').post(OrdersController.search);
 
     // app.route('/getLength').post(OrdersController.getLength);
-
+    app.route('/changeToSelfShip').post(OrdersController.changeStatus);
+    app.route('/changeStatus').post(OrdersController.changed);
     app.route('/getOrders').post(OrdersController.getOrders);
     app.route('/getAllUniqueStatus').get(OrdersController.getAllUniqueStatus);
+    app.route('/getChats').post(OrdersController.getChats);
     app.use(function(req,res,next){
         res.status(404).send("page not found");
     });
