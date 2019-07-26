@@ -393,7 +393,7 @@ var OrdersController ={
 
             var sku = req.body.sku;
             var id = req.body.id;
-            var result = await chats.find({_id:id},{$set:{"product.sku":sku}}).lean();
+            var result = await chats.updateOne({_id:id},{'$set':{"product.sku":sku}}).lean();
             console.log(result);
             res.send({
                 success:result,
