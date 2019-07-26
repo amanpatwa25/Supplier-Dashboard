@@ -378,6 +378,10 @@ var OrdersController ={
 
             var result = await chats.find({},{_id:1,product:1}).skip(pageNo).limit(10000).lean();
             console.log("Result",result);
+            res.send({
+                success:1,
+                data:result
+            })
 
         }
         catch(err){
