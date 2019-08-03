@@ -5,6 +5,7 @@ var OrderStatus = require('../../config/OrderStatuses');
 var OrderService = require('../services/OrderService');
 var OrderStatus = require('../../config/OrderStatuses');
 var chats = require('../models/chat');
+var Categories = require('../models/categories');
 
 var OrdersController = {
 
@@ -341,7 +342,7 @@ var OrdersController = {
         try {
             var id = Number(req.body.transactionId);
             console.log("Id", id);
-            var result = await newOrders.find({ "products.transactionId": id }, { _id: 0, products: 1 }).lean();
+            var result = await newOrders.find({ "products.transactionId": id }, { _id: 0, "products.$": 1 }).lean();
             console.log("Result", result);
             res.json({
                 result1: result
@@ -411,6 +412,50 @@ var OrdersController = {
             })
         }
         catch (err) {
+            console.log(err);
+        }
+    },
+
+
+
+    getCounterId:async function (counterName){
+        var counterSeq;
+        try{
+        var data=await countersModel.findOneAndUpdate({counterName:counterName}, {$inc:{counterSeq:1}}, {new: true}).lean();
+        counterSeq=data.counterSeq;
+        return counterSeq;
+        }catch(e){
+        console.log(e);
+        return "NIL";
+        }
+    },
+
+    uploadBulk: async function(req, res){
+        try{
+            var obj = req.body.obj;
+            counter = await this.getCounterId('products');
+            obj.productId = counter;
+            obj.baseProduct = counter;
+            console.log("obj",JSON.stringify(obj,undefined,3));
+            // var result = newOrders.create(obj)
+
+        }
+        catch(err){
+            console.log("Error",err);
+            res.send({
+                success: false
+            })
+        }
+    },
+
+    getNewCategories: async function(req,res){
+        try {
+            var result = await Categories.find({}).lean();
+            res.send({
+                result:result
+            })
+        }
+        catch(err){
             console.log(err);
         }
     }
