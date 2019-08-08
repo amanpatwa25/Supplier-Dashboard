@@ -5,7 +5,7 @@ var OrderStatus = require('../../config/OrderStatuses');
 var service = {
 
 
-    getOrders: async function (pageNo, OrderType,from,to) {
+    getOrders: async function (pageNo, OrderType, from, to) {
 
         var pageSize = 25;
 
@@ -15,24 +15,24 @@ var service = {
 
             if (OrderType) findString['products.productStatus'] = OrderType;
 
-            if(from && to ){
-                from = from.split('-').map(el=>Number(el));
-                to = to.split('-').map(el=>Number(el));
+            if (from && to) {
+                from = from.split('-').map(el => Number(el));
+                to = to.split('-').map(el => Number(el));
 
-                
-                console.log('from',new Date(from[0],from[1],from[2]));
-                console.log('to',new Date(to[0],to[1],to[2]));
-                
 
-                findString['orderDate']={'$gte':new Date(from[0],from[1],from[2]), '$lt':new Date(to[0],to[1],to[2])};
-            }         
+                console.log('from', new Date(from[0], from[1], from[2]));
+                console.log('to', new Date(to[0], to[1], to[2]));
 
-            console.log('findstring',JSON.stringify(findString,null,3));
-            
+
+                findString['orderDate'] = { '$gte': new Date(from[0], from[1], from[2]), '$lt': new Date(to[0], to[1], to[2]) };
+            }
+
+            console.log('findstring', JSON.stringify(findString, null, 3));
+
 
             var res = await Orders.find(findString).skip(pageNo * pageSize).limit(pageSize).lean();
-            console.log('res',res.length);
-            
+            console.log('res', res.length);
+
             var results = [];
 
             res.forEach(order => {
@@ -41,30 +41,30 @@ var service = {
                     orderId: order.orderId,
                     date: order.orderDate,
                     products: [],
-                    totalAmt:0,
-                    allSkus:[],
+                    totalAmt: 0,
+                    allSkus: [],
                 }
 
                 order.products.forEach(prod => {
-                    
-                    if(!prod.productDetails || !prod.money) return;
-                    
+
+                    if (!prod.productDetails || !prod.money) return;
+
                     mOrder.products.push({
-                        productId:  prod.productId,
-                        sku:        prod.productDetails.variantSku,
-                        title:      prod.productDetails.title,
+                        productId: prod.productId,
+                        sku: prod.productDetails.variantSku,
+                        title: prod.productDetails.title,
                         description: prod.productDetails.description,
-                        price:      prod.money.seller.listedPrice,
+                        price: prod.money.seller.listedPrice,
                         productStatus: prod.productStatus,
-                        qty:        1,                      //change this later
-                        imageUrl:   prod.productDetails.thumb,
+                        qty: 1,                      //change this later
+                        imageUrl: prod.productDetails.thumb,
                     });
 
                     mOrder.totalAmt += prod.money.seller.listedPrice;
                     mOrder.allSkus.push(prod.productDetails.variantSku);
                 });
-                
-                if(!mOrder.products.length) return;
+
+                if (!mOrder.products.length) return;
 
                 results.push(mOrder);
             });
@@ -75,65 +75,109 @@ var service = {
         }
     },
 
-    search : async function (OrderType,searchBy,searchString){
+    search: async function (OrderType, searchBy, searchString) {
 
-        var findString={};
+        var findString = {};
 
-        try{
+        try {
             if (OrderType) findString['products.productStatus'] = OrderType;
 
-            if(searchString && searchBy){
-                if(searchBy==='SKU') findString['products.productDetails.variantSku']=searchString;
-                if(searchBy==='orderId') findString['orderId']=Number(searchString);
+            if (searchString && searchBy) {
+                if (searchBy === 'SKU') findString['products.productDetails.variantSku'] = searchString;
+                if (searchBy === 'orderId') findString['orderId'] = Number(searchString);
                 // if(searchBy==='SPU') findString['product.productDetails.variantSku']=searchString;                
-                
+
             }
 
-            console.log('findString in search  ',findString);
-            
+            console.log('findString in search  ', findString);
+
             var res = await Orders.find(findString).lean();
 
             var results = [];
 
-                res.forEach(order => {
+            res.forEach(order => {
 
-                    let mOrder = {
-                        orderId: order.orderId,
-                        date: order.orderDate,
-                        products: [],
-                        totalAmt:0,
-                        allSkus:[],
-                    }
+                let mOrder = {
+                    orderId: order.orderId,
+                    date: order.orderDate,
+                    products: [],
+                    totalAmt: 0,
+                    allSkus: [],
+                }
 
-                    order.products.forEach(prod => {
-                        
-                        if(!prod.productDetails || !prod.money) return;
-                        
-                        mOrder.products.push({
-                            productId:  prod.productId,
-                            sku:        prod.productDetails.variantSku,
-                            title:      prod.productDetails.title,
-                            description: prod.productDetails.description,
-                            price:      prod.money.seller.listedPrice,
-                            productStatus: prod.productStatus,
-                            qty:        1,                      //change this later
-                            imageUrl:   prod.productDetails.thumb,
-                        });
+                order.products.forEach(prod => {
 
-                        mOrder.totalAmt += prod.money.seller.listedPrice;
-                        mOrder.allSkus.push(prod.productDetails.variantSku);
+                    if (!prod.productDetails || !prod.money) return;
+
+                    mOrder.products.push({
+                        productId: prod.productId,
+                        sku: prod.productDetails.variantSku,
+                        title: prod.productDetails.title,
+                        description: prod.productDetails.description,
+                        price: prod.money.seller.listedPrice,
+                        productStatus: prod.productStatus,
+                        qty: 1,                      //change this later
+                        imageUrl: prod.productDetails.thumb,
                     });
-                    
-                    if(!mOrder.products.length) return;
 
-                    results.push(mOrder);
+                    mOrder.totalAmt += prod.money.seller.listedPrice;
+                    mOrder.allSkus.push(prod.productDetails.variantSku);
                 });
-                return results;
-        }catch(err){
-            console.log('err',err);
+
+                if (!mOrder.products.length) return;
+
+                results.push(mOrder);
+            });
+            return results;
+        } catch (err) {
+            console.log('err', err);
         }
     },
-}
 
+
+    getSellerAllPendingProducts: async function (userId, status) {
+        var res = await Orders.find({ "products.seller.userId": userId, "products.productStatus": "ORDER_PLACED" }).lean();
+        console.log('res', res.length);
+
+        var results = [];
+
+        res.forEach(order => {
+
+            let mOrder = {
+                orderId: order.orderId,
+                date: order.orderDate,
+                products: [],
+                totalAmt: 0,
+                allSkus: [],
+            }
+
+            order.products.forEach(prod => {
+
+                if (!prod.productDetails || !prod.money) return;
+
+                mOrder.products.push({
+                    productId: prod.productId,
+                    sku: prod.productDetails.variantSku,
+                    title: prod.productDetails.title,
+                    description: prod.productDetails.description,
+                    price: prod.money.seller.listedPrice,
+                    productStatus: prod.productStatus,
+                    qty: 1,                      //change this later
+                    imageUrl: prod.productDetails.thumb,
+                });
+
+                mOrder.totalAmt += prod.money.seller.listedPrice;
+                mOrder.allSkus.push(prod.productDetails.variantSku);
+            });
+
+            if (!mOrder.products.length) return;
+
+            results.push(mOrder);
+        });
+        return results;
+    }
+
+
+}
 
 module.exports = service;

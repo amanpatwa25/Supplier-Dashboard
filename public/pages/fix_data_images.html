@@ -1,0 +1,94 @@
+<html>
+
+<head>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+
+    <!-- <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.11/lodash.core.js"
+            integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+            crossorigin="anonymous"></script> -->
+
+
+
+</head>
+
+<body>
+    <script src="all_data.js"></script>
+    <script>
+
+        var received_data = [];
+        var working_data = [];
+        var key = "";
+        var images = [];
+        var alphabets = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"];
+        var imagesURL=[
+        "https://cdn1.coutloot.com/chatImages/1562510949567.png",
+        "https://cdn1.coutloot.com/chatImages/1562510956094.png",
+        "https://cdn1.coutloot.com/chatImages/1562510963448.png",
+        "https://cdn1.coutloot.com/chatImages/1562510972128.png",
+        "https://cdn1.coutloot.com/chatImages/1562511159317.png",
+        "https://cdn1.coutloot.com/chatImages/1562511168324.png",
+        "https://cdn1.coutloot.com/chatImages/1562511176573.png",
+        "https://cdn1.coutloot.com/chatImages/1562511184590.png",
+        "https://cdn1.coutloot.com/chatImages/1562511184590.png",
+        "https://cdn1.coutloot.com/chatImages/1562511248636.png",
+        "https://cdn1.coutloot.com/chatImages/1562511255473.png",
+        "https://cdn1.coutloot.com/chatImages/1562511264671.png",
+        "https://cdn1.coutloot.com/chatImages/1562511330440.png",
+        "https://cdn1.coutloot.com/chatImages/1562511337722.png",
+        "https://cdn1.coutloot.com/chatImages/1562511353958.png",
+        "https://cdn1.coutloot.com/chatImages/1562511359931.png",
+        "https://cdn1.coutloot.com/chatImages/1562511427529.png",
+        "https://cdn1.coutloot.com/chatImages/1562511435835.png",
+        "https://cdn1.coutloot.com/chatImages/1562511442377.png",
+        "https://cdn1.coutloot.com/chatImages/1562511450189.png",
+        "https://cdn1.coutloot.com/chatImages/1562511514201.png",
+        "https://cdn1.coutloot.com/chatImages/1562511521244.png",
+        "https://cdn1.coutloot.com/chatImages/1562511529340.png",
+        "https://cdn1.coutloot.com/chatImages/1562511536272.png",
+        "https://cdn1.coutloot.com/chatImages/1562511589316.png",
+        "https://cdn1.coutloot.com/chatImages/1562511637759.png",
+        ];
+
+
+        window.onload = function () {
+            get_data("mobile_brand");
+        };
+
+        function get_data(key) {
+            var data = {
+                'key': key
+            };
+            console.log(key);
+            $.ajax({
+                url: 'http://139.59.94.58:5000/getFromKeys',
+                type: 'POST',
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(data),
+
+                success: function (data) {
+                    console.log(data);
+                    received_data=data.data;
+                    working_data=received_data;
+                    process_working_data();
+                }
+            });
+
+        }
+
+        function process_working_data()
+        {
+            
+            for(var i=0;i<working_data.length;i++){
+                if(working_data[i].displayIcon == ""){
+                    working_data[i].displayIcon = imagesURL[alphabets.indexOf(working_data[i].displayTitle.split("")[0].toLowerCase())]; 
+                }   
+            }
+            
+        }
+
+    </script>
+</body>
+
+</html>
