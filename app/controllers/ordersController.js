@@ -226,6 +226,36 @@ var OrdersController = {
             });
         }
     },
+    
+
+    getsellerdetails: async function (req, res) {
+        try {
+            var userId  = req.body.userId;
+
+            // if(!pageno) pageno = 0;
+            console.log(userId);
+            
+            var results = await OrderService.getAllSellerDetails(userId, "order status");
+            console.log('results---', results);
+
+            res.status(200).send({
+                success: true,
+                code: 200,
+                data: results,
+            });
+
+        } catch (error) {
+            res.status(500).send({
+                success: false,
+                code: 500,
+                msg: error.message,
+            });
+        }
+    },
+
+
+
+
 
 
     search: async function (req, res) {

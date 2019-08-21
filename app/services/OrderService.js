@@ -175,9 +175,58 @@ var service = {
             results.push(mOrder);
         });
         return results;
+    } ,
+
+
+
+    getAllSellerDetails : async function (userId , status) {
+        console.log('inside ------', userId, '-----', status);
+        // var res = await Orders.find({}).lean();
+        var res = await Orders.find({ "products.seller.userId": userId, "products.productStatus": "ORDER_PLACED" }).lean();
+        console.log('----', res);
+        var results = [];
+        res.forEach(order => {
+            let mOrder = {
+                orderId: order.orderId,
+                date: order.orderDate,
+                products: [],
+                totalAmt: 0,
+                allSkus: [],
+            }
+
+            order.products.forEach(prod => {
+
+                if (!prod.productDetails || !prod.money) return;
+
+                mOrder.products.push({
+                    productId: prod.productId,
+                    sku: prod.productDetails.variantSku,
+                    title: prod.productDetails.title,
+                    description: prod.productDetails.description,
+                    price: prod.money.seller.listedPrice,
+                    productStatus: prod.productStatus,
+                    qty: 1,                      //change this later
+                    imageUrl: prod.productDetails.thumb,
+                });
+
+                mOrder.totalAmt += prod.money.seller.listedPrice;
+                mOrder.allSkus.push(prod.productDetails.variantSku);
+            });
+
+            if (!mOrder.products.length) return;
+
+            results.push(mOrder);
+        });
+        return results;
     }
 
 
-}
 
+
+    
+
+
+
+
+}
 module.exports = service;

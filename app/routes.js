@@ -22,7 +22,7 @@ module.exports = function(app){
     app.route('/changeOrderStatus').post(OrdersController.status);
 
     app.route('/sellerconfirmproducts').post(OrdersController.sellerconfirmproducts);
-    // app.route('/scheduledpickups').post(OrdersController.scheduledpickups);
+    app.route('/getsellerdetailsinfo').post(OrdersController.getsellerdetails);
     app.route('/search').post(OrdersController.search);
 
 
