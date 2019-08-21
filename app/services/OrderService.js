@@ -183,7 +183,7 @@ var service = {
         console.log('inside ------', userId, '-----', status);
         // var res = await Orders.find({}).lean();
         var res = await Orders.find({ "products.seller.userId": userId, "products.productStatus": "ORDER_PLACED" }).lean();
-        console.log('----', res);
+        console.log('----', res);g
         var results = [];
         res.forEach(order => {
             let mOrder = {
