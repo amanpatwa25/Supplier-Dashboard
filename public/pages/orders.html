@@ -1,0 +1,1959 @@
+<html>
+
+<head>
+    <title></title>
+    <meta content="">
+    <style></style>
+    <link rel="stylesheet" href="../css/pages/orders.css">
+    <link rel="stylesheet" href="../css/pages/main.css">
+    <link rel="stylesheet" href="../css/font_awesome.css">
+    <link rel="stylesheet" href="../css/datatable.css">
+    <link rel="stylesheet" href="../css/conversation.css">
+    <link rel="stylesheet" href="../css/scrollbar/scrollbar.css">
+    <link href="../css/bootstap431.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Lato&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+    <link href="https://unpkg.com/tabulator-tables@4.2.7/dist/css/tabulator.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.18/datatables.min.css"/>
+ 
+  
+
+</head>
+
+<body class="body" style="font-family:Lato;">
+
+    <div class="header row no_margin">
+        <div class="col-6 no_margin">
+            <select id="main_menu">
+                <option disabled selected>Main Menu</option>
+                <option>Order Manager</option>
+                <option>Money Manager</option>
+                <option>My Profile</option>
+                <option>Logout</option>
+            </select>
+        </div>
+        <div class="col-6 no_margin">
+            <img class="img-fluid" id="header_logo" src="../assets/coutloot_logo_white.png"></img>
+        </div>
+    </div>
+
+
+    <div class="main_holder no_margin row">
+        <div class="nav flex-column nav-pills no_margin col-2 shadow" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+            <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true"><img class="img-fluid img-thumbnail" src="../assets/all orders.png" style="width:30px; border: 0 none;"></img>All Orders</a>
+            <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false"><img class="img-fluid img-thumbnail" src="../assets/awb.png" style="width:30px; border: 0 none;"></img>Create Order AWBS</a>
+            <a class="nav-link" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-messages" role="tab" aria-controls="v-pills-messages" aria-selected="false"><img class="img-fluid img-thumbnail" src="../assets/package.png" style="width:30px; border: 0 none;"></img>Create Packages</a>
+            <a class="nav-link" id="v-pills-shipped-tab" data-toggle="pill"  href="#v-pills-shipped" role="tab" aria-controls="v-pills-shipped" aria-selected="false"><img class="img-fluid img-thumbnail" src="../assets/to be shipped.png" style="width:30px; border: 0 none;"></img>To Be Shipped</a>
+            <a class="nav-link" id="v-pills-intransit-tab" data-toggle="pill" href="#v-pills-intransit" role="tab" aria-controls="v-pills-intransit" aria-selected="false"><img class="img-fluid img-thumbnail" src="../assets/in transit.png" style="width:30px; border: 0 none;"></img>In Transit</a>
+            <a class="nav-link" id="v-pills-delivered-tab" data-toggle="pill" href="#v-pills-delivered" role="tab" aria-controls="v-pills-delivered" aria-selected="false"><img class="img-fluid img-thumbnail" src="../assets/delivered.png" style="width:30px; border: 0 none;"></img>Delivered Orders</a>
+            <a class="nav-link" id="v-pills-cancelled-tab" data-toggle="pill" href="#v-pills-cancelled" role="tab" aria-controls="v-pills-cancelled" aria-selected="false"><img class="img-fluid img-thumbnail" src="../assets/cancel (1) - Copy.png" style="width:30px; border: 0 none;"></img>Cancelled Orders</a>
+        </div>
+        <!-- <img class="img-fluid img-thumbnail" src="../assets/cancel (1) - Copy.png"></img> -->
+        <div class="tab-content no_margin col-10 no_padding" id="v-pills-tabContent">
+
+
+            <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
+                <div class="container no_margin tab_holder" id="create_awb">
+                    <h3 class="tab_header">New Orders - Create AWB</h3>
+
+                    <div class="row no_margin" style="padding-top: 5px;padding-bottom: 15px;">
+
+                        <div class="input-group col-3">
+                            <div class="input-group">
+                                <select style="background: #E9ECEF;border-top-left-radius:5px;border-bottom-left-radius:5px;padding-left: 4px;">
+                                            <option disabled selected>Search By</option>
+                                               <option>By Order Id</option> 
+                                               <option>By SPU</option> 
+                                               <option>By SKU</option>
+                                            </select>
+                                <input type="text" class="form-control" id="search_box" placeholder="Search" aria-label="Text input with dropdown button">
+                            </div>
+
+
+
+
+                        </div>
+
+                        <div class="input-group col-3">
+                            <button type="button" class="btn" style="background: #273c75;color: white;">Apply Filter</button>
+                        </div>
+                    </div>
+
+                    <div class="row no_margin">
+                        <ul class="list-group" style="width: -webkit-fill-available;">
+                            <li class="list-group-item">
+
+                            </li>
+                            </ul>
+
+                            <div class="dataTables_info col-11" id="example_info" role="status" aria-live="polite"></div>
+                            <button type="button" onclick=displayNext() class="btn col-1" style="background: #273c75; float: right;  color: white;">Next</button>
+
+
+
+
+
+                        </div>
+
+                </div>
+            </div>
+
+
+
+            <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
+                <div class="container no_margin tab_holder" id="all_orders">
+                    <h3 class="tab_header">Find All Orders</h3>
+                    <div class="row no_margin" style="padding-top: 5px;">
+
+                        <div class="input-group col-3">
+                            <div class="input-group">
+                                <select id="select_orders" style="background: #E9ECEF;border-top-left-radius:5px;border-bottom-left-radius:5px;padding-left: 4px;">
+                                            <option disabled selected>Search By</option>
+                                               <option>orderId</option> 
+                                               <option>SPU</option> 
+                                               <option>SKU</option>
+                                            </select>
+                                <input type="text" class="form-control" id="input_orders" placeholder="Search" aria-label="Text input with dropdown button">
+                            </div>
+                        </div>
+
+                        <div class="input-group col-4" class="date_selector">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1">Between Dates</span>
+                            </div>
+                            <input type="text" name="daterange" class="form-control" placeholder="Select Date" aria-label="Username" aria-describedby="basic-addon1" style="background: white!important;cursor: pointer;" readonly>
+                        </div>
+
+                        <div class="input-group col-3">
+                            <button type="button" onclick="displayOrders()" class="btn" style="background: #273c75;color: white;">Apply Filter</button>
+                        </div>
+                    </div>
+                    <div class="row no_margin no_padding" id="main_orders" style="display: none;">
+                            <table id="example_search" class="display table">
+                                    <thead>
+                                        <tr>
+                                            <th>Order Id</th>
+                                            <th>SKU</th>
+                                            <th>Title</th>
+                                            <th>Qty</th>
+                                            <th>Price</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+
+                                </table>
+
+                    </div>
+                    
+                    
+                    <div class="row no_margin no_padding">
+                        <table id="example" class="display table">
+                            <thead>
+                                <tr>
+                                    <th>Order Id</th>
+                                    <th>SKU</th>
+                                    <th>Title</th>
+                                    <th>Qty</th>
+                                    <th>Price</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                        </table>
+
+                        <div class="dataTables_info col-11" id="example_info" role="status" aria-live="polite"></div>
+                        <button type="button" class="btn col-1" style="background: #273c75;display: inline; float: right; color: white;">Next</button>
+                            </div>
+                        <div class="col-11"></div>
+                        <button type="button" onclick=displayOrdersNext() class="btn col-1 mb-2" style="background: #273c75; float: right; color: white;">Next</button>
+                    </div>
+                    
+                    
+
+
+                </div>
+            </div>
+            
+
+
+
+            <div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">
+                <div class="container no_margin tab_holder" id="all_orders">
+                        <div>
+                            <h3 class="tab_header col-10" style="display: inline;">Create packages:</h3> 
+                                    <button type="button" id="button" class="btn btn-primary btn-md col-2" style="float: bottom-right;">Create Package</button>
+                        </div>
+
+                             
+                            <div class="row no_margin" style="padding-top: 5px;">
+    
+                            <div class="input-group col-3">
+                                <div class="input-group">
+                                    <select id="select_package" style="background: #E9ECEF;border-top-left-radius:5px;border-bottom-left-radius:5px;padding-left: 4px;">
+                                                <option disabled selected>Search By</option>
+                                                   <option>orderId</option> 
+                                                   <option>SPU</option> 
+                                                   <option>SKU</option>
+                                                </select>
+                                    <input type="text" id="input_package" class="form-control" id="search_box" placeholder="Search" aria-label="Text input with dropdown button">
+                                </div>
+                            </div>
+    
+                            <div class="input-group col-4" class="date_selector">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="basic-addon1">Between Dates</span>
+                                </div>
+                                <input type="text" name="daterange" class="form-control" placeholder="Select Date" aria-label="Username" aria-describedby="basic-addon1" style="background: white!important;cursor: pointer;" readonly>
+                            </div>
+    
+                            <div class="input-group col-3">
+                                <button type="button" onclick="displayPackages()" class="btn" style="background: #273c75;color: white;">Apply Filter</button>
+                            </div>
+                        </div>
+
+                        <div class="row no_margin no_padding" id="main_packages" style="display: none;">
+                                <table id="example_filter_package" class="display table">
+                                        <thead>
+                                            <tr>
+                                                <th>Waybill no</th>
+                                                <th>Order number</th>
+                                                <th>Qty</th>
+                                                <th>Amount</th>
+                                                
+                                            </tr>
+                                        </thead>
+                                    </table>
+                            
+                        </div>
+                        <div class="row no_margin no_padding">
+                                <table id="example_package" class="display table">
+                                    <thead>
+                                        <tr>
+                                            <th>Waybill no</th>
+                                            <th>Order number</th>
+                                            <th>Qty</th>
+                                            <th>Amount</th>
+                                            
+                                        </tr>
+                                    </thead>
+                                </table>
+                                <div class="dataTables_info col-11" id="example_info" role="status" aria-live="polite"></div>
+                                <button type="button" class="btn col-1" style="background: #273c75;display: inline; float: right; color: white;">Next</button>
+                            
+
+
+
+                                <div class="col-11"></div>
+                                <button type="button" onclick=displayPackagesNext() class="btn col-1 mb-2" style="background: #273c75; float: right; color: white;">Next</button>
+                            </div>
+                               
+                          </div>  
+                                
+                 </div>
+
+
+                 <div class="tab-pane fade" id="v-pills-shipped" role="tabpanel" aria-labelledby="v-pills-shipped-tab">
+                <div class="container no_margin tab_holder" id="all_orders">
+                    
+                            <h3 class="tab_header">To be shipped:</h3>                                          
+
+                             
+                            <div class="row no_margin" style="padding-top: 5px;">
+    
+                            <div class="input-group col-3">
+                                <div class="input-group">
+                                    <select id="select_shipped" style="background: #E9ECEF;border-top-left-radius:5px;border-bottom-left-radius:5px;padding-left: 4px;">
+                                                <option disabled selected>Search By</option>
+                                                   <option>orderId</option> 
+                                                   <option>SPU</option> 
+                                                   <option>SKU</option>
+                                                </select>
+                                    <input type="text" class="form-control" id="input_shipped" placeholder="Search" aria-label="Text input with dropdown button">
+                                </div>
+                            </div>
+    
+                            <div class="input-group col-4" class="date_selector">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="basic-addon1">Between Dates</span>
+                                </div>
+                                <input type="text" name="daterange" class="form-control" placeholder="Select Date" aria-label="Username" aria-describedby="basic-addon1" style="background: white!important;cursor: pointer;" readonly>
+                            </div>
+    
+                            <div class="input-group col-3">
+                                <button type="button" onclick="displayShipped()" class="btn" style="background: #273c75;color: white;">Apply Filter</button>
+                            </div>
+                        </div>
+                        <div class="row no_margin no_padding" id="main_shipped" style="display: none;">
+                                <table id="example_filter_shipped" class="display table">
+                                        <thead>
+                                                    <tr>
+                                                        <th>Package No</th>
+                                                        <th>No of Orders</th>
+                                                        <th>Total Amount</th>
+                                                       </tr>
+                                                </thead>
+                                                </table>
+
+                        </div>
+                        <div class="row no_margin no_padding">
+                                <table id="example_shipped" class="display table">
+                                    <thead>
+                                                <tr>
+                                                    <th>Package No</th>
+                                                    <th>No of Orders</th>
+                                                    <th>Total Amount</th>
+                                                   </tr>
+                                            </thead>
+                                            </table>
+
+                                            <div class="dataTables_info col-11" id="example_info" role="status" aria-live="polite"></div>
+                                            <button type="button" class="btn col-1" style="background: #273c75; float: right; color: white;">Next</button>
+
+
+                                        </div>
+                                            <div class="col-11"></div>
+                                            <button type="button" onclick=displayShippedNext() class="btn col-1 mb-2" style="background: #273c75; float: right; color: white;">Next</button>
+                       </div>
+    
+                 
+                               
+        </div>
+        
+
+                
+                                             
+                                                
+                                                
+                                            
+                                    </div>
+
+                                    <div class="tab-pane fade" id="v-pills-intransit" role="tabpanel" aria-labelledby="v-pills-intransit-tab">
+                                        <div class="container no_margin tab_holder" id="all_orders">
+                                            
+                                                    <h3 class="tab_header">Intransit</h3>                                          
+                    
+                                                     
+                                                    <div class="row no_margin" style="padding-top: 5px;">
+                            
+                                                    <div class="input-group col-3">
+                                                        <div class="input-group">
+                                                            <select id="select_intransit" style="background: #E9ECEF;border-top-left-radius:5px;border-bottom-left-radius:5px;padding-left: 4px;">
+                                                                        <option disabled selected>Search By</option>
+                                                                           <option>orderId</option> 
+                                                                           <option>SPU</option> 
+                                                                           <option>SKU</option>
+                                                                        </select>
+                                                            <input type="text" class="form-control" id="input_intransit" placeholder="Search" aria-label="Text input with dropdown button">
+                                                        </div>
+                                                    </div>
+                            
+                                                    <div class="input-group col-4" class="date_selector">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text" id="basic-addon1">Between Dates</span>
+                                                        </div>
+                                                        <input type="text" name="daterange" class="form-control" placeholder="Select Date" aria-label="Username" aria-describedby="basic-addon1" style="background: white!important;cursor: pointer;" readonly>
+                                                    </div>
+                            
+                                                    <div class="input-group col-3">
+                                                        <button type="button" onclick="displayIntransit()" class="btn" style="background: #273c75;color: white;">Apply Filter</button>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row no_margin no_padding" id="main_intransit" style="display: none;">
+                                                        <table id="example_filter_intransit" class="display table">
+                                                                <thead>
+                                                                            <tr>
+                                                                                <th>Package No</th>
+                                                                                <th>No of Orders</th>
+                                                                                <th>Total Amount</th>
+                                                                               </tr>
+                                                                        </thead>
+                                                        </table>                
+
+                                                </div>
+
+                                                <div class="row no_margin no_padding">
+                                                        <table id="example_intransit" class="display table">
+                                                            <thead>
+                                                                        <tr>
+                                                
+                                                                            <th>Package No</th>
+                                                                            <th>No of Orders</th>
+                                                                            <th>Total Amount</th>
+                                                                           </tr>
+                                                                    </thead>
+                                                                    
+                                                                    </table>
+<<<<<<< HEAD
+
+                                                                    <div class="dataTables_info col-11" id="example_info" role="status" aria-live="polite"></div>
+                                                                    <button type="button" class="btn col-1" style="background: #273c75;display: inline; float: right; color: white;">Next</button>
+                                                                      </div>
+=======
+                                                                    <div class="col-11"></div>
+                                                                    <button type="button" onclick=displayIntransitNext() class="btn col-1 mb-2" style="background: #273c75; float: right; color: white;">Next</button>
+                                                                </div>
+>>>>>>> 0d6435fa5ac97ab14ad7e33571542141f3b381bb
+                            
+                                         
+                                                       
+                            
+                                
+                    
+                                        
+                                                                     
+                                                                        
+                                                                        
+                                                                    
+                                                            </div>
+
+
+            <div class="tab-pane fade" id="v-pills-delivered" role="tabpanel" aria-labelledby="v-pills-delivered-tab">
+                <div class="container no_margin tab_holder" id="all_orders">
+                    <h3 class="tab_header">Orders Delivered</h3>
+                    <div class="row no_margin" style="padding-top: 5px;">
+
+                        <div class="input-group col-3">
+                            <div class="input-group">
+                                <select id="select_delivered" style="background: #E9ECEF;border-top-left-radius:5px;border-bottom-left-radius:5px;padding-left: 4px;">
+                                            <option disabled selected>Search By</option>
+                                               <option>orderId</option> 
+                                               <option>SPU</option> 
+                                               <option>SKU</option>
+                                               <!-- <option>By Package Id</option> -->
+                                            </select>
+                                <input type="text" class="form-control" id="input_delivered" placeholder="Search" aria-label="Text input with dropdown button">
+                            </div>
+                        </div>
+
+                        <div class="input-group col-3">
+                            <button type="button" onclick="displayDelivered()" class="btn" style="background: #273c75;color: white;">Apply Filter</button>
+                        </div>
+                    </div>
+                    <div class="row no_margin no_padding" id="main_delivered" style="display: none;">
+                            <table id="example_deliver" class="display table">
+                                    <thead>
+                                        <tr>
+                                                <th>Order Id</th>
+                                                <th>SKU</th>
+                                                <th>Title</th>
+                                                <th>WayBill No</th>
+                                                <th>Package No</th>
+                                                <th>Qty</th>
+                                                <th>Price</th>
+                                                <th>Status</th>
+                                        </tr>
+                                    </thead>
+
+                                </table>
+
+                    </div>
+
+                    <div class="row no_margin no_padding container">
+
+                            
+                         <table id="example_delivered" class="display table">
+                            <thead>
+                                <tr>
+                                    <th>Order Id</th>
+                                    <th>SKU</th>
+                                    <th>Title</th>
+                                    <th>WayBill No</th>
+                                    <th>Package No</th>
+                                    <th>Qty</th>
+                                    <th>Price</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                         </table>
+<<<<<<< HEAD
+                         <div class="dataTables_info col-11" id="example_info" role="status" aria-live="polite"></div>
+                         <button type="button" class="btn col-1" style="background: #273c75;display: inline; float: right; color: white;">Next</button>   
+                    
+ 
+=======
+
+                         <div class="col-11"></div>
+                        <button type="button" onclick=displayDeliveredNext() class="btn col-1 mb-2" style="background: #273c75; float: right; color: white;">Next</button>
+>>>>>>> 0d6435fa5ac97ab14ad7e33571542141f3b381bb
+                    
+                    
+                    </div>
+
+
+                </div>
+            </div>
+
+            <div class="tab-pane fade" id="v-pills-cancelled" role="tabpanel" aria-labelledby="v-pills-cancelled-tab">
+                <div class="container no_margin tab_holder" id="all_orders">
+                    
+                            <h3 class="tab_header">Cancelled</h3>                                          
+
+                                
+                            <div class="row no_margin" style="padding-top: 5px;">
+    
+                            <div class="input-group col-3">
+                                <div class="input-group">
+                                    <select style="background: #E9ECEF;border-top-left-radius:5px;border-bottom-left-radius:5px;padding-left: 4px;">
+                                                <option disabled selected>Search By</option>
+                                                    <option>By Order Id</option> 
+                                                    <option>By SPU</option> 
+                                                    <option>By SKU</option>
+                                                </select>
+                                    <input type="text" class="form-control" id="search_box" placeholder="Search" aria-label="Text input with dropdown button">
+                                </div>
+                            </div>
+    
+                            <div class="input-group col-4" class="date_selector">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="basic-addon1">Between Dates</span>
+                                </div>
+                                <input type="text" name="daterange" class="form-control" placeholder="Select Date" aria-label="Username" aria-describedby="basic-addon1" style="background: white!important;cursor: pointer;" readonly>
+                            </div>
+    
+                            <div class="input-group col-3">
+                                <button type="button" onclick="displayCancel()" class="btn" style="background: #273c75;color: white;">Apply Filter</button>
+                            </div>
+                        </div>
+
+                        <div class="row no_margin no_padding" id="main_cancel" style="display: none;">
+                                <table id="example_cancel" class="display table">
+                                        <thead>
+                                            <tr>
+                                                <th>Package No</th>
+                                                <th>No of Orders</th>
+                                                <th>Total Amount</th>
+                                            </tr>
+                                        </thead>
+                                </table>       
+
+
+                        </div>
+
+                        <div class="row no_margin no_padding">
+                                <table id="example_cancelled" class="display table">
+                                    <thead>
+                                                <tr>
+                                                    <th>Package No</th>
+                                                    <th>No of Orders</th>
+                                                    <th>Total Amount</th>
+                                                    </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                    
+                                                        <tr>
+                                                                <td>Tiger Nixon</td>
+                                                                <td>System Architect</td>
+                                                                <td>51</td>                                                             
+                                                                <td><button type="button" class="btn btn-primary">Print waybill</button></td>
+                                                        </tr>
+    
+                                                        <tr>    <td>Garrett Winters</td>
+                                                                <td>Accountant</td>
+                                                                <td>555</td>
+                                                                <td><button type="button" class="btn btn-primary">Print waybill</button></td>
+                                                        </tr>
+                                                        <tr>
+                                                                <td>Ashton Cox</td>
+                                                                <td>Junior Technical Author</td>
+                                                                <td>4488</td>
+                                                                <td><button type="button" class="btn btn-primary">Print waybill</button></td> 
+                                                        </tr>            
+                                                        <tr>
+                                                                <td>Jennifer Chang</td>
+                                                                <td>Regional Director</td>
+                                                                <td>48909</td>
+                                                                <td><button type="button" class="btn btn-primary">Print waybill</button></td>                                                   
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td>Sakura Yamamoto</td>
+                                                            <td>Support Engineer</td>
+                                                            <td>900</td>
+                                                            <td><button type="button" class="btn btn-primary">Print waybill</button></td>
+                                                            </tr>
+
+                                                            <tr>
+                                                                <td>Zenaida Frank</td>
+                                                                <td>Software Engineer</td>
+                                                                    <td>63</td>
+                                                                <td><button type="button" class="btn btn-primary">Print waybill</button></td>         
+                                                                    </tr>
+                                                            <tr>
+                                                                <td>Zorita Serrano</td>
+                                                                <td>Software Engineer</td>
+                                                                <td>56</td>
+                                                                <td><button type="button" class="btn btn-primary">Print waybill</button></td>         
+                                                                                                                                </tr>
+                                                            <tr>
+                                                                <td>Jennifer Acosta</td>
+                                                                <td>Junior Javascript Developer</td>
+                                                                <td>60</td>     
+                                                                <td><button type="button" class="btn btn-primary">Print waybill</button></td>                                            
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Cara Stevens</td>
+                                                                <td>Sales Assistant</td>
+                                                                    <td>46</td>
+                                                                    <td><button type="button" class="btn btn-primary">Print waybill</button></td>         
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Hermione Butler</td>
+                                                                <td>Regional Director</td>
+                                                                    <td>47</td>
+                                                                    <td><button type="button" class="btn btn-primary">Print waybill</button></td>         
+
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Lael Greer</td>
+                                                                <td>Systems Administrator</td>
+                                                                    <td>21</td>
+                                                                    <td><button type="button" class="btn btn-primary">Print waybill</button></td>         
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Jonas Alexander</td>
+                                                                <td>Developer</td>
+                                                                <td>30</td>
+                                                                <td><button type="button" class="btn btn-primary">Print waybill</button></td>         
+
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Shad Decker</td>
+                                                                <td>Regional Director</td>
+
+                                                                <td>51</td>
+                                                                <td><button type="button" class="btn btn-primary">Print waybill</button></td>         
+                                                            </tr>
+
+
+                                                </tbody>
+                                            </table>
+                                            <div class="dataTables_info col-11" id="example_info" role="status" aria-live="polite"></div>
+                                            <button type="button" class="btn col-1" style="background: #273c75;display: inline; float: right; color: white;">Next</button>
+
+                                        </div>
+    
+                    
+                                
+        </div>
+        
+
+                
+                                                
+                                                
+                                                
+                                            
+                                    </div>
+
+        </div> 
+        </div>
+
+    
+
+
+
+
+    <!-- JQuery -->
+    <script type="text/javascript" src="../js/jquery.js"></script>
+    <!-- Bootstrap tooltips -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
+    <!-- Bootstrap core JavaScript -->
+    <script type="text/javascript" src="../js/bootstrap431.js"></script>
+    <!-- MDB core JavaScript -->
+    <script type="text/javascript" src="../js/conversation.js"></script>
+    <script type="text/javascript" src="../js/moment.js"></script>
+    <script type="text/javascript" src="../js/datatable.js"></script>
+    <script type="text/javascript" src="../js/pages/orders.js"></script>
+    <script type="text/javascript" src="../js/smoothscroll.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+    <script type="text/javascript" src="https://unpkg.com/tabulator-tables@4.2.7/dist/js/tabulator.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.6/js/dataTables.buttons.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.6/js/dataTables.buttons.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.html5.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.18/datatables.min.js"></script>
+
+
+
+
+
+    <script>
+var pageNoOrders = 0;
+var pageNoPackages = 0;
+var pageNoShipped = 0;
+var pageNoDelivered = 0;
+var pageNoIntransit = 0;
+
+function displayOrders() {
+
+    var option = $('#select_orders').find(":selected").text();
+    var searchVal = $('#input_orders').val();
+    console.log(option);
+    console.log(searchVal);
+            // $('#example').hide();
+           // $('#main_orders').css('display','block');
+            $.ajax({
+
+                
+                url: '/search',
+                type:'POST',
+                data: {
+                    "searchBy":option,
+                    "searchString":searchVal
+
+                },
+                success:function(data){
+                  var results = newArray(data.data);
+                    getOrders(results);
+                }
+            })
+            
+}
+
+function displayCancel(){
+    
+    $('#main_cancel').css('display','block');
+}        
+
+function displayDelivered(){
+    var option = $('#select_delivered').find(":selected").text();
+    var searchVal = $('#input_delivered').val();
+    console.log(option);
+    console.log(searchVal);
+    // $('#example').hide();
+           // $('#main_orders').css('display','block');
+            $.ajax({
+                url: '/search',
+                type:'POST',
+                data: {
+                    "orderType":'DELIVERED',
+                    "searchBy":option,
+                    "searchString":searchVal
+
+                },
+                success:function(data){
+                  var results = newDeliveredArray(data.data);
+                    deliveredOrders(results);
+                }
+            })
+    
+    //     $('#main_delivered').css('display','block');
+}  
+
+function displayIntransit(){
+
+    var option = $('#select_intransit').find(":selected").text();
+    var searchVal = $('#input_intransit').val();
+    console.log(option);
+    console.log(searchVal);
+    // $('#example').hide();
+           // $('#main_orders').css('display','block');
+            $.ajax({
+                url: '/search',
+                type:'POST',
+                data: {
+                    "orderType":'PICKUP_IN_TRANSIT',
+                    "searchBy":option,
+                    "searchString":searchVal
+
+                },
+                success:function(data){
+                    console.log(data.data);
+                  createIntransit(data.data);
+                }
+            })
+    
+
+
+    // $('#main_intransit').css('display','block');
+}
+
+function displayShipped(){
+
+    var option = $('#select_shipped').find(":selected").text();
+    var searchVal = $('#input_shipped').val();
+    console.log(option);
+    console.log(searchVal);
+    // $('#example').hide();
+           // $('#main_orders').css('display','block');
+            $.ajax({
+                url: '/search',
+                type:'POST',
+                data: {
+                    "orderType":'SHIPPED',
+                    "searchBy":option,
+                    "searchString":searchVal
+
+                },
+                success:function(data){
+                    createShipped(data.data);
+                }
+            })
+    // $('#main_shipped').css('display','block');
+}
+
+function displayPackages()
+{
+    var option = $('#select_package').find(":selected").text();
+    var searchVal = $('#input_package').val();
+    console.log(option);
+    console.log(searchVal);
+    // $('#example').hide();
+           // $('#main_orders').css('display','block');
+            $.ajax({
+                url: '/search',
+                type:'POST',
+                data: {
+                    "searchBy":option,
+                    "searchString":searchVal
+
+                },
+                success:function(data){
+                    createPackage(data.data);
+                }
+            })
+    
+    // $('#main_packages').css('display','block');
+}
+
+function displayOrdersNext(){
+                    
+                    $.ajax({
+                    'url' : '/allOrders?pageNo='+ (++pageNoOrders),
+                    'type' : 'GET',
+                    'success': function(data){
+                        results=newArray(data.data);
+                        getOrders(results);
+                    }
+
+                });
+
+}
+
+function displayPackagesNext(){
+    $.ajax({
+        
+        'url' : '/readyToShipOrders?pageNo='+(++pageNoPackages),
+        'type' : 'GET',
+        'success': function(data){
+        createPackage(data.data);        }
+});
+    
+
+}
+
+function displayShippedNext(){
+    $.ajax({
+        
+        'url' : '/shippedOrders?pageNo='+(++pageNoShipped),
+        'type' : 'GET',
+        'success': function(data){
+        createShipped(data.data);
+        }
+});
+}
+
+function displayDeliveredNext(){
+
+    $.ajax({
+        
+        'url' : '/deliveredOrders?pageNo='+(++pageNoDelivered),
+        'type' : 'GET',
+        'success': function(data){
+        results=newDeliveredArray(data.data);
+        deliveredOrders(results);
+        }
+});
+
+    
+}
+
+function displayIntransitNext(){
+
+    $.ajax({
+        
+        'url' : '/inTransitOrders?pageNo='+(++pageNoIntransit),
+        'type' : 'GET',
+        'success': function(data){
+        createIntransit(data.data);
+  
+        
+        }
+});
+
+    
+}
+  
+
+
+// $('#example').DataTable({
+//    drawCallback: function(){
+//       $('.paginate_button.next:not(.disabled)', this.api().table().container())          
+//          .on('click', function(){
+//             alert('next');
+//          });       
+//    }
+// });   
+
+
+
+function newCreateAwb(arr){
+            var array = [];
+            for (let i = 0; i < arr.length; i++) {
+                for (let j = 0; j < arr[i].products.length; j++) {
+                    
+                    array.push({
+                        orderId:arr[i].orderId,
+                        date: arr[i].date,
+                        products:[
+                            {
+                            imageUrl:arr[i].products[j].imageUrl,
+                            sku:arr[i].products[j].sku,
+                            title:arr[i].products[j].title,
+                            price:arr[i].products[j].price,
+                            qty:arr[i].products[j].qty,
+                            }
+                        ],
+                    })
+                }
+            }
+            return array;
+        }
+
+
+        function newDeliveredArray(arr){
+            var array = [];
+            for (let i = 0; i < arr.length; i++) {
+                for (let j = 0; j < arr[i].products.length; j++) {
+                    console.log("test  ",array[i]);
+                    
+                    array.push({
+                        orderId:arr[i].orderId,
+                        wayBillNo:arr[i].wayBillNo,
+                        packageNo:arr[i].packageNo,
+                        products:[
+                            {
+                            sku:arr[i].products[j].sku,
+                            title:arr[i].products[j].title,
+                            price:arr[i].products[j].price,
+                            qty:arr[i].products[j].qty,
+                            productStatus:arr[i].products[j].productStatus,
+                            }
+                        ],
+                        
+                    })
+                }
+            }
+            return array;
+        }
+
+
+        function newArray(arr){
+            var array = [];
+            for (let i = 0; i < arr.length; i++) {
+                for (let j = 0; j < arr[i].products.length; j++) {
+                    array.push({
+                        orderId: arr[i].orderId,	
+                        date: arr[i].date,
+                        products:[
+                            {
+                                sku: arr[i].products[j].sku,
+                                title: arr[i].products[j].title,
+                                price: arr[i].products[j].price,
+                                qty: arr[i].products[j].qty,
+                                productStatus:arr[i].products[j].productStatus, 
+                            }
+                        ],
+                        
+                    })
+                }
+            }
+            return array;
+        }
+
+       
+        function getOrders(results){
+
+        var table = $('#example').DataTable({
+            paging: false,
+            data: results,
+            destroy: true,
+            
+
+
+
+            'rowGroup': {
+                // 'dataSrc': products.title,
+                'startRender': function(rows, group) {
+                    console.log(data);
+                    
+                    return '<label>' + group + ' (' + rows.count() + ')</label>';
+                }         
+            },
+            
+            'columns':[
+                {data: 'orderId'},
+                {data: 'products[0].sku'},
+                {data: 'products[0].title'},
+                {data: 'products[0].qty'},
+                {data: 'products[0].price'},
+                {data: 'products[0].productStatus'},
+            ],
+            "columnDefs": [{
+                "visible": false,
+                "targets": groupColumn
+            }],
+            "order": [
+                [groupColumn, 'asc']
+            ],
+            "displayLength": 25,
+            "drawCallback": function(settings) {
+                var api = this.api();
+                var rows = api.rows({
+                    page: 'current'
+                }).nodes();
+                var last = null;
+
+                api.column(groupColumn, {
+                    page: 'current'
+                }).data().each(function(group, i) {
+                    if (last !== group) {
+                        $(rows).eq(i).before(
+                            '<tr class="group"><td colspan="5">' + group + '</td></tr>'
+                        );
+
+                        last = group;
+                    }
+                });
+            }
+        });
+
+        // // Order by the grouping
+        $('#example tbody').on('click', 'tr.group', function() {
+            var currentOrder = table.order()[0];
+            if (currentOrder[0] === groupColumn && currentOrder[1] === 'asc') {
+                table.order([groupColumn, 'desc']).draw();
+            } else {
+                table.order([groupColumn, 'asc']).draw();
+            }
+        });
+
+
+
+}
+
+
+        function deliveredOrders(results){
+            var table1= $('#example_delivered').DataTable({
+                paging: false,
+                data: results,
+                destroy: true,
+                paging: false,
+                'rowGroup': {
+                    // 'dataSrc': products.title,
+                    'startRender': function(rows, group) {
+                        console.log(data);
+                        
+                        return '<label>' + group + ' (' + rows.count() + ')</label>';
+                    }         
+                },
+                
+                'columns':[
+                    {data: 'orderId'},
+                    {data: 'products[0].sku'},
+                    {data: 'products[0].title'},
+                    {data: 'wayBillNo'},
+                    {data: 'packageNo'},
+                    {data: 'product[0].qty'},
+                    {data: 'product[0].price'},
+                    {data: 'product[0].productStatus'}
+                ],
+                "columnDefs": [{
+                    "visible": false,
+                    "targets": groupColumn
+                }],
+                "order": [
+                    [groupColumn, 'asc']
+                ],
+                "displayLength": 25,
+                "drawCallback": function(settings) {
+                    var api = this.api();
+                    var rows = api.rows({
+                        page: 'current'
+                    }).nodes();
+                    var last = null;
+
+                    api.column(groupColumn, {
+                        page: 'current'
+                    }).data().each(function(group, i) {
+                        if (last !== group) {
+                            $(rows).eq(i).before(
+                                '<tr class="group"><td colspan="7">' + group + '</td></tr>'
+                            );
+
+                            last = group;
+                        }
+                    });
+                }
+            });
+        
+
+                $('#example_delivered tbody').on('click', 'tr.group', function() {
+                var currentOrder = table1.order()[0];
+                if (currentOrder[0] === groupColumn && currentOrder[1] === 'asc') {
+                    table1.order([groupColumn, 'desc']).draw();
+                } else {
+                    table1.order([groupColumn, 'asc']).draw();
+                }
+            });
+
+            
+        }
+
+        
+
+        var table6 = $('#example_package').DataTable();
+            $('#example_package tbody').on( 'click', 'tr', function () {
+                $(this).toggleClass('selected');
+            } );
+
+
+
+            $('#button').on( 'click', function () {
+            console.log("Inside btn click");
+            
+            // var d = $.map(table6.rows('.selected').data(),function(item){
+            //     return item[0];
+            // });
+            var d = $('#example_package').DataTable().rows('.selected').data();
+            for(var i=0;i<d.length;i++){
+
+                console.log("Package:"+d[i].totalAmt);
+            }
+            console.log("d",d);
+            alert($('#example_package').DataTable().rows(('.selected')).data().length + ' row(s) selected');
+
+            // console.log("Shipped click:", JSON.stringify(table5.row( $(this).parents('tr') ).data(),undefined,2));
+            } );
+                
+
+            // $('#button').click( function () {
+            //     var d = table6.rows('.selected').data()
+            //     console.log("d",d);
+            //     for(var i=0;i<d.length;i++){
+
+            //         console.log("Package:"+d[i][0]);
+            //     }
+            // });
+
+
+            var groupColumn = 0;
+            $('#v-pills-home-tab').click(function(){
+                var results;
+
+                $.ajax({
+                    'url' : '/allOrders',
+                    'type' : 'GET',
+                    'success': function(data){
+                        results=newArray(data.data);
+                        getOrders(results);
+                    }
+
+                });
+
+            
+            
+        });
+
+        function createShipped(data){
+             // $('#example_shipped').empty();
+             var table5 = $('#example_shipped').DataTable({
+                paging: false,
+                data: data,
+                destroy:true,
+                'rowGroup': {
+                    // 'dataSrc': products.title,
+                    'startRender': function(rows, group) {
+                        console.log("Data",data);
+                        // Assign class name to all child rows
+                        // var groupName = 'group-' + group.replace(/[^A-Za-z0-9]/g, '');
+                        // var rowNodes = rows.nodes();
+                        // rowNodes.to$().addClass(groupName);
+                        
+                        // Get selected checkboxes
+                        // var checkboxesSelected = $('.dt-checkboxes:checked', rowNodes);
+                        
+                        // // Parent checkbox is selected when all child checkboxes are selected
+                        // var isSelected = (checkboxesSelected.length == rowNodes.length);
+                        
+                        return '<label>' + group + ' (' + rows.count() + ')</label>';
+                    }         
+                },
+                
+                'columns':[
+                    {data: 'packageNo'},
+                    {data: 'orderId'},
+                    {data: 'totalAmt'},
+            
+                ],
+                // "columnDefs": [{
+                //     "visible": false,
+                //     "targets": groupColumn
+                // }],
+                "order": [
+                    [groupColumn, 'asc']
+                ],
+                "displayLength": 25,
+                "drawCallback": function(settings) {
+                    var api = this.api();
+                    var rows = api.rows({
+                        page: 'current'
+                    }).nodes();
+                    var last = null;
+
+                    api.column(groupColumn, {
+                        page: 'current'
+                    }).data().each(function(group, i) {
+                        if (last !== group) {
+                            // console.log("rows",$(rows).closest('tr').data());
+                            // console.log("data:",JSON.stringify(rows.context[0].aoData[0]._aData.packageNo));
+                             $(rows).eq(i).append(
+                                '<td><button type="button" class="btn btn-primary btn_shipped">Print waybill</button></td>'
+                                
+                            );
+
+                            last = group;
+                        }
+                    });
+                }
+            });
+        }
+
+
+            $('#v-pills-shipped-tab').click(function(){
+                // $('#example_shipped').empty();
+                var table5 = $('#example_shipped').DataTable({
+                    paging: false,
+                    ajax:'/shippedOrders',
+                data: 'data',
+                paging: false,
+                destroy:true,
+                'rowGroup': {
+                    // 'dataSrc': products.title,
+                    'startRender': function(rows, group) {
+                        console.log("Data",data);
+                        // Assign class name to all child rows
+                        // var groupName = 'group-' + group.replace(/[^A-Za-z0-9]/g, '');
+                        // var rowNodes = rows.nodes();
+                        // rowNodes.to$().addClass(groupName);
+                        
+                        // Get selected checkboxes
+                        // var checkboxesSelected = $('.dt-checkboxes:checked', rowNodes);
+                        
+                        // // Parent checkbox is selected when all child checkboxes are selected
+                        // var isSelected = (checkboxesSelected.length == rowNodes.length);
+                        
+                        return '<label>' + group + ' (' + rows.count() + ')</label>';
+                    }         
+                },
+                
+                'columns':[
+                    {data: 'packageNo'},
+                    {data: 'orderId'},
+                    {data: 'totalAmt'},
+            
+                ],
+                // "columnDefs": [{
+                //     "visible": false,
+                //     "targets": groupColumn
+                // }],
+                "order": [
+                    [groupColumn, 'asc']
+                ],
+                "displayLength": 25,
+                "drawCallback": function(settings) {
+                    var api = this.api();
+                    var rows = api.rows({
+                        page: 'current'
+                    }).nodes();
+                    var last = null;
+
+                    api.column(groupColumn, {
+                        page: 'current'
+                    }).data().each(function(group, i) {
+                        if (last !== group) {
+                            // console.log("rows",$(rows).closest('tr').data());
+                            // console.log("data:",JSON.stringify(rows.context[0].aoData[0]._aData.packageNo));
+                             $(rows).eq(i).append(
+                                '<td><button type="button" class="btn btn-primary btn_shipped">Print waybill</button></td>'
+                                
+                            );
+
+                            last = group;
+                        }
+                    });
+                }
+            });
+
+            $('#example_shipped').on( 'click', 'tbody .btn_shipped', function () {
+
+                var d = table5.row( $(this).parents('tr') ).data();
+                console.log("d",d.packageNo);
+                
+            // console.log("Shipped click:", JSON.stringify(table5.row( $(this).parents('tr') ).data(),undefined,2));
+            } );
+
+            });
+
+            function createPackage(data){
+                $('#example_package').DataTable({
+                paging: false,
+                data: data,
+                destroy:true,
+                'rowGroup': {
+                    // 'dataSrc': products.title,
+                    'startRender': function(rows, group) {
+                        console.log(data);
+                        // Assign class name to all child rows
+                        // var groupName = 'group-' + group.replace(/[^A-Za-z0-9]/g, '');
+                        // var rowNodes = rows.nodes();
+                        // rowNodes.to$().addClass(groupName);
+                        
+                        // Get selected checkboxes
+                        // var checkboxesSelected = $('.dt-checkboxes:checked', rowNodes);
+                        
+                        // // Parent checkbox is selected when all child checkboxes are selected
+                        // var isSelected = (checkboxesSelected.length == rowNodes.length);
+                        
+                        return '<label>' + group + ' (' + rows.count() + ')</label>';
+                    }         
+                },
+                
+                'columns':[
+                    {data: 'waybillno'},
+                    {data: 'orderId'},
+                    {data:'allSkus'},
+                    {data: 'totalAmt'},
+            
+                ],
+                // "columnDefs": [{
+                //     "visible": false,
+                //     "targets": groupColumn
+                // }],
+                "order": [
+                    [groupColumn, 'asc']
+                ],
+                "displayLength": 25,
+                "drawCallback": function(settings) {
+                    var api = this.api();
+                    var rows = api.rows({
+                        page: 'current'
+                    }).nodes();
+                    var last = null;
+
+                    api.column(groupColumn, {
+                        page: 'current'
+                    }).data().each(function(group, i) {
+                        if (last !== group) {
+                            $(rows).eq(i).append(
+                                // '<tr class="group"><td colspan="4">' + group + '</td></tr>'
+                                '<td><button type="button" class="btn btn-primary">Print waybill</button></td>'
+                                
+                            );
+
+                            last = group;
+                        }
+                    });
+                }
+            });
+          
+            }
+            
+            $('#v-pills-messages-tab').click(function(){
+                $('#example_package').DataTable({
+                paging: false,
+                ajax: "/readyToShipOrders",
+                data: 'data',
+                paging: false,
+                destroy:true,
+                'rowGroup': {
+                    // 'dataSrc': products.title,
+                    'startRender': function(rows, group) {
+                        console.log(data);
+                        // Assign class name to all child rows
+                        // var groupName = 'group-' + group.replace(/[^A-Za-z0-9]/g, '');
+                        // var rowNodes = rows.nodes();
+                        // rowNodes.to$().addClass(groupName);
+                        
+                        // Get selected checkboxes
+                        // var checkboxesSelected = $('.dt-checkboxes:checked', rowNodes);
+                        
+                        // // Parent checkbox is selected when all child checkboxes are selected
+                        // var isSelected = (checkboxesSelected.length == rowNodes.length);
+                        
+                        return '<label>' + group + ' (' + rows.count() + ')</label>';
+                    }         
+                },
+                
+                'columns':[
+                    {data: 'waybillno'},
+                    {data: 'orderId'},
+                    {data:'allSkus'},
+                    {data: 'totalAmt'},
+            
+                ],
+                // "columnDefs": [{
+                //     "visible": false,
+                //     "targets": groupColumn
+                // }],
+                "order": [
+                    [groupColumn, 'asc']
+                ],
+                "displayLength": 25,
+                "drawCallback": function(settings) {
+                    var api = this.api();
+                    var rows = api.rows({
+                        page: 'current'
+                    }).nodes();
+                    var last = null;
+
+                    api.column(groupColumn, {
+                        page: 'current'
+                    }).data().each(function(group, i) {
+                        if (last !== group) {
+                            $(rows).eq(i).append(
+                                // '<tr class="group"><td colspan="4">' + group + '</td></tr>'
+                                '<td><button type="button" class="btn btn-primary">Print waybill</button></td>'
+                                
+                            );
+
+                            last = group;
+                        }
+                    });
+                }
+            });
+          
+              });
+            
+              function createIntransit(data){
+
+                $('#example_intransit').DataTable({
+                paging:false,    
+                data: data,
+                destroy:true,
+                'rowGroup': {
+                    // 'dataSrc': products.title,
+                    'startRender': function(rows, group) {
+                        console.log(data);
+                        // Assign class name to all child rows
+                        // var groupName = 'group-' + group.replace(/[^A-Za-z0-9]/g, '');
+                        // var rowNodes = rows.nodes();
+                        // rowNodes.to$().addClass(groupName);
+                        
+                        // Get selected checkboxes
+                        // var checkboxesSelected = $('.dt-checkboxes:checked', rowNodes);
+                        
+                        // // Parent checkbox is selected when all child checkboxes are selected
+                        // var isSelected = (checkboxesSelected.length == rowNodes.length);
+                        
+                        return '<label>' + group + ' (' + rows.count() + ')</label>';
+                    }         
+                },
+                
+                'columns':[
+                    {data: 'packageNo'},
+                    {data: 'orderId'},
+                    {data: 'totalAmt'},
+            
+                ],
+                // "columnDefs": [{
+                //     "visible": false,
+                //     "targets": groupColumn
+                // }],
+                "order": [
+                    [groupColumn, 'asc']
+                ],
+                "displayLength": 25,
+                "drawCallback": function(settings) {
+                    var api = this.api();
+                    var rows = api.rows({
+                        page: 'current'
+                    }).nodes();
+                    var last = null;
+
+                    api.column(groupColumn, {
+                        page: 'current'
+                    }).data().each(function(group, i) {
+                        if (last !== group) {
+                            $(rows).eq(i).append(
+                                // '<tr class="group"><td colspan="4">' + group + '</td></tr>'
+                                '<td><button type="button" class="btn btn_intransit btn-primary">Print waybill</button></td>'
+                                
+                            );
+
+                            last = group;
+                        }
+                    });
+                }
+            });
+                  
+              }
+
+
+            $('#v-pills-intransit-tab').click(function(){
+             $('#example_intransit').DataTable({
+                 paging: false,
+                 ajax:'/inTransitOrders',
+                data: 'data',
+                paging: false,
+                destroy:true,
+                'rowGroup': {
+                    // 'dataSrc': products.title,
+                    'startRender': function(rows, group) {
+                        console.log(data);
+                        // Assign class name to all child rows
+                        // var groupName = 'group-' + group.replace(/[^A-Za-z0-9]/g, '');
+                        // var rowNodes = rows.nodes();
+                        // rowNodes.to$().addClass(groupName);
+                        
+                        // Get selected checkboxes
+                        // var checkboxesSelected = $('.dt-checkboxes:checked', rowNodes);
+                        
+                        // // Parent checkbox is selected when all child checkboxes are selected
+                        // var isSelected = (checkboxesSelected.length == rowNodes.length);
+                        
+                        return '<label>' + group + ' (' + rows.count() + ')</label>';
+                    }         
+                },
+                
+                'columns':[
+                    {data: 'packageNo'},
+                    {data: 'orderId'},
+                    {data: 'totalAmt'},
+            
+                ],
+                // "columnDefs": [{
+                //     "visible": false,
+                //     "targets": groupColumn
+                // }],
+                "order": [
+                    [groupColumn, 'asc']
+                ],
+                "displayLength": 25,
+                "drawCallback": function(settings) {
+                    var api = this.api();
+                    var rows = api.rows({
+                        page: 'current'
+                    }).nodes();
+                    var last = null;
+
+                    api.column(groupColumn, {
+                        page: 'current'
+                    }).data().each(function(group, i) {
+                        if (last !== group) {
+                            $(rows).eq(i).append(
+                                // '<tr class="group"><td colspan="4">' + group + '</td></tr>'
+                                '<td><button type="button" class="btn btn_intransit btn-primary">Print waybill</button></td>'
+                                
+                            );
+
+                            last = group;
+                        }
+                    });
+                }
+            });
+
+            $('#example_intransit').on( 'click', 'tbody .btn_intransit', function () {
+
+            var d = table5.row( $(this).parents('tr') ).data();
+            console.log("d",d.packageNo);
+
+            // console.log("Shipped click:", JSON.stringify(table5.row( $(this).parents('tr') ).data(),undefined,2));
+            } );
+
+            });
+
+
+            $('#v-pills-delivered-tab').click(function(){
+
+                $.ajax({
+
+                    'url' : '/deliveredOrders',
+                    'type' : 'GET',
+                    'success': function(data){
+                        results=newDeliveredArray(data.data);
+                        deliveredOrders(results);
+                    }
+
+                });
+
+
+             
+            });
+
+            
+                $('#v-pills-profile-tab').click(function(){
+                    $.ajax({
+                        'url' : '/placedOrders',
+                        'type' : 'GET',
+                        'success': function(data){
+
+                            var createAwbs = data.data;
+
+                    $('.list-group-item').empty();
+                    for(let i=0;i<createAwbs.length;i++){
+                        var items = '';
+                        for(let j=0;j<createAwbs[i].products.length;j++){
+                            items+='<li class="list-item orderitem_product">'+
+'                                                <div class="row no_margin">'+
+'<img class="img-fluid col-1 no_margin" style="max-height: 55px;" src='+createAwbs[i].products[j].imageUrl+'></img>'+
+'                                                    <div class="col-2 no_margin">'+createAwbs[i].products[j].sku+'</div>'+
+'                                                    <div class="col-5 no_margin">'+createAwbs[i].products[j].title+'</div>'+
+'                                                    <div class="col-2 no_margin">'+createAwbs[i].products[j].qty+'</div>'+
+'                                                    <div class="col-2 no_margin">'+createAwbs[i].products[j].price+'</div>'+
+'</div>'+
+'                                            </li>';
+                            }
+                            
+                            $('.list-group-item').append('<div class="container no_margin order_item">'+
+'                                    <div class="row no_margin ">'+
+'                                        <div class="col-6 no_margin no_padding" style="text-align: left;">'+
+'                                            <h4 class="no_margin">Order Id : '+createAwbs[i].orderId+'</h4>'+
+'                                            <p class="no_margin no_padding" style="font-size: 15px;color:#666666">Order Date : '+createAwbs[i].date+'</p>'+
+'                                        </div>'+
+''+
+'                                        <div class="col-2 no_margin"></div>'+
+'                                        <div class="col-4 no_margin">'+
+'                                            <button type="button" class="btn" style="background: #ce2465;color: white;float: right;">Create AWB</button>'+
+'                                        </div>'+
+'                                    </div>'+
+''+
+'                                    <h5 style="padding-top: 15px;padding-left: 10px;">Products</h5>'+
+'                                    <div class="row no_margin order_item_products" style="padding-left: 10px;">'+
+'                                        <ul class="list-group list-group-flush">'+
+''+
+'                                            <li class="list-item orderitem_product">'+
+'                                                <div class="row no_margin">'+
+'                                                    <div class="col-1 no_margin"></div>'+
+'                                                    <div class="col-2 no_margin">SKU</div>'+
+'                                                    <div class="col-5 no_margin">Product Description</div>'+
+'                                                    <div class="col-2 no_margin">Ordered Qty</div>'+
+'                                                    <div class="col-2 no_margin">Amount</div>'+
+'                                                </div>'+
+'                                            </li>'+items+
+''+
+'                                        </ul>'+
+''+
+'                                    </div>'+
+''+
+'                                </div>'+
+''+
+'                            </li>');
+                        }
+                    
+                        }
+                    })
+
+                    // console.log(createAwbs.length);
+                
+                   
+
+                });
+
+                      
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        $(document).ready(function() {
+
+            var AllOrders = [
+            {
+                orderId: 234672,	
+                date: '12 march',
+                products:[
+                    {
+                    sku: 'Absg5645',
+                    title: 'Samsung Galaxy S10',
+                    price: 799,
+                    qty: 1
+                    },
+                    {
+                    sku: 'Absg56343',
+                    title: 'Samsung ipone',
+                    price: 7993,
+                    qty: 1
+                    }
+                ],
+                status:'djfkwt'
+            },
+            {
+                orderId: 234671,	
+                date: '12 march',
+                products:[
+                    {
+                    sku: 'Absg5645',
+                    title: 'Samsung Galaxy S10',
+                    price: 799,
+                    qty: 1
+                    }
+                ],
+                status:'djfkwt'
+            }
+    ]
+
+    var shipping = 
+    [
+        {
+            packageNo: 959869,
+            orderId: 7325435,
+            totalAmt: 1500
+        },
+        {
+            packageNo: 72345,
+            orderId: 7325435,
+            totalAmt: 1500
+        }
+    ]
+
+    var delivered = 
+    [
+        {
+        orderId:258663,
+        wayBillNo:117852,
+        packageNo:956832,
+        products:[
+            {
+            sku:'fty5439',
+            title:'Macbook air 2019',
+            price:2500,
+            qty:1
+            }
+        ],
+        status:'delivered',
+        },
+        {
+            orderId:654345,
+            wayBillNo:116864,
+            packageNo:9543325,
+            products:[
+                {
+                sku:'floly5r7',
+                title:'iPhoneX',
+                price:1100,
+                qty:1,
+                }
+            ],
+            status:'delivered',
+        }
+    ]
+
+    var createAwbs = [
+    {
+        orderId:'2635453',
+        date: '12 july',
+        products:[
+            {
+            imageUrl: 'http://fx.quarkscm.com/product/xy/2000/2000/p/tt/i/m/image_356_1_218_1_81_1_394_1_17_1_18_1_21_1_202_1_97_1_100_1_290_1_177_1_610_1_265_1_193_1_361_1_1045_1_1079_1_1599_1_39_1_292_1_92_1_3_1_3_1_8_1_14_1_4_1_77_1_137_1_19_1_14_1_110_1_51_1_18_1_7_1_184_1_193_1_8_1_18_1_15_1_66_1_4_1_4_1_1711_1_3591.jpg',
+            sku:'435344',
+            title:'one plus 9',
+            price:845,
+            qty:2,
+            },{
+            imageUrl: 'http://fx.quarkscm.com/product/xy/2000/2000/p/tt/i/m/image_356_1_218_1_81_1_394_1_17_1_18_1_21_1_202_1_97_1_100_1_290_1_177_1_610_1_265_1_193_1_361_1_1045_1_1079_1_1599_1_39_1_292_1_92_1_3_1_3_1_8_1_14_1_4_1_77_1_137_1_19_1_14_1_110_1_51_1_18_1_7_1_184_1_193_1_8_1_18_1_15_1_66_1_4_1_4_1_1711_1_3591.jpg',
+            sku:'12345',
+            title:'calvin klein leather jacket',
+            price:300,
+            qty:3,
+            }
+        ],
+    },
+    {
+        orderId:'8357403',
+        date: '12 july',
+        products:[
+            {
+            imageUrl: 'http://fx.quarkscm.com/product/xy/2000/2000/p/tt/i/m/image_356_1_218_1_81_1_394_1_17_1_18_1_21_1_202_1_97_1_100_1_290_1_177_1_610_1_265_1_193_1_361_1_1045_1_1079_1_1599_1_39_1_292_1_92_1_3_1_3_1_8_1_14_1_4_1_77_1_137_1_19_1_14_1_110_1_51_1_18_1_7_1_184_1_193_1_8_1_18_1_15_1_66_1_4_1_4_1_1711_1_3591.jpg',
+            sku:'435344',
+            title:'one plus 9',
+            price:1000,
+            qty:2,
+            },{
+            imageUrl: 'http://fx.quarkscm.com/product/xy/2000/2000/p/tt/i/m/image_356_1_218_1_81_1_394_1_17_1_18_1_21_1_202_1_97_1_100_1_290_1_177_1_610_1_265_1_193_1_361_1_1045_1_1079_1_1599_1_39_1_292_1_92_1_3_1_3_1_8_1_14_1_4_1_77_1_137_1_19_1_14_1_110_1_51_1_18_1_7_1_184_1_193_1_8_1_18_1_15_1_66_1_4_1_4_1_1711_1_3591.jpg',
+            sku:'12345',
+            title:'calvin klein leather jacket',
+            price:300,
+            qty:3,
+            }
+        ],
+    }
+    ]
+
+    var packages = 
+    [
+        {
+            waybillno: 959869,
+            orderId: 7325435,
+            products:[{
+            sku:[754,980,133]
+            }],
+            Amt:1500
+        },
+        {
+            waybillno:563672,
+            orderId:98766,
+            products:[{
+            sku:[4647,564,6869]
+            }],
+            Amt:50
+        },
+        {
+            waybillno:56789,
+            orderId:987654,
+            products:[{
+            sku:[456,0987,23]
+            }],
+            Amt:500
+        }
+    ]
+
+
+
+     let newAllOrders = newArray(AllOrders);
+        console.log('new all orders.....', newAllOrders);
+
+        let newDeliveredOrders = newDeliveredArray(delivered);
+
+
+        
+         var results;
+
+                $.ajax({
+                    'url' : '/allOrders',
+                    'type' : 'GET',
+                    'success': function(data){
+                        results=newArray(data.data);
+                        getOrders(results);
+                    }
+
+                });
+
+             $('input[name="daterange"]').daterangepicker({
+
+                        }, function(start, end, label) {
+                            console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
+                        });
+
+                        /*
+                        $('#example').DataTable({
+                            destroy: true,
+                            dom: 'Bfrtip',
+                            paging: true,
+                            info: true,
+                            buttons: [
+                                'csv', 'excel'
+                            ]
+                        });*/
+
+
+                        
+                
+
+
+
+
+
+        // $(document).ready(function() {
+        //     var groupColumn = 0;
+        //     var table = $('#example_delivered').DataTable({
+        //         destroy: true,
+        //         "columnDefs": [{
+        //             "visible": false,
+        //             "targets": groupColumn
+        //         }],
+        //         "order": [
+        //             [groupColumn, 'asc']
+        //         ],
+        //         "displayLength": 25,
+        //         "drawCallback": function(settings) {
+        //             var api = this.api();
+        //             var rows = api.rows({
+        //                 page: 'current'
+        //             }).nodes();
+        //             var last = null;
+
+        //             api.column(groupColumn, {
+        //                 page: 'current'
+        //             }).data().each(function(group, i) {
+        //                 if (last !== group) {
+        //                     $(rows).eq(i).before(
+        //                         '<tr class="group"><td colspan="5">' + group + '</td></tr>'
+        //                     );
+
+        //                     last = group;
+        //                 }
+        //             });
+        //         }
+        //     });
+
+        //     // Order by the grouping
+        //     $('#example_delivered tbody').on('click', 'tr.group', function() {
+        //         var currentOrder = table.order()[0];
+        //         if (currentOrder[0] === groupColumn && currentOrder[1] === 'asc') {
+        //             table.order([groupColumn, 'desc']).draw();
+        //         } else {
+        //             table.order([groupColumn, 'asc']).draw();
+        //         }
+        //     });
+
+
+        //     $('input[name="daterange"]').daterangepicker({
+
+        //     }, function(start, end, label) {
+        //         console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
+        //     });
+
+        //     /*
+        //     $('#example').DataTable({
+        //         destroy: true,
+        //         dom: 'Bfrtip',
+        //         paging: true,
+        //         info: true,
+        //         buttons: [
+        //             'csv', 'excel'
+        //         ]
+        //     });*/
+
+
+            
+        // });
+
+
+        });
+
+
+
+    
+
+
+    </script>
+</body>
+
+</html>
